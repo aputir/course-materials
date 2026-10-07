@@ -34,6 +34,15 @@ The build script accepts `all`, `hw1`, `homework`, `workshop-notes`, `project-ph
 
 The repository is [APUT course materials](https://github.com/aputir/course-materials). The lossless 43-page story PDF is approximately 127 MiB, exceeding GitHub's [100 MiB regular-file limit](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github). It is available in the [course-materials release](https://github.com/aputir/course-materials/releases/tag/course-materials-2026-10-07) and can also be rebuilt with `./scripts/build.sh evolution-ai-story`. This generated PDF is ignored by Git; its Typst source and all 43 original images are included in the repository.
 
+The release also includes `evolution-ai-story-compressed.pdf`, a 22.9 MiB sharing copy. On macOS with Swift installed, generate a separate compressed copy after the Typst build:
+
+```sh
+swift scripts/compress-pdf.swift output/pdf/evolution-ai-story.pdf \
+  output/pdf/evolution-ai-story-compressed.pdf
+```
+
+The compression helper uses macOS Quartz and is optional; it is not part of `build.sh`. Keep the original PNG assets and the lossless build when preparing the sharing copy.
+
 ## Create a document
 
 Run these manual commands from the project root. Copy the appropriate starter to `documents/`, replace the example copy, and keep the import at `../course/theme.typ`:
