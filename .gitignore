@@ -1,6 +1,5 @@
 .DS_Store
 /tmp/
 /java_hello_world/
-/evolution-ai-story.md
-/assets/evolution-story/
-/assets/evolution-ai-story/
+# Generated lossless deck is distributed as a GitHub release asset (>100 MiB).
+/output/pdf/evolution-ai-story.pdf

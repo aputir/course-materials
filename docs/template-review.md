@@ -31,6 +31,8 @@ In response to the user's language review, HW1's fictional ship/homework name is
 
 A follow-up bilingual-text review confirmed that no «Java Explorer» phrase remains in HW1 and the visible English spans are exact language/API/product names, code literals, or specialist course terminology. The homework starter's ordinary English placeholder comment was removed from its Java example; the Persian instructions now carry that guidance. The style guide explicitly avoids English glosses that only repeat clear Persian wording.
 
+The first HW1 content page now introduces a restrained six-mission story arc and gives the student a clear role on the ship's programming team. Its pre-mission notes group the existing language, topic, reasoning, readability, input, and submission rules in concise action-oriented wording. Visual inspection confirms the page still fits cleanly; no assignment constraint was removed.
+
 ## Evidence and authoring limits
 
 See `verification.md` for compilation, all-page visual review, font sizes, PDF metadata, source fidelity, and portable rebuild evidence. `document-style-guide.md` contains the numeric spacing scale; `technical-decisions.md` explains the implementation.

@@ -72,3 +72,13 @@ English technical names required by an assignment remain unchanged. Persian sent
 - Keep PDF title/author metadata aligned with visible course metadata. Supply `pdf-author` when a separate publishing credit is needed.
 - Build with bundled fonts and embedded math fonts, without network or system-font dependencies.
 - Keep Typst sources, reference copies, font licenses, and provenance. Update the guide and verification record when the shared presentation changes.
+
+## Presentations
+
+The slide family uses `course-slides` and the `slide-*` helpers in `course/theme.typ`. `slide-style` owns its 960 × 540 pt canvas, 48 pt horizontal and 30 pt vertical margins, and typography. Use Vazirmatn at 24 pt for body copy, 38 pt for content titles, 58 pt for cover titles, and 62 pt for section titles. Code blocks use 19 pt JetBrains Mono; inline code scales with surrounding text. Header labels are 14 pt and footer credits/numbers are 12 pt.
+
+Keep compositions flat and airy. White content pages, navy section dividers, a pale statement page, large titles, and restrained blue accents provide variety without decorative panels around ordinary prose. Two-column layouts place the first column on the right. Use a code panel only for literal code.
+
+The cover uses one original UT seal, 80 pt wide, at the upper right. It has no running furniture or printed number. Other branded layouts use course/section labels and Persian slide numbering beginning at ۱. Image-only slides override those conventions: exactly one complete image occupies the canvas with no added copy, logo, header, footer, or printed number. Their default `contain` fit preserves image proportions and all source content. Optional `cover` fit crops and must be an intentional author choice.
+
+The demonstration deck is `templates/slides.typ`; `documents/evolution-ai-story.typ` contains the 43 original illustrations in numbered order. Neither source changes the original script or images. Presentation authoring follows the same Persian prose, bilingual-helper, bundled-font, render-and-review rules as the course documents. Treat all demonstration copy as placeholders and review long titles, lists, and code after editing.

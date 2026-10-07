@@ -28,6 +28,7 @@ Short English terms and code identifiers are isolated as inline `box` content wi
 
 This method is explicit and locally scoped. It adds no automatic paragraph-language detection package and needs no hidden bidi controls sprinkled through the source. Authors can read and edit the source in logical order. The typography proof covers leading/trailing Persian punctuation, English parentheses, Java member access and comparisons, standalone English prose, and mathematical expressions.
 
+
 The revised starters make semantic distinctions explicit. `en` is for names and ordinary English phrases; `term` is a prose alias for concepts such as Recursion or Array. Exact Java entities such as `ArrayList`, `List<String>`, `items`, and `items.get(0)` use `code-inline`. A numeric helper, `latin-number`, preserves Latin digits, signs, and decimal punctuation in ordinary prose, using the body font. Code blocks hold complete snippets or literal structured examples. Math remains native math; warning text remains ordinary text in a labeled callout. The author chooses these roles rather than an automatic keyword formatter guessing from spelling.
 
 ## Airy spacing and consistency audit

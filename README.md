@@ -10,12 +10,14 @@ A Persian-first Typst document system for Advanced Programming. Homework sheets,
 - Course metadata: `course/config.typ`
 - Shared layout and components: `course/theme.typ`
 - Mixed Persian/English/math examples: `examples/typography.typ`
+- Slide starter and layout showcase: `templates/slides.typ`
+- Image-only story presentation: `documents/evolution-ai-story.typ`
 - Design rationale and limitations: `docs/technical-decisions.md`
 - Rendering and portability checks: `docs/verification.md`
 - Publishing rules and researched references: `docs/document-style-guide.md`
 - Latest consistency and spacing audit: `docs/template-review.md`
 
-Prerequisite: Typst 0.15.1, which is installed on this machine. The build script requires Bash. Build the six bundled documents:
+Prerequisite: Typst 0.15.1, which is installed on this machine. The build script requires Bash. Build the documents and presentations:
 
 ```sh
 ./scripts/build.sh
@@ -28,7 +30,9 @@ Compile one entry:
 ./scripts/build.sh typography
 ```
 
-The build script accepts `all`, `hw1`, `homework`, `workshop-notes`, `project-phase`, `handout`, and `typography`. It works from any directory, loads the bundled fonts, ignores system fonts, and writes PDFs to `output/pdf/`. It builds this fixed set; newly created documents use the manual command below or a new entry in the script.
+The build script accepts `all`, `hw1`, `homework`, `workshop-notes`, `project-phase`, `handout`, `typography`, `slides`, and `evolution-ai-story`. It works from any directory, loads the bundled fonts, ignores system fonts, and writes PDFs to `output/pdf/`. It builds this fixed set; newly created documents use the manual command below or a new entry in the script. All required image assets and bundled fonts are tracked, so a fresh clone can compile the full family. The older document-only ZIP does not include the slides.
+
+The repository is [APUT course materials](https://github.com/aputir/course-materials). The lossless 43-page story PDF is approximately 127 MiB, exceeding GitHub's [100 MiB regular-file limit](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github). It is available in the [course-materials release](https://github.com/aputir/course-materials/releases/tag/course-materials-2026-10-07) and can also be rebuilt with `./scripts/build.sh evolution-ai-story`. This generated PDF is ignored by Git; its Typst source and all 43 original images are included in the repository.
 
 ## Create a document
 
@@ -104,6 +108,32 @@ $ F_n = F_(n-1) + F_(n-2) $
 `en`, `term`, `latin-number`, `code-inline`, and `math-inline` create inline objects with their own LTR layout context. Short terms stay together, including their internal parentheses and operators. Keep Persian sentence punctuation outside those spans. Put an English term's own punctuation inside the span. `latin-number` preserves the supplied notation, including decimals and signs; pass a string when formatting such as trailing zeros matters. For a whole English paragraph, use `english` so it can wrap naturally. Long code belongs in `code-block`; break very long source lines at sensible syntax boundaries. Code ligatures and contextual substitutions are disabled so operators show their actual characters.
 
 Use native math syntax for equations; do not type formulas as plain text or images. Persian display numbers and labels remain Persian, while code and mathematical values use their native numeric notation. `examples/typography.typ` demonstrates punctuation, comparison operators, member access, English wrapping, subscripts, interval notation, cases, and multiline Java.
+
+## Create slides
+
+Copy `templates/slides.typ` to `documents/` and replace the demonstration copy. It shows eight pages using seven layouts: cover, dark section divider, open content shell, two columns, image with text, statement, and image only. The shell is also demonstrated with code. All layout and typography come from `course/theme.typ`, using the same fonts, colors, metadata, and inline helpers as the documents.
+
+```sh
+./scripts/build.sh slides
+./scripts/build.sh evolution-ai-story
+```
+
+Slides use a 16:9 canvas (960 × 540 pt). The cover contains one UT seal and no running header, footer, or number. Content layouts have quiet course/section headers and a Persian slide number in the footer. A dedicated slide counter starts at ۱ after the cover; image slides count in a mixed deck but display no furniture.
+
+```typst
+#import "../course/theme.typ": *
+#show: course-slides.with(title: "عنوان ارائه")
+
+#slide-cover([عنوان ارائه], subtitle: [موضوع جلسه])
+#slide-shell([عنوان اسلاید], section: [موضوع])[
+  توضیح کوتاه با نام #en[Java] و شناسهٔ #code-inline("ArrayList").
+]
+#slide-image("../assets/evolution-ai-story/slide-01-big-bang.png")
+```
+
+Additional helpers are `slide-section(title, number: ..., subtitle: ...)`, `slide-columns(title, right-body, left-body)`, `slide-image-text(title, path, body)`, and `slide-statement(body, attribution: ...)`. Pass `meta` to branded layouts when overriding `course-info`. Content layouts accept `source` for an optional footer credit. Titles and prose follow the same Persian-first conventions as the documents.
+
+`slide-image` shows the complete source with `fit: "contain"` by default. Use `fit: "cover"` only when cropping is intended; `background` controls any empty space. Image pages have no additional text, logo, header, footer, or number. The story source lists all 43 filenames explicitly in their numbered order, without a cover. Its images are embedded at their original resolution. Keep prose brief and break long code lines manually; these fixed slides do not shrink text to fit. Recompile and review after editing.
 
 ## Assets and reference copies
 

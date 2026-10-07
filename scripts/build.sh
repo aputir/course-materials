@@ -16,6 +16,8 @@ case "${1:-all}" in
     build_one templates/project-phase.typ project-phase-template
     build_one templates/handout.typ handout-template
     build_one examples/typography.typ typography-proof
+    build_one templates/slides.typ slides-template
+    build_one documents/evolution-ai-story.typ evolution-ai-story
     ;;
   hw1) build_one documents/hw1.typ hw1 ;;
   homework) build_one templates/homework.typ homework-template ;;
@@ -23,5 +25,7 @@ case "${1:-all}" in
   project-phase) build_one templates/project-phase.typ project-phase-template ;;
   handout) build_one templates/handout.typ handout-template ;;
   typography) build_one examples/typography.typ typography-proof ;;
-  *) printf 'Usage: %s [all|hw1|homework|workshop-notes|project-phase|handout|typography]\n' "$0" >&2; exit 2 ;;
+  slides) build_one templates/slides.typ slides-template ;;
+  evolution-ai-story) build_one documents/evolution-ai-story.typ evolution-ai-story ;;
+  *) printf 'Usage: %s [all|hw1|homework|workshop-notes|project-phase|handout|typography|slides|evolution-ai-story]\n' "$0" >&2; exit 2 ;;
 esac

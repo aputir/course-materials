@@ -30,3 +30,9 @@ Vazirmatn provides Persian/Arabic shaping and compatible Latin glyphs based on R
 ## Mathematics
 
 New Computer Modern Math is embedded in Typst 0.15.1 and is used by the theme. It requires no separate download. Builds ignore system fonts to avoid accidental substitutions.
+
+## Story illustrations
+
+The 43 existing PNG files in `evolution-ai-story/` accompany `evolution-ai-story.md`. They are supplied workspace assets, retained without edits. The image-only presentation uses them in their numbered filename order at their original 1672 × 940 or 1672 × 941 resolution. The layout showcase uses slides 20 and 1 as image examples. No new external artwork was sourced for these presentations. The image folder and story script are tracked for portable source builds.
+
+The eight earlier illustrations in `evolution-story/` are retained as original reference assets. The current 43-page presentation uses `evolution-ai-story/`. These reference images are also included in Git without edits.

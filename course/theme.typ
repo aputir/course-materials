@@ -178,3 +178,152 @@
   counter(page).update(1)
   body
 }
+
+// Widescreen presentations share the document family's identity and helpers.
+// All slide geometry and type live here; entries only supply content.
+#let slide-style = (
+  width: 960pt, height: 540pt, margin-x: 48pt, margin-y: 30pt,
+  body: 24pt, title: 38pt, cover: 58pt, section: 62pt,
+  label: 14pt, footer: 12pt, gap: 24pt, column-gap: 36pt,
+)
+#let slide-counter = counter("course-slide")
+
+#let course-slides(body, title: "ارائهٔ درس", meta: course-info, pdf-author: none) = {
+  let author = if pdf-author == none { metadata-text(meta.university) + " — " + metadata-text(meta.title) } else { pdf-author }
+  set document(title: title, author: author)
+  set text(font: body-font, size: slide-style.body, lang: "fa", dir: rtl, fill: colors.ink)
+  set align(right)
+  set par(justify: false, leading: 8pt, spacing: 16pt)
+  set block(above: 0pt, below: 0pt)
+  set list(indent: 0pt, body-indent: 22pt, spacing: 16pt, marker: text(fill: colors.blue)[•])
+  set enum(indent: 0pt, body-indent: 26pt, spacing: 16pt, numbering: n => fa(n) + ".")
+  show list: set block(above: 20pt, below: 20pt)
+  show enum: set block(above: 20pt, below: 20pt)
+  set heading(numbering: none)
+  show heading: set block(above: 0pt, below: 14pt)
+  show heading: set text(size: 28pt, weight: "bold", fill: colors.blue)
+  show math.equation: set text(font: "New Computer Modern Math", lang: "en", dir: ltr)
+  show raw: set text(font: code-font, lang: "en", dir: ltr, ligatures: false, features: (calt: 0, liga: 0))
+  show raw.where(block: false): set text(size: 0.86em / 0.8)
+  show raw.where(block: true): it => block(width: 100%, fill: colors.pale, inset: 18pt, radius: 4pt)[
+    #set text(size: 19pt)
+    #set par(leading: 6pt, spacing: 0pt)
+    #set align(left)
+    #it
+  ]
+  set page(width: slide-style.width, height: slide-style.height, margin: 0pt,
+    header: none, footer: none, numbering: none, fill: colors.white)
+  slide-counter.update(0)
+  body
+}
+
+#let slide-page(body, fill: colors.white, counted: true) = {
+  if counted { slide-counter.step() }
+  page(width: slide-style.width, height: slide-style.height, margin: 0pt,
+    header: none, footer: none, numbering: none, fill: fill)[
+    #block(width: 100%, height: 100%, inset: (x: slide-style.margin-x, y: slide-style.margin-y))[
+      #body
+    ]
+  ]
+}
+
+#let slide-footer(meta, dark: false, source: none) = context {
+  let tint = if dark { colors.rule } else { colors.muted }
+  grid(columns: (1fr, auto), gutter: 24pt, align: (right, left),
+    text(size: slide-style.footer, fill: tint)[#if source == none { meta.university } else { source }],
+    text(size: slide-style.footer, fill: tint)[#fa(slide-counter.get().first())],
+  )
+}
+
+// An open content area, with a quiet course/section header and numbered footer.
+#let slide-shell(title, body, section: none, meta: course-info, source: none) = slide-page[
+  #grid(columns: (1fr,), rows: (24pt, 24pt, auto, 24pt, 1fr, 22pt, 22pt),
+    grid(columns: (1fr, auto), align: (right, left),
+      text(size: slide-style.label, fill: colors.muted)[#meta.title],
+      text(size: slide-style.label, fill: colors.blue)[#if section != none { section }],
+    ),
+    [],
+    block[#text(size: slide-style.title, weight: "bold")[#title]],
+    [],
+    block(width: 100%, height: 100%)[#body],
+    [],
+    slide-footer(meta, source: source),
+  )
+]
+
+#let slide-cover(title, subtitle: none, meta: course-info, presented-by: none, date: none) = slide-page(counted: false)[
+  #grid(columns: (1fr,), rows: (80pt, 1fr, auto, 1fr, 28pt),
+    grid(columns: (80pt, 1fr), gutter: 24pt, align: horizon,
+      image("../assets/logos/ut-source.png", width: 80pt),
+      [
+        #text(size: 18pt, weight: "bold")[#meta.university]
+        #v(6pt)
+        #text(size: 14pt, fill: colors.muted)[#meta.faculty]
+      ],
+    ),
+    [],
+    [
+      #text(size: 20pt, fill: colors.blue)[#meta.title]
+      #v(16pt)
+      #text(size: slide-style.cover, weight: "bold")[#title]
+      #if subtitle != none { v(18pt); text(size: 25pt, fill: colors.muted)[#subtitle] }
+    ],
+    [],
+    grid(columns: (1fr, auto), gutter: 24pt,
+      text(size: 16pt, fill: colors.muted)[#if presented-by != none { presented-by }],
+      text(size: 16pt, fill: colors.muted)[#if date != none { date } else if meta.term != none { meta.term }],
+    ),
+  )
+]
+
+#let slide-section(title, subtitle: none, number: none, meta: course-info) = slide-page(fill: colors.ink)[
+  #set text(fill: colors.white)
+  #grid(columns: (1fr,), rows: (24pt, 1fr, auto, 1fr, 22pt),
+    text(size: slide-style.label, fill: colors.rule)[#meta.title],
+    [],
+    [
+      #if number != none { text(size: 26pt, fill: colors.rule)[بخش #fa(number)]; v(22pt) }
+      #text(size: slide-style.section, weight: "bold")[#title]
+      #if subtitle != none { v(24pt); text(size: 26pt, fill: colors.rule)[#subtitle] }
+    ],
+    [],
+    slide-footer(meta, dark: true),
+  )
+]
+
+// First column is the logical right-hand column in the Persian layout.
+#let slide-columns(title, right-body, left-body, section: none, meta: course-info, source: none) = slide-shell(
+  title, section: section, meta: meta, source: source,
+  grid(columns: (1fr, 1fr), gutter: slide-style.column-gap, right-body, left-body),
+)
+
+#let slide-image-text(title, path, body, section: none, meta: course-info, source: none, fit: "contain") = slide-shell(
+  title, section: section, meta: meta, source: source,
+  grid(columns: (0.85fr, 1.15fr), rows: (1fr,), gutter: slide-style.column-gap,
+    block(width: 100%, height: 100%)[#body],
+    image(path, width: 100%, height: 100%, fit: fit),
+  ),
+)
+
+// The entire source image remains visible by default, without any furniture.
+// Use fit: "cover" only when cropping is intentional.
+#let slide-image(path, fit: "contain", background: colors.white) = {
+  slide-counter.step()
+  page(width: slide-style.width, height: slide-style.height, margin: 0pt,
+    header: none, footer: none, numbering: none, fill: background)[
+    #place(top + left, image(path, width: slide-style.width, height: slide-style.height, fit: fit))
+  ]
+}
+
+#let slide-statement(body, attribution: none, meta: course-info) = slide-page(fill: colors.pale)[
+  #grid(columns: (1fr,), rows: (24pt, 1fr, auto, 1fr, 22pt),
+    text(size: slide-style.label, fill: colors.blue)[#meta.title],
+    [],
+    [
+      #text(size: 46pt, weight: "bold")[#body]
+      #if attribution != none { v(24pt); text(size: 20pt, fill: colors.muted)[#attribution] }
+    ],
+    [],
+    slide-footer(meta),
+  )
+]
