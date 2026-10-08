@@ -1,0 +1,20 @@
+[9/29/26 8:25 PM] Alireza Jafartash: [ Photo ]
+
+Design System
+[9/29/26 8:27 PM] Alireza Jafartash: This first direction is built around “learning brings light to the harbor.” Its personality is calm, curious, tactile, and luminous. Progress can appear as brighter windows, clearer routes, and a gradually livelier harbor.
+These are proposed tokens for APUT’s first visual direction.
+The world’s elements each have a role:
+Table
+The orbital rings connect the seaside and space themes. Rounded, modular structures also give the world a subtle connection to building software from understandable parts.
+The color tokens establish a cool environment with warm points of attention:
+Table
+These hex values are the palette targets; lighting and material shading create variations within the illustrations. Amber works best when concentrated around something meaningful.
+The remaining visual tokens keep different subjects in the same family:
+Table
+The story vocabulary gives those visuals consistent names:
+- Lumens: XP and accumulated progress, expressed through light.
+- Lenses: achievement badges, expressed through collectible optical objects.
+- Star Chart: the leaderboard, expressed through navigation and constellations.
+- Ship’s Log: the narrative opening of an assignment.
+For consistency, keep rendering, materials, lighting, and shape language fixed. Change subjects, actions, locations, and harbor development freely. Keep accent colors and camera angles within the defined family. The Keeper, ship, and Lens on this board are the first candidate reference assets.
+For your presentation, use ivory for teaching slides, midnight for chapter openings, and amber for the idea you want students to notice first.

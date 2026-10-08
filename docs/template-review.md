@@ -1,5 +1,32 @@
 # Template consistency and spacing review
 
+The [final review of 2026-10-08](final-review-2026-10-08.md) records the latest prompt change, full-family production review, two open compression-helper issues, semantic/documentation polish, and optional layout refinements. The findings below document the earlier unification work.
+
+## Current audit (2026-10-08)
+
+The project has one master theme (`src/course/theme.typ`) and focused starters. `course-document`, `course-workshop`, and `course-slides` represent A4 documents, workshop composition, and widescreen presentation geometry within that theme. Source inspection found no local font, margin, type-size, or layout overrides in document/template/proof entries.
+
+| Gap found | Resolution |
+| --- | --- |
+| The actual workshop manually assembled its cover, while the starter omitted the shared illustration and reflection. | Both use `course-workshop`, which automatically adds the cover and closing page. |
+| English used the Persian font; some proof prose bypassed the language helper. | Bundle four Lora styles; use Lora for English helpers and a Lora/Vazirmatn default fallback stack. Isolate the proof's English term with `term`. |
+| Mission and ordinary heading sizes could diverge; slides had one undifferentiated in-shell heading size. | One `type-scale` owns A4 headings at 16/12/11 pt above 11 pt body text; `slide-style` differentiates in-shell levels at 30/28/26 pt below the 38 pt page title. |
+| Code/math semantics were repeated between documents and slides. | One `semantic-typography` rule owns raw/math/link behavior in both. |
+| Paragraph, list, and section gaps were slightly loose for compact workshop notes. | Tighten the shared scale to 5 pt paragraph/items and 16/6 pt main-heading gaps; retain 4 pt leading and readable panel padding. |
+| The quote had no visual enclosure. | One thin-frame component uses Lora Italic for the cover quote and closing-page title. |
+| Repeated quote/story/image and prompt prefixes could drift between workshops. | One shared content dictionary owns the reflection. The improved prompt appends context to the single stored initial prompt. |
+| The story and examples incorrectly followed the Persian-first rule, and the prompt example lacked meaningful design detail. | The entire reflection uses English LTR Lora. The user-selected p5.js ships example specifies visual decisions, object methods, motion, and canvas-edge behavior. Future-workshop requirements are explicit in AGENTS and the editorial brief. |
+| The quote lacked double quotation marks and the reflection lacked a reader invitation. | The shared frame adds double marks on both pages; shared copy ends by asking readers to try both prompts and share their experience with classmates. |
+| Build entry paths and output mappings were maintained twice. | One build registry drives individual selectors, `all`, and usage text. |
+| HW1's input/output example specified its column gutter locally. | The theme's `example-columns` helper owns the equal-column layout and gap; the example text is unchanged. |
+| The rationale still described Vazirmatn for English and a checkout without Git metadata. | Update the current rationale, style guide, README, asset provenance, and verification record. |
+
+The English closing story connects the shared lantern light to the learner's understanding: experience improves how they frame the problem, supply context, and evaluate an answer. The user-selected example compares a simple request to animate ships in p5.js with the same request plus visual choices, an array of ship objects, separate methods, elapsed-time movement, edge wrapping, and an explanation of decisions. It introduces no new assignment requirement. The editorial subagent reviewed the ships revision for clarity, technical meaning, and suitability; it supersedes the earlier tournament scenario developed by the writing subagents.
+
+See `verification.md` for the final build, 32-page review, font checks, original workshop destinations, unchanged HW1 requirements/examples, metadata-populated cover, and fresh-copy compilation. The audit below is the earlier design record; its spacing numbers were superseded by this revision.
+
+## Earlier audit (2026-10-06)
+
 Date: 2026-10-06. User direction: **airy, generous space, but consistent**.
 
 The revision applies to the shared theme, all four starters, the typography proof, and HW1's rendered presentation. The HW1 content remains the same; the fictional vessel's name and ordinary English prose now use Persian equivalents.

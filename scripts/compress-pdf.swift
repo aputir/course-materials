@@ -2,17 +2,39 @@
 import Foundation
 import Quartz
 import CoreGraphics
+import Darwin
 
 guard CommandLine.arguments.count >= 2 else {
     fputs("Usage: swift scripts/compress-pdf.swift <input.pdf> [output.pdf]\n", stderr)
     exit(1)
 }
 
-let inputPath = (CommandLine.arguments[1] as NSString).standardizingPath
-let outputPath = CommandLine.arguments.count >= 3 ? (CommandLine.arguments[2] as NSString).standardizingPath : inputPath
+let inputURL = URL(fileURLWithPath: CommandLine.arguments[1]).standardizedFileURL.resolvingSymlinksInPath()
+let outputURL: URL
+if CommandLine.arguments.count >= 3 {
+    outputURL = URL(fileURLWithPath: CommandLine.arguments[2]).standardizedFileURL.resolvingSymlinksInPath()
+} else {
+    let defaultName = inputURL.deletingPathExtension().lastPathComponent + "-compressed.pdf"
+    outputURL = inputURL.deletingLastPathComponent().appendingPathComponent(defaultName)
+}
 
-let inUrl = URL(fileURLWithPath: inputPath)
-guard let pdfDoc = CGPDFDocument(inUrl as CFURL) else {
+let inputPath = inputURL.path
+let outputPath = outputURL.path
+guard inputURL != outputURL else {
+    fputs("Error: input and output must be different files\n", stderr)
+    exit(1)
+}
+
+let fileManager = FileManager.default
+if fileManager.fileExists(atPath: outputPath) {
+    let attributes = try fileManager.attributesOfItem(atPath: outputPath)
+    guard attributes[.type] as? FileAttributeType == .typeRegular else {
+        fputs("Error: output destination must be a regular file, not a directory or special file\n", stderr)
+        exit(1)
+    }
+}
+
+guard let pdfDoc = CGPDFDocument(inputURL as CFURL) else {
     fputs("Error: Could not read input PDF: \(inputPath)\n", stderr)
     exit(1)
 }
@@ -52,10 +74,11 @@ if auxInfo[kCGPDFContextCreator] == nil {
     auxInfo[kCGPDFContextCreator] = "Typst 0.15.1"
 }
 
-let fileManager = FileManager.default
 let origSize = (try? fileManager.attributesOfItem(atPath: inputPath)[.size] as? Int64) ?? 0
 
-let tempOutputUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString + ".pdf")
+let tempOutputUrl = outputURL.deletingLastPathComponent()
+    .appendingPathComponent(".\(outputURL.lastPathComponent).\(UUID().uuidString).tmp.pdf")
+defer { try? fileManager.removeItem(at: tempOutputUrl) }
 
 guard let consumer = CGDataConsumer(url: tempOutputUrl as CFURL),
       let context = CGContext(consumer: consumer, mediaBox: &mediaBox, auxInfo as CFDictionary) else {
@@ -82,11 +105,11 @@ for i in 1...pageCount {
 
 context.closePDF()
 
-let outUrl = URL(fileURLWithPath: outputPath)
-if fileManager.fileExists(atPath: outUrl.path) {
-    try fileManager.removeItem(at: outUrl)
+guard rename(tempOutputUrl.path, outputURL.path) == 0 else {
+    let reason = String(cString: strerror(errno))
+    fputs("Error: failed to install compressed PDF at \(outputPath): \(reason)\n", stderr)
+    exit(1)
 }
-try fileManager.moveItem(at: tempOutputUrl, to: outUrl)
 
 let newSize = (try? fileManager.attributesOfItem(atPath: outputPath)[.size] as? Int64) ?? 0
 

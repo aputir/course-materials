@@ -2,15 +2,19 @@
 
 ## Scope and identity
 
-The course is Advanced Programming / برنامه‌سازی پیشرفته. The supplied file names contain Advanced Algorithms and Homework 0x04, but the printed Persian heading says first homework and the requested ZIP name ends with HW1. The migrated entry is therefore `documents/hw1.typ`. This decision uses the document's content rather than stale filenames.
+The course is Advanced Programming / برنامه‌سازی پیشرفته. The supplied file names contain Advanced Algorithms and Homework 0x04, but the printed Persian heading says first homework and the requested ZIP name ends with HW1. The migrated entry is therefore `src/documents/hw1.typ`. This decision uses the document's content rather than stale filenames.
 
 The user approved a formal modern family with UT blue, navy text, A4 pages, Persian-first composition, and shared typography. There is no instructor, term, deadline, or course code in the supplied source. These remain optional configurable metadata, omitted until supplied.
 
 ## One theme with focused starters
 
-`course/config.typ` is the single metadata source. `course/theme.typ` owns colors, fonts, direction handling, page furniture, cover composition, and reusable components. The four starter files import it and contain their own content structures. This prevents style drift while keeping files easy to copy and edit.
+`src/course/config.typ` is the single metadata source. `src/course/theme.typ` owns colors, fonts, direction handling, page furniture, cover composition, and reusable components. The four starter files import it and contain their own content structures. This prevents style drift while keeping files easy to copy and edit.
 
 The primary interface is `course-document` used as a show rule. Titles, types, and numbers are strings; subtitles and metadata can contain rich Typst content. A reusable `mission` heading keeps its title with subsequent content and shows the score separately. Notes and code panels are breakable so longer documents can flow across pages.
+
+`course-workshop` is the workshop composition contract: it calls `course-document`, adds the shared cover artwork/framed English quote, and appends a dedicated closing page. Both the actual workshop and starter use it. `src/course/workshop-reflection.typ` exports the repeated editorial content, while the theme owns every font, frame, image size, and prompt panel. The content module has no theme import or local font rules. The initial prompt is stored once and reused as the prefix of the refined example. The complete closing reflection is an explicit English exception to Persian-first prose: the theme sets Lora, English language, LTR direction, left alignment, and a left panel border for the whole section. Prompt labels and the reader invitation belong to the content module. The shared frame adds double quotation marks to the unadorned quote on both pages. The editorial contract is documented in `docs/brand/workshop-reflection-editorial.md` and AGENTS for future workshops.
+
+`type-scale` owns the document hierarchy (11 pt body, 16/12/11 pt headings); normal and mission headings share the same size. `document-style`, `workshop-style`, and `slide-style` own their geometry. `semantic-typography` supplies the common raw/math/link rules for both A4 documents and widescreen slides. Separate entry points represent different page compositions within one design system. The build script's single registry owns selectors, source paths, and output names for individual and whole-family builds.
 
 ## Cover and information hierarchy revision
 
@@ -24,16 +28,16 @@ The body begins on the next page with its page counter reset to ۱. Its header s
 
 The primary text has `lang: "fa"` and `dir: rtl`. Typst handles shaping and bidi reordering. The dominant paragraph direction is set explicitly because punctuation and neutral characters need that context. See [Typst text documentation](https://typst.app/docs/reference/text/text/).
 
-Short English terms and code identifiers are isolated as inline `box` content with a local LTR context. This isolates parentheses, periods, operators, and internal ordering from surrounding Persian text. The whole short span stays together. The author should use `english` for long English prose, which wraps normally in an LTR paragraph. Use `code-block` for snippets, literal input/output, and file trees; raw blocks preserve source line breaks and need sensible author-supplied breaks for long lines. The `en` helper uses the Latin glyphs of Vazirmatn to retain the text's visual tone. JetBrains Mono distinguishes code from explanatory prose.
+Short English terms and code identifiers are isolated as inline `box` content with a local LTR context. This isolates parentheses, periods, operators, and internal ordering from surrounding Persian text. The whole short span stays together. The author should use `english` for long English prose, which wraps normally in an LTR paragraph. Use `code-block` for snippets, literal input/output, and file trees; raw blocks preserve source line breaks and need sensible author-supplied breaks for long lines. The `en` and `english` helpers use Lora, including its bundled bold/italic variants. The default prose stack is Lora followed by Vazirmatn, assigning Latin text to Lora and Persian glyphs to Vazirmatn. JetBrains Mono distinguishes code from explanatory prose.
 
 This method is explicit and locally scoped. It adds no automatic paragraph-language detection package and needs no hidden bidi controls sprinkled through the source. Authors can read and edit the source in logical order. The typography proof covers leading/trailing Persian punctuation, English parentheses, Java member access and comparisons, standalone English prose, and mathematical expressions.
 
 
-The revised starters make semantic distinctions explicit. `en` is for names and ordinary English phrases; `term` is a prose alias for concepts such as Recursion or Array. Exact Java entities such as `ArrayList`, `List<String>`, `items`, and `items.get(0)` use `code-inline`. A numeric helper, `latin-number`, preserves Latin digits, signs, and decimal punctuation in ordinary prose, using the body font. Code blocks hold complete snippets or literal structured examples. Math remains native math; warning text remains ordinary text in a labeled callout. The author chooses these roles rather than an automatic keyword formatter guessing from spelling.
+The revised starters make semantic distinctions explicit. `en` is for names and ordinary English phrases; `term` is a prose alias for concepts such as Recursion or Array. Exact Java entities such as `ArrayList`, `List<String>`, `items`, and `items.get(0)` use `code-inline`. A numeric helper, `latin-number`, preserves Latin digits, signs, and decimal punctuation in ordinary prose, using Lora. Code blocks hold complete snippets or literal structured examples. Math remains native math; warning text remains ordinary text in a labeled callout. The author chooses these roles rather than an automatic keyword formatter guessing from spelling.
 
 ## Airy spacing and consistency audit
 
-The user first asked for an airy feel, then visually rejected the result as too loose. Fresh PDF measurements showed about 16-17 pt between lines of 11 pt prose, in addition to large spaces around headings and blocks. The current shared `spacing` dictionary reduces leading to 4 pt, paragraph gaps to 6 pt, list gaps to 6 pt, and section openings to 18 pt. The absolute point/mm values keep spacing independent from heading size. Notes and raw blocks have explicit outer spacing and 10/8 pt horizontal/vertical padding; nested default block spacing is suppressed. Note labels stay with their first body content. Mission labels use a separate 5 pt gap instead of inheriting heading paragraph leading, and score labels remain intact.
+The user first asked for an airy feel, then visually rejected the result as too loose. Fresh PDF measurements showed about 16-17 pt between lines of 11 pt prose, in addition to large spaces around headings and blocks. The current shared `spacing` dictionary reduces leading to 4 pt, paragraph/list gaps to 5 pt, and section openings to 16 pt. The absolute point/mm values keep spacing independent from heading size. Notes and raw blocks have explicit outer spacing and 10/8 pt horizontal/vertical padding; nested default block spacing is suppressed. Note labels stay with their first body content. Mission labels use a separate 4 pt gap instead of inheriting heading paragraph leading, and score labels remain intact.
 
 The cover and body share a 21 mm horizontal margin. A fixed 22 mm gap follows the brand block, anchoring the course/title group consistently across empty and populated covers. Optional metadata follows that group by 10 mm, and flexible space remains below. The body top margin is 24 mm and header ascent 7 mm. See the numeric scale in `document-style-guide.md` and [Typst block spacing](https://typst.app/docs/reference/layout/block/).
 
@@ -47,9 +51,9 @@ Visual reading and text extraction are different checks. Both `pdftotext -raw` a
 
 ## Fonts, portability, and assets
 
-The project vendors Vazirmatn 33.003 Regular/Bold and JetBrains Mono 2.304 Regular with their OFL licenses. The build ignores system fonts and loads `assets/fonts`. Math comes from Typst's embedded fonts. No package import or online dependency is required during compilation.
+The project vendors Vazirmatn 33.003 Regular/Bold, Lora 3.021 Regular/Bold/Italic/BoldItalic, and JetBrains Mono 2.304 Regular with their OFL licenses. Lora is sourced unchanged from a pinned Cyreal upstream commit; see `resources/assets/SOURCES.md`. The build ignores system fonts and loads `resources/assets/fonts`. Math comes from Typst's embedded fonts. No package import or online dependency is required during compilation.
 
-The only rendered logo is the unmodified supplied UT PNG. An official university asset URL was found online, but the direct request returned HTML. At the current 32 mm cover size the UT seal is approximately 440 ppi. The source Engineering PNG remains an unused reference asset. See `assets/SOURCES.md` for exact provenance.
+The only rendered logo is the unmodified supplied UT PNG. An official university asset URL was found online, but the direct request returned HTML. At the current 32 mm cover size the UT seal is approximately 440 ppi. The source Engineering PNG remains an unused reference asset. See `resources/assets/SOURCES.md` for exact provenance.
 
 ## HW1 editorial decisions
 
@@ -76,4 +80,4 @@ Adobe's online whitepaper skill was inspected but not installed or executed: its
 - RTK: Rust Token Killer 0.51.0 installed through `brew install rtk-ai/tap/rtk`, verified by `rtk --version` and `rtk gain`.
 - Codex RTK integration: `rtk init -g --codex` created `~/.codex/RTK.md`, added its reference to `~/.codex/AGENTS.md`, and registered `~/.codex/hooks.json`. Automatic hook activation requires restarting Codex. RTK was invoked explicitly during this session.
 
-The project directory has no Git metadata. The user instructed implementation here, so no new repository, commits, or worktree were created. The design and implementation plan retain the decisions and progress.
+The initial conversion predated the current Git repository. The 2026-10-08 revision updates the same shared checkout and preserves earlier uncommitted document work. It creates no worktree, commits, or publication side effects. The design, plan, and verification records retain the decisions and progress.
