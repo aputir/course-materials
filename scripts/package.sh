@@ -51,6 +51,7 @@ cp "$project_root/scripts/build.sh" "$project_root/scripts/package.sh" "$project
 cp "$project_root/docs/document-style-guide.md" \
   "$project_root/docs/technical-decisions.md" \
   "$project_root/docs/template-review.md" \
+  "$project_root/docs/final-review-2026-10-08.md" \
   "$project_root/docs/verification.md" \
   "$package_root/docs/"
 cp -R "$project_root/docs/brand" "$package_root/docs/"

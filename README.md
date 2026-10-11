@@ -177,7 +177,7 @@ Slides use a 16:9 canvas (960 × 540 pt). The cover contains one UT seal and no 
 #slide-shell([عنوان اسلاید], section: [موضوع])[
   توضیح کوتاه با نام #en[Java] و شناسهٔ #code-inline("ArrayList").
 ]
-#slide-image("../resources/assets/illustrations/workshop-01-shared-light-print.png")
+#slide-image("../../resources/assets/illustrations/workshop-01-shared-light-print.png")
 ```
 
 Additional helpers are `slide-section(title, number: ..., subtitle: ...)`, `slide-columns(title, right-body, left-body)`, `slide-image-text(title, path, body)`, and `slide-statement(body, attribution: ...)`. Pass `meta` to branded layouts when overriding `course-info`. Content layouts accept `source` for an optional footer credit. Titles and prose follow the same Persian-first conventions as the documents.
