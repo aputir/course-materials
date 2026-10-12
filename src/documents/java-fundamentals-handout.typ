@@ -73,7 +73,7 @@
 
 این پوستهٔ #en[ACM] برای مثال فراهم شده است. چهار فرمان #code-inline("GRect")، #code-inline("GOval")، #code-inline("GLine") و #code-inline("GLabel") به‌ترتیب یک مستطیل، بیضی، خط و نوشته می‌سازند. مختصات مستطیل و بیضی همراه عرض و ارتفاع است؛ خط با دو سر مشخص می‌شود و جای نوشته نقطهٔ خط مبنای آن است. هر شکل با #code-inline("add") روی بوم دیده می‌شود.
 
-#code-block("import acm.graphics.*;\nimport acm.program.GraphicsProgram;\n\n// Supplied ACM program shell\npublic class LighthouseDemo extends GraphicsProgram {\n    public void run() {\n        GRect tower = new GRect(50, 90, 34, 110);\n        GOval light = new GOval(54, 76, 26, 18);\n        GLine shore = new GLine(0, 210, 300, 210);\n        GLabel sign = new GLabel(\"نصف‌النهار\", 24, 70);\n        add(tower);\n        add(light);\n        add(shore);\n        add(sign);\n\n        GOval boat = new GOval(30, 190, 24, 12);\n        add(boat);\n        for (int frame = 0; frame < 40; frame++) {\n            boat.move(2, 0);\n            pause(40);\n        }\n    }\n}")
+#code-block("import acm.graphics.*;\nimport acm.program.GraphicsProgram;\n\n// Supplied ACM program shell\npublic class LighthouseDemo extends GraphicsProgram {\n    public void run() {\n        GRect tower = new GRect(50, 90, 34, 110);\n        GOval light = new GOval(54, 76, 26, 18);\n        GLine shore = new GLine(0, 210, 300, 210);\n        GLabel sign = new GLabel(\"Meridian\", 24, 70);\n        add(tower);\n        add(light);\n        add(shore);\n        add(sign);\n\n        GOval boat = new GOval(30, 190, 24, 12);\n        add(boat);\n        for (int frame = 0; frame < 40; frame++) {\n            boat.move(2, 0);\n            pause(40);\n        }\n    }\n}")
 
 در هر قاب، #code-inline("move(2, 0)") بیضی قایق را دو واحد به راست می‌برد و #code-inline("pause(40)") مکث کوتاهی پیش از قاب بعدی ایجاد می‌کند. به تغییر یک قاب فکر کنید: اگر آرگومان اول #code-inline("move") منفی شود، مسیر دیده‌شده چه تغییری می‌کند؟
 
@@ -101,15 +101,15 @@
 
 چراغ وضعیت بندر در پوستهٔ آماده، با مقدار #code-inline("wind") تصمیم می‌گیرد. شرط‌ها به‌ترتیب بررسی می‌شوند و فقط نخستین شاخهٔ درست اجرا می‌شود. #code-inline("else") برای حالتی است که هیچ شرط پیشین درست نباشد.
 
-#code-block("int wind = 18;\nif (wind >= 30) {\n    System.out.println(\"بندر بسته است\");\n} else if (wind >= 15) {\n    System.out.println(\"با احتیاط حرکت کنید\");\n} else {\n    System.out.println(\"مسیر باز است\");\n}")
+#code-block("int wind = 18;\nif (wind >= 30) {\n    System.out.println(\"Closed\");\n} else if (wind >= 15) {\n    System.out.println(\"Proceed carefully\");\n} else {\n    System.out.println(\"Open\");\n}")
 
 برای انتخاب کوتاه میان دو مقدار، عبارت شرطی #code-inline("?:") همان تصمیم را در یک مقدار می‌سازد. در مثال زیر فقط یکی از دو رشته انتخاب می‌شود.
 
-#code-block("int boats = 3;\nString message = boats == 0 ? \"اسکله خالی است\" : \"قایق حاضر است\";\nSystem.out.println(message);")
+#code-block("int boats = 3;\nString message = boats == 0 ? \"Empty dock\" : \"Boat present\";\nSystem.out.println(message);")
 
 وقتی یک مقدار مشخص چند حالت جدا دارد، #code-inline("switch") آن را با #code-inline("case")ها می‌سنجد. #code-inline("break") پس از اجرای شاخه، خروج از #code-inline("switch") را تضمین می‌کند؛ بدون آن، اجرا ممکن است به #code-inline("case") بعدی ادامه یابد. #code-inline("default") حالت‌های نام‌برده‌نشده را می‌گیرد.
 
-#code-block("int signal = 1;\nswitch (signal) {\n    case 0:\n        System.out.println(\"بندر بسته است\");\n        break;\n    case 1:\n        System.out.println(\"ورود با احتیاط\");\n        break;\n    default:\n        System.out.println(\"وضعیت نامشخص است\");\n        break;\n}")
+#code-block("int signal = 1;\nswitch (signal) {\n    case 0:\n        System.out.println(\"Closed\");\n        break;\n    case 1:\n        System.out.println(\"Caution\");\n        break;\n    default:\n        System.out.println(\"Unknown\");\n        break;\n}")
 
 #pagebreak()
 
