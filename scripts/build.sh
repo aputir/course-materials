@@ -25,6 +25,7 @@ for entry in "${build_entries[@]}"; do
   IFS='|' read -r entry_key entry_source entry_output <<< "$entry"
   if [[ "$requested_entry" == all || "$requested_entry" == "$entry_key" ]]; then
     typst compile --root "$project_root" --ignore-system-fonts \
+      --package-path "$project_root/packages" \
       --font-path "$project_root/resources/assets/fonts" \
       "$project_root/$entry_source" "$project_root/output/pdf/$entry_output.pdf"
     printf 'Built %s.pdf\n' "$entry_output"

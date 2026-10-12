@@ -1,5 +1,25 @@
 # Verification record
 
+## Dorost integration and archive hygiene (2026-10-12)
+
+The course theme now uses Dorost's LTR, inline code/math, and Persian-digit
+helpers. A local `@local/dorost:0.2.1` package snapshot keeps clean clones and
+the portable archive buildable while the upstream Typst Universe entries are
+pending. Dorost's inline-code helper accepts the course's font and size and
+disables ligatures/contextual substitutions.
+
+`./scripts/build.sh all` completed with exit code 0 for all eight entries, using
+the bundled fonts and local package. Typst-rendered PNG previews of HW1's first
+body page and the typography proof cover were visually inspected; inline Latin
+terms, code, math, and surrounding Persian remain readable. `./scripts/package.sh`
+created the source archive; its contents include Dorost and no Finder metadata.
+An extracted archive successfully rebuilt HW1 without network access. The
+generated archive is ignored. Git history contains the generated ZIP in two
+early commits and no `.DS_Store` Git path. The full Dorost check compiled its
+fixtures, including the new code-inline fixture, then stopped at its PDF text
+inspection step because `pdftotext` is not installed in this environment.
+`git diff --check` passed.
+
 ## Output-only prompts and final family review (2026-10-08)
 
 Added the exact sentence “Your output must be only a p5.js codeblock.” on a separate line at the end of both prompt panels. One `output-instruction` field owns the copy; the theme renders it twice. The refined prompt now requests its explanation through code comments, respecting the output restriction. The editorial brief documents this requirement for future workshops.

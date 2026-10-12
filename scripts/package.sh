@@ -42,7 +42,7 @@ package_root="$temporary_root/ut-course-documents"
 mkdir -p "$package_root/docs" "$package_root/scripts" "$package_root/output/pdf"
 
 cp "$project_root/AGENTS.md" "$project_root/README.md" "$package_root/"
-cp -R "$project_root/src" "$project_root/resources" "$package_root/"
+cp -R "$project_root/src" "$project_root/resources" "$project_root/packages" "$package_root/"
 # Exclude maintainer-local story work even when packaging from a full checkout.
 rm -f "$package_root/src/documents/evolution-ai-story.typ"
 rm -rf "$package_root/resources/assets/evolution-ai-story" \

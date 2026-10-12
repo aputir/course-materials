@@ -1,5 +1,6 @@
 #import "config.typ": course-info
 #import "workshop-reflection.typ": workshop-reflection
+#import "@local/dorost:0.2.1": code-inline as dorost-code-inline, ltr as dorost-ltr, math-inline as dorost-math-inline, persian-digits
 
 #let colors = (
   ink: rgb("162B45"), blue: rgb("0077BD"), muted: rgb("627489"),
@@ -39,30 +40,26 @@
   else if value.has("body") { metadata-text(value.body) }
   else { "" }
 }
-#let fa(value) = {
-  let result = str(value)
-  for (a, b) in ("0": "۰", "1": "۱", "2": "۲", "3": "۳", "4": "۴", "5": "۵", "6": "۶", "7": "۷", "8": "۸", "9": "۹") {
-    result = result.replace(a, b)
-  }
-  result
-}
+#let fa = persian-digits
 
 // An inline box has its own bidi context. Use for short terms, not paragraphs.
-#let en(body) = box(text(font: english-font, lang: "en", dir: ltr, body))
+#let en(body) = box(text(font: english-font, lang: "en")[#dorost-ltr[#body]])
 // A concept is prose, even when its name comes from programming.
 #let term(body) = en(body)
 #let latin-number(value) = en(str(value))
 #let english(body) = block(width: 100%, above: spacing.element, below: spacing.element)[
-  #set text(font: english-font, lang: "en", dir: ltr)
+  #set text(font: english-font, lang: "en")
   #set align(left)
-  #body
+  #dorost-ltr[#body]
 ]
-#let code-inline(value) = box(text(font: code-font, lang: "en", dir: ltr, ligatures: false, features: (calt: 0, liga: 0), raw(value)))
+#let code-inline(value) = box(text(font: code-font, lang: "en")[
+  #dorost-code-inline(value, font: code-font, size: 0.86em / 0.8)
+])
 #let code-block(value, lang: "java") = raw(value, block: true, lang: lang)
 #let example-columns(right-body, left-body) = grid(
   columns: (1fr, 1fr), gutter: 2 * spacing.element, right-body, left-body,
 )
-#let math-inline(body) = box(text(lang: "en", dir: ltr, body))
+#let math-inline = dorost-math-inline
 #let semantic-typography(body) = {
   // Cards own their appearance; ordinary prose links need an explicit cue.
   show link: it => if it.body.func() == block { it } else { text(fill: colors.blue, underline(it)) }

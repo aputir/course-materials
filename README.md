@@ -11,6 +11,7 @@ A Persian-first Typst document system for Advanced Programming. Homework sheets,
 - Starter documents: `src/templates/`
 - Course metadata: `src/course/config.typ`
 - Single master theme, layout, typography, and components: `src/course/theme.typ`
+- Pinned local bilingual Typst package: `packages/local/dorost/0.2.1/`
 - Shared workshop quote, image, story, and prompt content: `src/course/workshop-reflection.typ`
 - Mixed Persian/English/math examples: `src/examples/typography.typ`
 - Slide starter and layout showcase: `src/templates/slides.typ`
@@ -26,12 +27,13 @@ A Persian-first Typst document system for Advanced Programming. Homework sheets,
 src/                      Typst sources: course system, documents, examples, templates
 resources/assets/         Fonts, licenses, logos, artwork, and provenance
 resources/references/     Original supplied course files
+packages/                 Pinned local Typst packages used by the build
 docs/                     Style, brand, review, decisions, and verification
 scripts/                  Build and package commands
 output/                   Generated PDFs and the distributable source archive
 ```
 
-Prerequisite: Typst 0.15.1, which is installed on this machine. The build script requires Bash. Build the documents and presentations:
+Prerequisites: Typst 0.15.1 and Bash. The local Dorost package is pinned in `packages/`; builds do not need Typst Universe access. Build the documents and presentations:
 
 ```sh
 ./scripts/build.sh
@@ -70,14 +72,14 @@ Run these manual commands from the project root. Copy the appropriate starter to
 
 ```sh
 cp src/templates/workshop-notes.typ src/documents/workshop-02.typ
-typst compile --root . --ignore-system-fonts --font-path resources/assets/fonts \
+typst compile --root . --package-path packages --ignore-system-fonts --font-path resources/assets/fonts \
   src/documents/workshop-02.typ output/pdf/workshop-02.pdf
 ```
 
 For a live preview that updates when files change:
 
 ```sh
-typst watch --root . --ignore-system-fonts --font-path resources/assets/fonts \
+typst watch --root . --package-path packages --ignore-system-fonts --font-path resources/assets/fonts \
   src/documents/workshop-02.typ output/pdf/workshop-02.pdf
 ```
 

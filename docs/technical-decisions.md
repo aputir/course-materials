@@ -8,7 +8,7 @@ The user approved a formal modern family with UT blue, navy text, A4 pages, Pers
 
 ## One theme with focused starters
 
-`src/course/config.typ` is the single metadata source. `src/course/theme.typ` owns colors, fonts, direction handling, page furniture, cover composition, and reusable components. The four starter files import it and contain their own content structures. This prevents style drift while keeping files easy to copy and edit.
+`src/course/config.typ` is the single metadata source. `src/course/theme.typ` owns colors, fonts, page furniture, cover composition, and course-specific components. The pinned local Dorost package supplies shared direction wrappers, inline code/math, and Persian digit conversion; its source is in `packages/local/dorost/0.2.1/`. The four starter files import the course theme and contain their own content structures. This prevents style drift while keeping files easy to copy and edit.
 
 The primary interface is `course-document` used as a show rule. Titles, types, and numbers are strings; subtitles and metadata can contain rich Typst content. A reusable `mission` heading keeps its title with subsequent content and shows the score separately. Notes and code panels are breakable so longer documents can flow across pages.
 
@@ -28,7 +28,7 @@ The body begins on the next page with its page counter reset to ۱. Its header s
 
 The primary text has `lang: "fa"` and `dir: rtl`. Typst handles shaping and bidi reordering. The dominant paragraph direction is set explicitly because punctuation and neutral characters need that context. See [Typst text documentation](https://typst.app/docs/reference/text/text/).
 
-Short English terms and code identifiers are isolated as inline `box` content with a local LTR context. This isolates parentheses, periods, operators, and internal ordering from surrounding Persian text. The whole short span stays together. The author should use `english` for long English prose, which wraps normally in an LTR paragraph. Use `code-block` for snippets, literal input/output, and file trees; raw blocks preserve source line breaks and need sensible author-supplied breaks for long lines. The `en` and `english` helpers use Lora, including its bundled bold/italic variants. The default prose stack is Lora followed by Vazirmatn, assigning Latin text to Lora and Persian glyphs to Vazirmatn. JetBrains Mono distinguishes code from explanatory prose.
+Short English terms and code identifiers are isolated as inline `box` content with a local LTR context. This isolates parentheses, periods, operators, and internal ordering from surrounding Persian text. The whole short span stays together. Dorost provides the LTR wrapper and inline code/math behavior; the course theme supplies its Lora/JetBrains Mono choices and APUT's 0.86em inline-code scale. Code ligatures and contextual substitutions are disabled so operators preserve their written shape. The author should use `english` for long English prose, which wraps normally in an LTR paragraph. Use `code-block` for snippets, literal input/output, and file trees; raw blocks preserve source line breaks and need sensible author-supplied breaks for long lines. The `en` and `english` helpers use Lora, including its bundled bold/italic variants. The default prose stack is Lora followed by Vazirmatn, assigning Latin text to Lora and Persian glyphs to Vazirmatn. JetBrains Mono distinguishes code from explanatory prose.
 
 This method is explicit and locally scoped. It adds no automatic paragraph-language detection package and needs no hidden bidi controls sprinkled through the source. Authors can read and edit the source in logical order. The typography proof covers leading/trailing Persian punctuation, English parentheses, Java member access and comparisons, standalone English prose, and mathematical expressions.
 
@@ -51,9 +51,17 @@ Visual reading and text extraction are different checks. Both `pdftotext -raw` a
 
 ## Fonts, portability, and assets
 
-The project vendors Vazirmatn 33.003 Regular/Bold, Lora 3.021 Regular/Bold/Italic/BoldItalic, and JetBrains Mono 2.304 Regular with their OFL licenses. Lora is sourced unchanged from a pinned Cyreal upstream commit; see `resources/assets/SOURCES.md`. The build ignores system fonts and loads `resources/assets/fonts`. Math comes from Typst's embedded fonts. No package import or online dependency is required during compilation.
+Git history shows the generated source archive was included in the initial
+checkpoint, updated in the source-publishing commit, and removed during the
+source/assets reorganization; those commits do not record why it was first
+committed. It is now generated locally and ignored by the repository.
+`.DS_Store` has not been a tracked Git path; the packaging command filters
+Finder metadata from the archive. The local Dorost snapshot avoids depending on
+its still-unpublished Typst Universe entry during builds.
 
-The only rendered logo is the unmodified supplied UT PNG. An official university asset URL was found online, but the direct request returned HTML. At the current 32 mm cover size the UT seal is approximately 440 ppi. The source Engineering PNG remains an unused reference asset. See `resources/assets/SOURCES.md` for exact provenance.
+The project vendors Vazirmatn 33.003 Regular/Bold, Lora 3.021 Regular/Bold/Italic/BoldItalic, and JetBrains Mono 2.304 Regular with their OFL licenses. Lora is sourced unchanged from a pinned Cyreal upstream commit; see `resources/assets/SOURCES.md`. The build ignores system fonts and loads `resources/assets/fonts`. Math comes from Typst's embedded fonts. The pinned local package path avoids network dependencies during compilation.
+
+The only rendered logo is the unmodified supplied UT PNG. An official university asset URL was found online, but the direct request returned HTML. At the current 32 mm cover size the UT seal is approximately 440 ppi. The source Engineering PNG remains an unused reference asset. See `resources/assets/SOURCES.md` for exact provenance. No online package downloads are required during compilation; the pinned Dorost source is local.
 
 ## HW1 editorial decisions
 

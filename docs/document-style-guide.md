@@ -4,6 +4,11 @@ This is the project's working editorial and design standard. Apply it to homewor
 
 ## References and skills
 
+The bilingual primitives (`ltr`, `rtl`, `code-inline`, `math-inline`, and
+Persian digit conversion) come from the pinned local [Dorost package](../packages/README.md).
+The course theme remains the source of APUT page geometry, visual identity,
+and course-specific components.
+
 - [Butterick's Practical Typography: key rules](https://practicaltypography.com/summary-of-key-rules.html) and [Typography in ten minutes](https://practicaltypography.com/typography-in-ten-minutes.html): prioritize readable body text; control font size, line spacing, measure, and emphasis; use consistent paragraph spacing and avoid alignment with repeated spaces. Its numerical recommendations primarily describe Latin typography, so Persian settings are judged in rendered pages rather than copied mechanically.
 - [Typst page setup guide](https://typst.app/docs/guides/page-setup/) and [text direction reference](https://typst.app/docs/reference/text/text/): implement consistent page geometry, furniture, and language/direction contexts.
 - The installed PDF skill supplies the production workflow: compile, render, inspect every page, and repair visual defects before delivery.

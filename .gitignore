@@ -1,4 +1,7 @@
 .DS_Store
+/__MACOSX/
+._*
+*.zip
 /tmp/
 /java_hello_world/
 # Local-only evolution story source, artwork, and generated PDFs.
@@ -10,4 +13,3 @@
 /output/pdf/evolution-ai-story-compressed.pdf
 /output/pdf/evolution-ai-story-compact.pdf
 /output/pdf/slides-template.pdf
-/output/ut-course-template.zip
