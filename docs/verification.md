@@ -1,5 +1,31 @@
 # Verification record
 
+## Java fundamentals student handout (2026-10-12)
+
+Typst version: `typst 0.15.1 (unknown commit)`. From the repository root, with
+`/home/opmc/.cargo/bin` added to `PATH`, the final seven-page PDF was compiled
+successfully with:
+
+```sh
+typst compile --root . --package-path packages --ignore-system-fonts --font-path resources/assets/fonts src/documents/java-fundamentals-handout.typ output/pdf/java-fundamentals-handout.pdf
+```
+
+All seven pages were rendered to numbered PNG files in the ignored SDD workspace
+with `typst compile --format png --ppi 144 --root . --package-path packages
+--ignore-system-fonts --font-path resources/assets/fonts
+src/documents/java-fundamentals-handout.typ
+.superpowers/sdd/2026-10-13-java-fundamentals-student-handout/rendered/page-{p}.png`.
+Every page was inspected individually in color and grayscale. Persian shaping
+and paragraph direction, Latin identifiers, Java operators, code line fit,
+headings, page breaks, page numbers ۱–۶ after the unnumbered cover, and footer
+clearance were legible. No clipping or extra blank page appeared. The handout
+uses code panels rather than tables; its checkerboard rows aligned in both
+renderings. The initial rendering exposed reordered Java punctuation around
+Persian string literals in code blocks. Those sample literals were changed to
+short ASCII labels, then the PDF was recompiled and every page reviewed again;
+the final code lines read in their intended order. Grayscale retains readable
+text and code without relying on syntax colors. No automated tests were run.
+
 ## Dorost integration and archive hygiene (2026-10-12)
 
 The course theme now uses Dorost's LTR, inline code/math, and Persian-digit
