@@ -197,7 +197,7 @@
   )[
     #set block(above: 0pt, below: 0pt)
     #text(size: type-scale.small, weight: "bold", fill: if is-user { colors.blue } else { colors.muted })[
-      #if is-user [شما:] else [AI:]
+      #if is-user [شما:] else [#en[AI:]]
     ]
     #v(spacing.label)
     #body
