@@ -53,6 +53,7 @@ charge--;                 // 16
 
 پنج عمل #code-inline("+")، #code-inline("-")، #code-inline("*")، #code-inline("/") و #code-inline("%") به‌ترتیب جمع، تفریق، ضرب، تقسیم و باقی‌مانده‌اند. این ردگیریِ کوتاه را با مقدار مورد انتظار مقایسه کنید:
 
+#block(breakable: false)[
 ```java
 int sum = 7 + 2;              // 9
 int difference = 7 - 2;       // 5
@@ -61,10 +62,11 @@ int quotient = 7 / 2;         // 3
 int remainder = 7 % 2;        // 1
 double fraction = (double) 7 / 2; // 3.5
 ```
+]
 
 تقسیم دو عدد صحیح، بخش کسری را حذف می‌کند؛ برای نتیجهٔ کسری، تبدیل باید *پیش از* تقسیم رخ دهد. تقدم، عبارت #code-inline("2 + 3 * 4") را به صورت #code-inline("2 + (3 * 4)") گروه‌بندی می‌کند؛ عملگرهای هم‌تقدم در #code-inline("20 - 6 - 4") از چپ گروه‌بندی می‌شوند و حاصل #latin-number("10") است. گروه‌بندی را با *ترتیب ارزیابی عملوندها* یکی ندانید: #en[Java] عملوندها را از چپ به راست ارزیابی می‌کند؛ در #code-inline("n++ + n++") با #code-inline("n = 1")، دو مقدارِ واردشده به جمع #latin-number("1") و #latin-number("2") هستند.
 
-حالا برای اندازه‌گیریِ مقدار واقعی، یک چاپ موقت کنار محاسبه بگذارید: #code-inline("System.out.println(remaining / capacity * 100);"). با #code-inline("remaining = 7") چه چاپ می‌شود؟ آیا همین، توضیحِ خوانده‌شدنِ #latin-number("0") درصد روی صفحه است؟ نخست فرضیه را بنویسید، سپس فقط یک بخش عبارت را عوض کنید و همان ورودی را دوباره اجرا کنید.
+حالا در اجرای جدا با #code-inline("int remaining = 7;") و #code-inline("int capacity = 20;")، یک چاپ موقت کنار محاسبه بگذارید: #code-inline("System.out.println(remaining / capacity * 100);"). چه چاپ می‌شود؟ آیا همین، توضیحِ خوانده‌شدنِ #latin-number("0") درصد روی صفحه است؟ نخست فرضیه را بنویسید، سپس فقط یک بخش عبارت را عوض کنید و همان ورودی را دوباره اجرا کنید.
 
 = ۲. چراغی که باید سه بار چشمک بزند
 
@@ -80,6 +82,7 @@ for (int frame = 0; frame < n; frame++) {
 همان ترتیب را می‌توان با #code-inline("while") دید: آغاز یک‌بار؛ سپس شرط، بدنه و افزایش. اگر چشمک بیشتر از انتظار بود، مقدار #code-inline("frame") را نزدیک انتهای بدنه چاپ کنید و نخستین دورِ اضافه را پیدا کنید.
 
 ```java
+int n = 3;
 int frame = 0;
 while (frame < n) {
     System.out.println(frame);
@@ -131,7 +134,7 @@ Exception in thread "main" java.lang.ArithmeticException: / by zero
     at acm.program.Program.start(Program.java:...)
 ```
 
-نام استثنا می‌گوید چه رخ داده؛ نخستین قابِ مربوط به کد خودتان، #code-inline("HarborDecision.java:18")، جای بررسی است. قاب‌های پایین‌تر زمینهٔ فراخوانی‌اند. شمارهٔ خط در این نمونه فرضی است؛ در اجرای خودتان، شماره و متن همان اجرای واقعی را بخوانید. یک چاپ موقتِ #code-inline("System.out.println(\"boats=\" + boats);") درست پیش از تقسیم، شاهدِ مقدار است. فرضیهٔ خود را با ورودی‌های #code-inline("boats = 0") و #code-inline("boats = 3") بسنجید.
+کل ردِ پشتهٔ بالا نمونه‌ای ساختگی برای تمرینِ خواندن است؛ نام فایل، قاب‌ها و شمارهٔ خط از اجرای واقعی گرفته نشده‌اند. نام استثنا می‌گوید چه رخ داده؛ نخستین قابِ مربوط به کد خودتان، #code-inline("HarborDecision.java:18")، جای بررسی است. قاب‌های پایین‌تر زمینهٔ فراخوانی‌اند. در اجرای خودتان، شماره و متن همان اجرای واقعی را بخوانید. یک چاپ موقتِ #code-inline("System.out.println(\"boats=\" + boats);") درست پیش از تقسیم، شاهدِ مقدار است. فرضیهٔ خود را با ورودی‌های #code-inline("boats = 0") و #code-inline("boats = 3") بسنجید.
 
 == دروازهٔ تصمیم
 
@@ -150,6 +153,8 @@ boolean atLeast = boats >= 3;   // true
 #code-inline("&&") به دو شرطِ درست نیاز دارد؛ #code-inline("||") با یک شرطِ درست هم درست می‌شود؛ #code-inline("!") نتیجه را وارونه می‌کند. در ارزیابی کوتاه‌مدار، اگر سمت چپ #code-inline("&&") نادرست یا سمت چپ #code-inline("||") درست باشد، سمت راست اجرا نمی‌شود. جای آزمون #code-inline("boats") را با جای تقسیم مقایسه کنید:
 
 ```java
+int total = 18;
+int boats = 0;
 boolean overLimit = boats != 0 && total / boats > 5;
 boolean emptyOrOver = boats == 0 || total / boats > 5;
 boolean notEmpty = !(boats == 0);
@@ -161,6 +166,7 @@ boolean notEmpty = !(boats == 0);
 
 ```java
 int wind = 18;
+int boats = 0;
 if (wind >= 30) { System.out.println("closed"); }
 else if (wind >= 15) { System.out.println("caution"); }
 else { System.out.println("open"); }
@@ -178,7 +184,7 @@ switch (wind / 15) {
 
 فانوس‌بان مسیرِ #latin-number("4") در #latin-number("4") می‌خواهد. خانهٔ بالا و چپ با #code-inline("row = 0") و #code-inline("col = 0") باید #code-inline("X") باشد؛ پس سطر اول #code-inline("X . X .") و سطر بعد #code-inline(". X . X") است. ولی چاپ واقعی در هر سطر یک خانهٔ اضافه دارد. این *خطای منطقی* است: کد اجرا می‌شود، اما نتیجه با انتظار نمی‌خواند.
 
-#align(center, image("../../resources/assets/illustrations/java-debugging-keeper-route.png", width: 82mm, height: 49mm, fit: "contain"))
+#align(center, image("../../resources/assets/illustrations/java-debugging-keeper-route.png", width: 70mm, height: 35mm, fit: "contain"))
 
 ```java
 int rows = 4, cols = 4;
@@ -190,11 +196,20 @@ for (int row = 0; row < rows; row++) {
 }
 ```
 
-برای سطر نخست، انتظار #code-inline("X . X .") است؛ مشاهده #code-inline("X . X . X") یک خانهٔ اضافه دارد.
+چهار سطرِ مورد انتظارِ تخته این‌ها هستند:
 
-حلقهٔ بیرونی سطر را عوض می‌کند و درونی ستونِ همان سطر را می‌سازد. #code-inline("% 2") زوج‌بودنِ جمعِ سطر و ستون را می‌سنجد. برای پیدا کردن نخستین خانهٔ اضافه، قبل از چاپ خانه، #code-inline("System.out.println(\"row=\" + row + \" col=\" + col);") را موقتاً در اجرای جدا بگذارید؛ چون خودِ این چاپ شکل تخته را عوض می‌کند. مقدارهای #code-inline("row") و #code-inline("col") را برای دور نخست و آخر یادداشت کنید. چه شرطی باید چهار ستون، از #latin-number("0") تا #latin-number("3")، بسازد؟
+```text
+X . X .
+. X . X
+X . X .
+. X . X
+```
 
-در بومِ آمادهٔ #en[ACM]، همان مختصات به شکل تبدیل می‌شوند: #code-inline("GRect") یک خانه، #code-inline("GOval") یک نشان، #code-inline("GLine") یک مرز و #code-inline("GLabel") یک برچسب می‌سازند. این قطعه را داخل بخش آمادهٔ #code-inline("run") بخوانید؛ ساختار برنامه از پیش فراهم است.
+در اجرای قطعهٔ خطادار، سطر نخست #code-inline("X . X . X") می‌شود؛ هر سطر یک خانهٔ اضافه دارد.
+
+حلقهٔ بیرونی سطر و درونی ستون را می‌سازد؛ #code-inline("% 2") زوج‌بودنِ جمعِ آن‌ها را می‌سنجد. در اجرای جدا، #code-inline("System.out.println(\"row=\" + row + \" col=\" + col);") را پیش از چاپ خانه بگذارید و نخستین ستونِ اضافه را بیابید. چه شرطی دقیقاً ستون‌های #latin-number("0") تا #latin-number("3") را می‌سازد؟
+
+در بخش آمادهٔ #code-inline("run") از بوم #en[ACM]، #code-inline("GRect") خانه، #code-inline("GOval") نشان، #code-inline("GLine") مرز و #code-inline("GLabel") برچسب می‌سازند.
 
 ```java
 int cell = 18, row = 1, col = 2;
@@ -205,7 +220,7 @@ GLabel title = new GLabel("route", 0, 90);
 add(tile); add(mark); add(border); add(title);
 ```
 
-اگر خانهٔ چاپی و خانهٔ رسم‌شده با هم نخوانند، نخست شمارِ دورهای هر حلقه و سپس رابطهٔ #code-inline("col * cell") و #code-inline("row * cell") را ردگیری کنید.
+برای اختلاف چاپ و رسم، #code-inline("col * cell") و #code-inline("row * cell") را ردگیری کنید.
 
 = یادداشت پایانی فانوس‌بان
 
@@ -213,6 +228,6 @@ add(tile); add(mark); add(border); add(title);
 ۱. *صورت مسئله:* انتظار، مشاهده و کوچک‌ترین ورودیِ بازتولید را بنویسید. #linebreak()
 ۲. *شاهد:* پیام کامپایلر، نخستین قاب مرتبط از کد خودتان در ردِ پشته، یا یک #code-inline("System.out.println") کنار مقدار مشکوک را بخوانید. #linebreak()
 ۳. *فرضیه:* بگویید کدام مقدار یا شرط باید فرق کند؛ هر بار یک تغییر را آزمایش کنید. #linebreak()
-۴. *جست‌وجو و پرسش:* با #en[Java] و متن دقیق خطا یا نام مفهوم جست‌وجو کنید. نام‌ها، مسیرهای محلی، کلیدها و داده‌های خصوصی را حذف کنید. از هوش مصنوعی بخواهید «با این ورودی، انتظار، مشاهده و خطا، مفهوم را توضیح بده و یک آزمون کوچک پیشنهاد کن». اگر واژه‌ای را نمی‌دانید، بپرسید «ساده‌تر و با یک مثال توضیح بده». ادعای AI را با اجرا بسنجید. #linebreak()
-۵. *تأیید:* همان ورودی و یک حالتِ نزدیک، مثل #code-inline("boats = 0") و #code-inline("boats = 3")، را دوباره اجرا و علت نتیجه را ثبت کنید.
+۴. *جست‌وجو و پرسش:* با #en[Java] و متن دقیق خطا جست‌وجو و توضیح‌ها را با منابع معتبر مقایسه کنید. نام‌ها، مسیرها، کلیدها و داده‌های خصوصی را حذف کنید. به AI ورودی، کدِ کوتاه، انتظار، مشاهده، خطا و فرضیه را بدهید؛ توضیح و آزمون کوچک بخواهید. برای مفهوم ناآشنا بپرسید «ساده‌تر و با یک مثال توضیح بده»؛ ادعا را با اجرا بسنجید. #linebreak()
+۵. *تأیید:* ورودی اصلی و یک حالتِ نزدیک، مثل #code-inline("boats = 0") و #code-inline("boats = 3")، را دوباره اجرا و علت نتیجه را ثبت کنید.
 ]
