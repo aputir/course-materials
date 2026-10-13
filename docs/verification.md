@@ -1,5 +1,42 @@
 # Verification record
 
+## Java debugging story handout candidates (2026-10-13)
+
+Typst version: `typst 0.15.1 (unknown commit)`. Candidate A compiled from
+`src/documents/java-debugging-keeper-log-candidate.typ` to
+`output/pdf/java-debugging-keeper-log-candidate.pdf`; Candidate B compiled from
+`src/documents/java-debugging-reports-candidate.typ` to
+`output/pdf/java-debugging-reports-candidate.pdf`. Both builds used the bundled
+fonts, local packages, and disabled system fonts, and completed without errors.
+Candidate A has five pages (cover plus four body pages); Candidate B has six
+(cover plus five body pages).
+
+Compile commands, run from the repository root:
+
+```sh
+/home/opmc/.cargo/bin/typst compile --root . --package-path packages --ignore-system-fonts --font-path resources/assets/fonts src/documents/java-debugging-keeper-log-candidate.typ output/pdf/java-debugging-keeper-log-candidate.pdf
+/home/opmc/.cargo/bin/typst compile --root . --package-path packages --ignore-system-fonts --font-path resources/assets/fonts src/documents/java-debugging-reports-candidate.typ output/pdf/java-debugging-reports-candidate.pdf
+```
+
+All eleven pages were rendered from the delivered PDFs at 144 PPI with Typst
+and inspected individually in color and grayscale. Persian shaping and
+paragraph direction, Latin identifiers and operators, code line fit,
+illustrations, page breaks, headers, page numbers, and footers remain clear.
+No clipping or blank pages appeared. Candidate B's first report continues onto
+the next page; the continuation is readable. Both candidates were checked
+against the complete requested syllabus, keep the shared three core bugs,
+include the debugging/search/AI routine, and contain no OOP instruction.
+Candidate B also includes a small loop-boundary defect. ACM graphics snippets
+are presented as fragments for the course's prepared scaffold. No automated
+tests were run. These remain comparison drafts pending the user's selection.
+
+Render commands, run from the repository root:
+
+```sh
+/home/opmc/.cargo/bin/typst compile --format png --ppi 144 --root . --package-path packages --ignore-system-fonts --font-path resources/assets/fonts src/documents/java-debugging-keeper-log-candidate.typ .superpowers/sdd/2026-10-13-java-debugging-story-handout-candidates/candidate-a-final/page-{p}.png
+/home/opmc/.cargo/bin/typst compile --format png --ppi 144 --root . --package-path packages --ignore-system-fonts --font-path resources/assets/fonts src/documents/java-debugging-reports-candidate.typ .superpowers/sdd/2026-10-13-java-debugging-story-handout-candidates/candidate-b-final/page-{p}.png
+```
+
 ## Java fundamentals student handout (2026-10-12)
 
 Typst version: `typst 0.15.1 (unknown commit)`. From the repository root, with
