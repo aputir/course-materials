@@ -1,5 +1,28 @@
 # Verification record
 
+## Debugging, Search & AI student handout (2026-10-13)
+
+Typst version: `typst 0.15.1 (unknown commit)`. From the repository root, with
+`/home/opmc/.cargo/bin` added to `PATH`, the final eleven-page PDF was compiled
+successfully with:
+
+```sh
+typst compile --root . --package-path packages --ignore-system-fonts --font-path resources/assets/fonts src/documents/debugging-ai-handout.typ output/pdf/debugging-ai-handout.pdf
+```
+
+All 11 pages were rendered to numbered PNG files with `typst compile --format png --root . --package-path packages --ignore-system-fonts --font-path resources/assets/fonts src/documents/debugging-ai-handout.typ /tmp/debugging-page-{p}.png`.
+Every page was visually inspected individually:
+- **Cover (p. 1):** Unnumbered, standard UT seal and course title, subtitle «چگونه با خطاها روبه‌رو شویم», clean metadata presentation.
+- **Section 1 & Orientation (p. 2):** Body page ۱, GitHub example resource card, error taxonomy table (Compile, Runtime, Logic), and predict checkpoint.
+- **Section 2 (pp. 3–4):** Compile error anatomy, `error-anatomy` component with `BatteryCalc.java:7` type mismatch, Golden Rule 1, 5 common compiler errors side-by-side using `example-columns`, and trace checkpoint.
+- **Section 3 (p. 5):** Runtime error and stack trace anatomy, `AverageCalc.java:12` division by zero in sentinel loop, Golden Rule 2, 3 common runtime exceptions, and predict checkpoint.
+- **Section 4 (p. 6):** Logic error and `Checkerboard.java` off-by-one error (5 rows instead of 4), expected vs actual output columns, late casting, wrong conditions, desk checking strategy, and try-it checkpoint.
+- **Section 5 (p. 7):** Search query formula, professional search tricks, Google search mockup rendered with `border-frame`, Stack Overflow anatomy, 5 query templates checklist, and predict checkpoint.
+- **Section 6 (pp. 8–10):** AI capabilities and limitations, prompt template with `prompt-example`, worked conversation mockup (bad vs good prompt) using `ai-conversation` and `chat-bubble`, do/don't comparative table, 5-step debugging workflow, and try-it checkpoint.
+- **Recap & Self-Check (p. 11):** 4 self-check conceptual questions and a 5-item personal skill evaluation checklist.
+
+Grayscale readability was verified; the dark fill of `terminal-block` maintains strong contrast without relying on syntax colors. All three standalone Java examples (`BatteryCalc.java`, `AverageCalc.java`, `Checkerboard.java`) were verified with `javac` and runtime execution. No automated tests were added.
+
 ## Java fundamentals student handout (2026-10-12)
 
 Typst version: `typst 0.15.1 (unknown commit)`. From the repository root, with
