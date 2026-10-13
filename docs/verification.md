@@ -18,8 +18,8 @@ Compile commands, run from the repository root:
 /home/opmc/.cargo/bin/typst compile --root . --package-path packages --ignore-system-fonts --font-path resources/assets/fonts src/documents/java-debugging-reports-candidate.typ output/pdf/java-debugging-reports-candidate.pdf
 ```
 
-All eleven pages were rendered from the delivered PDFs at 144 PPI with Typst
-and inspected individually in color and grayscale. Persian shaping and
+All eleven pages were rendered directly from both Typst sources at 144 PPI and
+inspected individually in color and grayscale. Persian shaping and
 paragraph direction, Latin identifiers and operators, code line fit,
 illustrations, page breaks, headers, page numbers, and footers remain clear.
 No clipping or blank pages appeared. Candidate B's first report continues onto
@@ -34,7 +34,8 @@ Render commands, run from the repository root:
 
 ```sh
 /home/opmc/.cargo/bin/typst compile --format png --ppi 144 --root . --package-path packages --ignore-system-fonts --font-path resources/assets/fonts src/documents/java-debugging-keeper-log-candidate.typ .superpowers/sdd/2026-10-13-java-debugging-story-handout-candidates/candidate-a-final/page-{p}.png
-/home/opmc/.cargo/bin/typst compile --format png --ppi 144 --root . --package-path packages --ignore-system-fonts --font-path resources/assets/fonts src/documents/java-debugging-reports-candidate.typ .superpowers/sdd/2026-10-13-java-debugging-story-handout-candidates/candidate-b-final/page-{p}.png
+/home/opmc/.cargo/bin/typst compile --format png --ppi 144 src/documents/java-debugging-reports-candidate.typ .superpowers/sdd/2026-10-13-java-debugging-story-handout-candidates/candidate-b-final-144/color/page-{p}.png
+python3 -c 'from pathlib import Path; from PIL import Image; root=Path(".superpowers/sdd/2026-10-13-java-debugging-story-handout-candidates/candidate-b-final-144"); [(Image.open(p).convert("L").save(root/"grayscale"/p.name)) for p in sorted((root/"color").glob("page-*.png"))]'
 ```
 
 ## Java fundamentals student handout (2026-10-12)

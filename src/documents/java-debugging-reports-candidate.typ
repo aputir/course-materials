@@ -1,6 +1,6 @@
 #import "../course/theme.typ": *
 #show: course-document.with(
-  kind: "راهنمای درس",
+  kind: "پیش‌نویس جزوهٔ دانشجو — گزینهٔ ب",
   title: "گزارش‌های عیب‌یابی فانوس دریایی",
   subtitle: "چهار رویداد کوتاه برای یادگیریِ دیدن، پرسیدن و آزمودن",
 )
@@ -27,11 +27,15 @@
 
 == سه شاهد از یک محاسبه
 
-در این برشِ مستقل، خط اول عمداً خطای زمان کامپایل دارد. خط دوم اجرا می‌شود ولی برای #code-inline("remaining = 7") و #code-inline("capacity = 20") صفر می‌دهد. پیام زیر نمونهٔ پیام کامپایلر است، نه ردّ پشتهٔ زمان اجرا.
+این برشِ مستقل عمداً کامپایل نمی‌شود. پیام زیر نمونهٔ پیام کامپایلر است، نه ردّ پشتهٔ زمان اجرا.
 
-#code-block("int remaining = 7, capacity = 20;\nint batteryPercent = 35.0; // intentional compile error\n// error: incompatible types: possible lossy conversion\n//        from double to int\nint shown = remaining / capacity * 100;\nSystem.out.println(remaining + \"/\" + capacity + \" -> \" + shown);")
+#code-block("int batteryPercent = 35.0; // intentional compile error\n// error: incompatible types: possible lossy conversion\n//        from double to int")
 
-ابتدا فقط همان خط مشکل‌دار را در یک نمونهٔ کوچک بازسازی کنید. سپس خروجی #code-inline("println") را با انتظار مقایسه کنید. پنج عمل #code-inline("+"), #code-inline("-"), #code-inline("*"), #code-inline("/") و #code-inline("%") به‌ترتیب جمع، تفریق، ضرب، تقسیم و باقی‌مانده‌اند. در تقسیم دو #code-inline("int") بخش کسری حذف می‌شود؛ برای بخش کسری باید *پیش از تقسیم* یک عملوند به نوع اعشاری تبدیل شود. این عبارت را برای آزمودن فرضیه، جدا از قطعهٔ معیوب اجرا و پیش‌بینی کنید:
+در اجرای جداگانهٔ زیر، با #code-inline("remaining = 7") و #code-inline("capacity = 20") خروجی صفر است. این قطعه بدون اعلان معیوبِ بالا کامپایل می‌شود؛ خروجی #code-inline("println") را با انتظار مقایسه کنید.
+
+#code-block("int remaining = 7, capacity = 20;\nint shown = remaining / capacity * 100;\nSystem.out.println(shown);")
+
+ابتدا هر مشکل را در نمونه‌ای کوچک بازسازی کنید. پنج عمل #code-inline("+"), #code-inline("-"), #code-inline("*"), #code-inline("/") و #code-inline("%") به‌ترتیب جمع، تفریق، ضرب، تقسیم و باقی‌مانده‌اند. در تقسیم دو #code-inline("int") بخش کسری حذف می‌شود؛ برای بخش کسری باید *پیش از تقسیم* یک عملوند به نوع اعشاری تبدیل شود. این عبارت را برای آزمودن فرضیه، جدا از دو قطعهٔ پیشین اجرا و پیش‌بینی کنید:
 
 #code-block("int remaining = 7, capacity = 20;\ndouble probe = (double) remaining / capacity * 100;")
 
