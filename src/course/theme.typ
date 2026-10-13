@@ -1,6 +1,6 @@
 #import "config.typ": course-info
 #import "workshop-reflection.typ": workshop-reflection
-#import "@local/dorost:0.2.1": code-inline as dorost-code-inline, ltr as dorost-ltr, math-inline as dorost-math-inline, persian-digits
+#import "@local/dorost:0.2.1": code-inline as dorost-code-inline, ltr as dorost-ltr, math-inline as dorost-math-inline, persian-digits, border-frame
 
 #let colors = (
   ink: rgb("162B45"), blue: rgb("0077BD"), muted: rgb("627489"),
@@ -171,6 +171,68 @@
   set list(marker: box(rect(width: 5pt, height: 5pt, stroke: 0.8pt + colors.muted)), spacing: spacing.item)
   list(..items)
 }
+
+#let terminal-block(body) = block(
+  width: 100%, fill: rgb("1E2A35"),
+  stroke: (left: 1.5pt + colors.blue),
+  inset: (x: spacing.panel-x, y: spacing.panel-y),
+  above: spacing.element, below: spacing.element,
+  radius: 3pt, breakable: true,
+)[
+  #set block(above: 0pt, below: 0pt)
+  #set text(size: type-scale.code, font: code-font, lang: "en", dir: ltr, fill: rgb("E2EDF4"))
+  #set align(left)
+  #set par(leading: 4pt, spacing: 0pt)
+  #body
+]
+
+#let chat-bubble(role, body) = {
+  let is-user = role == "user"
+  block(
+    width: 85%, fill: if is-user { colors.pale } else { colors.white },
+    stroke: 0.5pt + colors.rule,
+    inset: (x: spacing.panel-x, y: spacing.panel-y),
+    radius: 6pt, above: 3pt, below: 3pt,
+    breakable: false,
+  )[
+    #set block(above: 0pt, below: 0pt)
+    #text(size: type-scale.small, weight: "bold", fill: if is-user { colors.blue } else { colors.muted })[
+      #if is-user [شما:] else [AI:]
+    ]
+    #v(spacing.label)
+    #body
+  ]
+}
+
+#let ai-conversation(..bubbles) = block(
+  width: 100%, above: spacing.element, below: spacing.element,
+)[
+  #for pair in bubbles.pos() {
+    let (role, body) = pair
+    if role == "user" { align(right, chat-bubble("user", body)) }
+    else { align(left, chat-bubble("ai", body)) }
+    v(2pt)
+  }
+]
+
+#let error-anatomy(body, annotations) = block(
+  width: 100%, above: spacing.element, below: spacing.element,
+)[
+  #terminal-block(body)
+  #v(spacing.label)
+  #block(width: 100%, fill: colors.pale, inset: (x: spacing.panel-x, y: spacing.panel-y), radius: 3pt, stroke: 0.5pt + colors.rule)[
+    #set block(above: 0pt, below: 0pt)
+    #set text(size: type-scale.small)
+    #text(weight: "bold", fill: colors.blue)[آناتومی پیام خطا]
+    #v(spacing.label)
+    #for (label, meaning) in annotations [
+      #text(font: code-font, lang: "en", dir: ltr, size: type-scale.small)[#label]
+      #h(6pt) #sym.arrow.l #h(6pt)
+      #meaning
+      #linebreak()
+    ]
+  ]
+]
 
 #let course-cover(kind, title, subtitle, number, meta, deadline, prepared-by, issued-on, artwork: none) = {
   let details = ()
