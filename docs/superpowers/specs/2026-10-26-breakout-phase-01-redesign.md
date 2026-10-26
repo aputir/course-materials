@@ -65,7 +65,7 @@ Instead of burdening students with theoretical GoF design pattern terminology be
 ## 4. Page-by-Page Document Structure
 
 ### Page 1: Cover Page
-- UT Seal (32mm) and official institutional typography (`دانشگاه تهران`, `دانشکده مهندسی برق و کامپیوتر`).
+- UT Seal (32mm) and official institutional typography (`دانشگاه تهران`, `دانشکده علوم کامپیوتر`).
 - Document Category: `فاز پروژه ۰۱`
 - Document Title: `هستهٔ بازی Breakout`
 - Subtitle: `اهداف، نیازمندی‌های فنی، طراحی شی‌گرا و معیارهای ارزیابی`
