@@ -9,52 +9,75 @@
 
   == ۱. بازتاب زاویه‌دار از سکو
 
-  اگر توپ همیشه مثل آینه بازتاب کند، بازی سریعاً وارد یک چرخه تکراری و خسته‌کننده می‌شود. برای هیجان بیشتر، زاویه پرتاب با توجه به فاصله نقطه برخورد تا مرکز سکو تغییر می‌کند:
+  اگر توپ همیشه مثل آینه بازتاب کند، بازی سریعاً وارد یک چرخه تکراری و خسته‌کننده می‌شود. برای پویایی بیشتر، زاویه پرتاب با توجه به فاصله نقطه برخورد تا مرکز سکو تعیین می‌گردد:
 
-  #grid(
-    columns: (1.2fr, 1.8fr),
-    gutter: 8pt,
+  #v(2pt)
+
+  #block(
+    fill: colors.pale,
+    stroke: (right: 3.5pt + colors.blue),
+    radius: 3pt,
+    inset: (x: 10pt, y: 7pt),
+    width: 100%,
     [
+      #text(weight: "bold", size: type-scale.small, fill: colors.blue)[روابط ریاضی کمانه زاویه‌دار]
+      #v(3pt)
+
       #set text(size: 8.5pt)
-      - *محاسبه انحراف نسبی برخورد:*\
-        $d = (x_"ball" - x_"paddle_center") / (W_"paddle" / 2) in [-1.0, +1.0]$
-      - *زاویه بیشینه پرتاب:*\
-        $theta = d times 60^degree$
-      - *پایستگی تندی کل توپ:*\
-        $v = sqrt(v_x^2 + v_y^2)$
-      - *سرعت‌های تفکیک‌شده جدید:*\
-        $v_x' = v sin(theta)$ و $v_y' = -v cos(theta)$
+
+      - *۱. انحراف نسبی برخورد نسبت به مرکز سکو ($d in [-1.0, +1.0]$):*
+        فاصله افقی تا مرکز ($Delta x$) و نیم‌عرض سکو ($w_"half"$) را به‌صورت متغیرهای تفکیک‌شده تعریف می‌کنیم:
+        $ Delta x = x_"ball" - x_"paddle_center" quad , quad w_"half" = W_"paddle" / 2 $
+        $ d = (Delta x) / w_"half" $
+        #text(size: 7.8pt, fill: colors.muted)[مقدار منفی نشان‌دهنده اصابت در نیمه چپ ($Delta x < 0$) و مقدار مثبت نشان‌دهنده اصابت در نیمه راست سکو ($Delta x > 0$) است.]
+
       #v(2pt)
-      علامت مؤلفه عمودی همیشه منفی است تا توپ همیشه رو به بالا و به سمت آجرها شلیک شود.
-    ],
-    [
-      #code-block("// Calculate hit offset relative to paddle center (-1.0 to +1.0)
-double paddleCenter = paddle.getX() + paddle.getWidth() / 2.0;
-double ballCenter = ball.getX() + ball.getRadius();
-double offset = (ballCenter - paddleCenter) / (paddle.getWidth() / 2.0);
-offset = Math.max(-1.0, Math.min(1.0, offset));
+      - *۲. زاویه پرتاب متناسب با نقطه برخورد (تا بیشینه ۶۰ درجه):*
+        $ theta = d times 60^degree $
+        #text(size: 7.8pt, fill: colors.muted)[برخورد در مرکز سکو بازتابی عمودی ($theta = 0$) و برخورد در لبه‌ها ($d = plus.minus 1.0$) تندترین زاویه پرتاب را می‌سازد.]
 
-double maxAngle = Math.toRadians(60.0);
-double angle = offset * maxAngle;
-double speed = Math.hypot(ball.getVx(), ball.getVy());
+      #v(2pt)
+      - *۳. پایستگی تندی کل توپ بر پایه قضیه فیثاغورس:*
+        $ v = sqrt(v_x^2 + v_y^2) $
 
-ball.setVx(speed * Math.sin(angle));
-ball.setVy(-Math.abs(speed * Math.cos(angle)));")
+      #v(2pt)
+      - *۴. تجزیه سرعت به مؤلفه‌های جدید (پرتاب رو به بالا):*
+        $ v_x' = v sin(theta) quad , quad v_y' = -|v cos(theta)| $
+        #text(size: 7.8pt, fill: colors.muted)[علامت منفی در مؤلفه عمودی تضمین می‌کند که توپ همیشه رو به بالا و به سمت آجرها کمانه کند.]
     ]
   )
 
   #v(2pt)
 
-  == ۲. تشخیص برخورد با آجرها (#en[AABB])
+  #code-block("// Calculate horizontal offset and half-width as separate variables
+double paddleCenter = paddle.getX() + paddle.getWidth() / 2.0;
+double ballCenter = ball.getX() + ball.getRadius();
+double deltaX = ballCenter - paddleCenter;
+double halfWidth = paddle.getWidth() / 2.0;
 
-  برای بررسی برخورد توپ با آجرها و دیواره‌ها، از الگوریتم تداخل مستطیل‌های محیطی (#en[AABB]) استفاده می‌کنیم. به محض برخورد، سرعت عمودی یا افقی معکوس شده، آجر مربوطه ناپدید می‌شود و ۱۰۰ امتیاز شیرین به بازیکن اضافه می‌گردد!
+double offset = deltaX / halfWidth;
+offset = Math.max(-1.0, Math.min(1.0, offset));
+
+// Calculate bounce angle (max 60 deg) and preserve total velocity
+double angle = offset * Math.toRadians(60.0);
+double speed = Math.hypot(ball.getVx(), ball.getVy());
+
+// Apply new velocity components (always deflect upwards)
+ball.setVx(speed * Math.sin(angle));
+ball.setVy(-Math.abs(speed * Math.cos(angle)));")
+
+  #v(2pt)
+
+  == ۲. تشخیص برخورد با آجرها
+
+  برای بررسی برخورد توپ با آجرها و دیواره‌ها، از الگوریتم تداخل مستطیل‌های محیطی#footnote[#en[AABB: Axis-Aligned Bounding Box]] استفاده می‌کنیم. به محض برخورد، سرعت عمودی یا افقی معکوس شده، آجر مربوطه ناپدید می‌شود و ۱۰۰ امتیاز به بازیکن اضافه می‌گردد.
 
   #v(2pt)
 
   #note[نکات طلایی برای پیاده‌سازی روان فیزیک][
     #set text(size: 8.5pt)
     + *گیر افتادن توپ در سکو:* اگر فقط علامت سرعت را منفی کنید، توپ ممکن است در فریم بعدی همچنان داخل سکو بماند و شروع به لرزیدن کند! چاره کار: موقعیت عمودی توپ را پس از برخورد، مماس با سطح بالایی سکو قرار دهید.
-    + *تقسیم صفر ناشی از اعداد صحیح:* در محاسبه نسبت فاصله، متغیرها باید اعشاری (#code-inline("double")) باشند؛ در غیر این صورت تقسیم عدد صحیح حاصل را صفر می‌کند.
-    + *پرش شبح‌وار از موانع (#en[Tunneling]):* اگر سرعت توپ خیلی زیاد شود، ممکن است در یک فریم از عرض آجر رد شود بدون اینکه برخوردی ثبت شود! سرعت را در اندازه‌ای منطقی نگه دارید.
+    + *تقسیم صفر ناشی از اعداد صحیح:* در محاسبه نسبت فاصله، متغیرها باید از نوع اعشاری #code-inline("double") باشند؛ در غیر این صورت تقسیم عدد صحیح حاصل را صفر می‌کند.
+    + *پرش شبح‌وار از موانع#footnote[#en[Tunneling]]:* اگر سرعت توپ خیلی زیاد شود، ممکن است در یک فریم از عرض آجر رد شود بدون اینکه برخوردی ثبت شود! سرعت را در اندازه‌ای منطقی نگه دارید.
   ]
 ]

@@ -69,6 +69,23 @@ Use the same 21 mm horizontal margin on cover and body. Body top/bottom margins 
 
 English technical names required by an assignment remain unchanged. Persian sentence punctuation stays outside a Latin span; the span's own parentheses and punctuation stay inside. Do not add invisible bidi controls to individual paragraphs.
 
+### Bilingual terms, footnotes, and headings
+
+1. **No parenthetical English terms in prose or headings:** Never place English translations, acronyms, or glosses in parentheses alongside Persian terms (e.g., do NOT write `بافر دوگانه (#en[Double Buffering])` or `معماری (#en[MVC])`).
+2. **Footnotes for English specialist terms:** When introducing a technical concept, acronym, or specialist term, use the natural Persian term in prose and attach an explanatory footnote:
+   - `بافر دوگانه#footnote[#en[Double Buffering]]`
+   - `معماری مدل-نما-کنترل‌گر#footnote[#en[MVC: Model-View-Controller]]`
+   - `الگوریتم تداخل مستطیل‌های محیطی#footnote[#en[AABB: Axis-Aligned Bounding Box]]`
+   - `پرش شبح‌وار از موانع#footnote[#en[Tunneling]]`
+3. **Clean headings:** Headings must never contain parenthetical English terms or abbreviations. Write clean Persian headings (e.g. `== ۲. پایداری تصویر و بافر دوگانه` or `== ۲. تشخیص برخورد با آجرها`). For contracts or technical API definitions, use colon notation: `== قرارداد ذخیره رکورد: #code-inline("HighScoreStorage")`.
+4. **Card badges and tags:** English labels and code tags within cards must be displayed directly without surrounding parentheses (e.g. `#code-inline("InMemoryScoreStorage")`, not `(#code-inline("InMemoryScoreStorage"))`).
+
+### Layout: vertical cards, code blocks, and formula decomposition
+
+1. **Vertical-first cards:** Avoid horizontal cards or placing cards side-by-side. Always prefer full-width, vertically stacked cards (`width: 100%`) for visual clarity and predictable page flow.
+2. **Vertical separation of code and explanations:** Do not place code blocks horizontally adjacent to lists or descriptions. Stack code blocks and explanations vertically with appropriate spacing.
+3. **Formula visibility and decomposition:** Place mathematical formulas in dedicated lines with sufficient breathing room. For complex or multi-term fractions, break the numerator and denominator into separate named variables ($Delta x$ and $w_"half"$) before computing the ratio, aligning the math directly with clean implementation code.
+
 ## Editorial and production quality
 
 ### Links and optional cover illustrations

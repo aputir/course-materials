@@ -2,21 +2,27 @@
 
 ## Breakout Phase 1 project phase document redesign (2026-10-26)
 
-Typst version: `typst 0.15.1`. From the `course-materials` repository root, the six-page modular project phase PDF was compiled successfully with:
+Typst version: `typst 0.15.1`. From the `course-materials` repository root, the 12-page modular project phase PDF was compiled successfully with:
 
 ```sh
 PATH="/home/opmc/.cargo/bin:$PATH" ./scripts/build.sh breakout-phase-01
 ```
 
-All 6 pages were rendered to numbered PNG files and visually verified individually:
-- **Cover (p. 1):** Dedicated unnumbered cover with official 32 mm UT seal, updated department affiliation «دانشکده علوم کامپیوتر», course title «برنامه‌سازی پیشرفته», kind «فاز پروژه», title «هستهٔ بازی Breakout», phase number «۰۱», and custom vector blueprint vignette (`130 × 70 mm`) implementing the 1976 Breakout engineering schematic: dark navy background (`#052B49`), green phosphor strokes (`#62F2C2`), mint highlights (`#A0FFDA`), two-column drafting composition (66% playfield with 8×6 brick matrix, double-line paddle, normal vector, deflection arc, and 33% technical panel with reflection equations, continuous kinematic formulas, and discrete TTL hardware specifications), the 1976 Wozniak/Jobs Atari 44-chip sprint historical quote frame, and a recommended prompt panel.
-- **Foundations (p. 2):** Body page ۱, «فهرست مطالب» (`#outline`) with dotted leaders, «هدف و محدودهٔ آموزشی» aligning with syllabus (SRP, encapsulation, polymorphism, preparing for File I/O), and «قواعد و سازوکار پایهٔ بازی» table covering 3 lives/hearts, score counter, Space serve, P pause toggle, R quick restart, and end states.
-- **Architecture & Contracts (p. 3):** Body page ۲, «معماری سیستم و تفکیک مسئولیت‌ها (MVC)» with 3-tier visual card diagram (Controller: `GameEngine`, View: `BreakoutCanvas`, Model: `Ball`, `Paddle`, `Brick`, `GameState`, `HighScoreStorage`), class responsibilities table, and «آینده‌نگری معماری: قرارداد ذخیره‌سازی داده» introducing the strategy pattern via the `HighScoreStorage` interface (RAM-based now, File-based once covered in lecture).
-- **Physics & Geometry (p. 4):** Body page ۳, «دستگاه مختصات و هندسهٔ بازی» visual diagram and standard dimensions table, «بازتاب زاویه‌دار قطعه‌ای از سکو» segmented deflection math formulation with complete Java implementation snippet, AABB bounding box collision clamp, and «تالار خطاهای متداول» callout (sticky paddle fix with position reset, integer division truncation with `2.0`, high-speed tunneling clamp).
-- **Lifecycle & Milestones (p. 5):** Body page ۴, «ماشین وضعیت و چرخهٔ حیات بازی» visual block diagram (`READY`, `RUNNING`, `PAUSED`, `GAME_OVER`, `VICTORY`), state table, 5 scaffolded implementation milestones with concrete acceptance criteria, and bonus features (durable 2-hit bricks and dynamic runtime storage toggle).
-- **Evaluation & Defense (p. 6):** Body page ۵, «ساختار استاندارد مخزن گیت و فایل‌ها» with standard packaging tree in terminal block, atomic commit conventions, «جدول مصوب ارزیابی و بارم‌بندی» (100 points normalized to 2.0 course points across Functionality 40, OOP 35, Code Quality 15, Oral Defense 10), «ضریب ارزیابی در جلسهٔ دفاع شفاهی» linear interpolation multiplier ($\alpha \in [0.5, 1.0]$), and academic integrity & Quera submission callout.
+All 12 pages were rendered to numbered PNG files and visually verified individually:
+- **Cover (p. 1):** Dedicated unnumbered cover with official 32 mm UT seal, department affiliation «دانشکده علوم کامپیوتر», course title «برنامه‌سازی پیشرفته», kind «فاز پروژه», title «هسته بازی Breakout», phase number «۰۱», and custom vector blueprint vignette (`130 × 70 mm`).
+- **Table of Contents (p. 2):** Automated `#outline` with dotted leaders and clean section hierarchy.
+- **Rules & Submission (p. 3):** Solo development, GitHub commit expectations, in-person oral defense, and Quera submission guidelines.
+- **Introduction & Goals (p. 4):** Historical Atari 1976 Wozniak/Jobs sprint context, core OOP educational goals (SoC, SRP, Encapsulation, Event-driven architecture).
+- **Pre-Phase 1 Actions (p. 5):** High-level tasks for GitHub repository setup, .gitignore configuration, and Conventional Commits; game feel exploration; and UML modeling in vertical card layout without horizontal columns.
+- **System Architecture (p. 6):** MVC pattern with storytelling hook, vertically stacked MVC cards, 3-step data flow, and vertical `HighScoreStorage` interface definition followed by in-memory and file persistence cards.
+- **Entities & Geometry (p. 7):** Uncompact, complete 175pt vector schematic of the 800×600 playfield with HUD bar, full 40-brick matrix in 5 colored rows, ball velocity trajectory, paddle bounds, and danger line; accompanied by 4 vertical entity cards with geometry definitions, vector badges, and encapsulation rules.
+- **Gameplay & State Machine (p. 8):** Vector state machine diagram connecting all 5 states (`READY`, `RUNNING`, `PAUSED`, `GAME_OVER`, `VICTORY`) with directional transition arrows (Space launch, P pause/resume, ball drop life decrement loop, game over, victory, and R restart) plus states table.
+- **Graphics & HUD (p. 9):** 2D coordinate system, double buffering mechanics with clean footnote terminology (no parenthetical glosses), and visual HUD requirements table.
+- **Physics & Collisions (p. 10):** Segmented paddle deflection math with displayed equations on dedicated lines with full breathing room and physical explanations, split numerator ($Delta x$) and denominator ($w_"half"$) variable fractions matching Java implementation, complete Java code block, and AABB brick collision guidelines.
+- **Implementation Milestones (p. 11):** Five discrete implementation milestones with acceptance criteria and commit strategy.
+- **Evaluation Criteria (p. 12):** Comprehensive 100-point rubric (40 Functionality, 35 OOP Architecture, 15 Code Quality, 10 Oral Defense) and bonus challenges.
 
-All pages adhere strictly to the 6-page budget, full-width line justification (`par(justify: true)`), and calm 6pt paragraph rhythm without clipped characters or trailing orphan pages.
+All pages adhere strictly to the 12-page budget (1 page per section) without clipped text or overflowing pages. All parenthetical English glosses `(#en[...])` across all sections have been completely replaced with `#footnote[#en[...]]` or clean card badges, and the convention is formally documented in `AGENTS.md` and `docs/document-style-guide.md`.
 
 ## Debugging, Search & AI student handout (2026-10-13)
 
