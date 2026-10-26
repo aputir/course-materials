@@ -1,105 +1,80 @@
 #import "../../course/theme.typ": *
 
 #let breakout-architecture-page() = [
-  = معماری سیستم و تفکیک مسئولیت‌ها (#en[MVC])
+  = ساختار و معماری سیستم
 
-  در پیاده‌سازی پروژه‌های تعاملی، بزرگ‌ترین خطای رایج تجمع تمام منطق بازی، شنوندگان رخداد، حلقه‌های زمانی و اشکال گرافیکی درون یک کلاس زیرمجموعهٔ #code-inline("GraphicsProgram") است؛ الگویی نامناسب که به ساخت یک شیء همه‌کاره (#term[God Class])، ناپایدار و غیرقابل آزمون منجر می‌شود. برای دستیابی به یک معماری اصولی و تفکیک مسئولیت‌ها (#term[SoC])، سیستم به سه لایهٔ اصلی تفکیک می‌شود:
+  تصور کنید تمام بازی در یک کلاس غول‌آسای ۲۵۰۰ خطی نوشته شود: از سرعت توپ و برخورد با دیواره تا رنگ صورتی آجرها و شنونده کلید Space! شاید اولش ساده به نظر برسد، اما با اولین باگ نامرئی، کد تبدیل به کلافی سردرگم می‌شود. نجات‌بخش ما در این بازی، الگوی درخشان معماری مدل-نما-کنترل‌گر (#en[MVC]) است که وظایف را به ۳ بخش مستقل تقسیم می‌کند:
 
-  #v(spacing.element)
+  #v(2pt)
 
-  #grid(
-    columns: (1fr, 1.25fr, 1fr),
-    gutter: 8pt,
-    block(
-      fill: colors.pale,
-      stroke: 0.6pt + colors.rule,
-      radius: 4pt,
-      inset: (x: 8pt, y: 7pt),
-      width: 100%,
+  #let mvc-card(title, en-tag, accent, desc) = block(
+    fill: colors.pale,
+    stroke: (right: 3.5pt + accent),
+    radius: 3pt,
+    inset: (x: 8pt, y: 5.5pt),
+    width: 100%,
+    grid(
+      columns: (105pt, 1fr),
+      gutter: 8pt,
+      align: horizon,
       [
-        #set align(center)
-        #text(weight: "bold", fill: colors.blue)[نمایشگر (#en[View])]
-        #v(3pt)
-        #text(size: type-scale.small, fill: colors.ink)[#code-inline("BreakoutCanvas")]
-        #v(4pt)
-        #set align(right)
-        #set text(size: 8.5pt)
-        • پوستهٔ بوم و کپسوله‌سازی #en[ACM]\
-        • ترسیم #code-inline("GRect") و #code-inline("GOval")\
-        • نمایش #en[HUD] (امتیاز و ۳ قلب جان)\
-        • لایهٔ پیام وضعیت (#en[Overlay])
-      ]
-    ),
-    block(
-      fill: colors.pale,
-      stroke: 1pt + colors.blue,
-      radius: 4pt,
-      inset: (x: 8pt, y: 7pt),
-      width: 100%,
+        #text(weight: "bold", size: type-scale.small, fill: accent)[#title]\
+        #text(size: 8pt, fill: colors.muted)[#en-tag]
+      ],
       [
-        #set align(center)
-        #text(weight: "bold", fill: colors.blue)[کنترلر (#en[Controller])]
-        #v(3pt)
-        #text(size: type-scale.small, fill: colors.ink)[#code-inline("GameEngine")]
-        #v(4pt)
-        #set align(right)
         #set text(size: 8.5pt)
-        • حلقهٔ بازی با زمان‌بندی #latin-number("60 FPS")\
-        • شنوندهٔ ورودی صفحه‌کلید (#en[Key Events])\
-        • توزیع‌کنندهٔ برخوردها (#en[Dispatcher])\
-        • هماهنگ‌سازی مدل و فرمان بازترسیم
-      ]
-    ),
-    block(
-      fill: colors.pale,
-      stroke: 0.6pt + colors.rule,
-      radius: 4pt,
-      inset: (x: 8pt, y: 7pt),
-      width: 100%,
-      [
-        #set align(center)
-        #text(weight: "bold", fill: colors.blue)[مدل دامنه (#en[Model])]
-        #v(3pt)
-        #text(size: type-scale.small, fill: colors.ink)[دامنهٔ خالص جاوا]
-        #v(4pt)
-        #set align(right)
-        #set text(size: 8.5pt)
-        • کلاس‌های #code-inline("Ball")، #code-inline("Paddle")، #code-inline("Brick")\
-        • وضعیت بازی (#code-inline("GameState"))\
-        • قرارداد رکورد (#code-inline("HighScoreStorage"))\
-        • بدون وابستگی به #en[GUI] و کاملاً آزمون‌پذیر
+        #desc
       ]
     )
   )
 
+  #mvc-card(
+    "لایه مدل (Model)",
+    "کلاس‌های منطق خالص",
+    colors.ink,
+    [حقیقت جهان بازی؛ مختصات توپ، سکو، آجرها و جان‌ها. کدهای کاملاً مستقل از پنجره و گرافیک با آزمون‌پذیری آسان.]
+  )
   #v(2pt)
-
-  == مسئولیت کلاس‌ها و کپسوله‌سازی داده‌ها
-
-  #table(
-    columns: (0.9fr, 1.4fr, 2.2fr),
-    table.header([*کلاس*], [*فیلدهای کپسوله‌شده (#code-inline("private"))*], [*رفتارها و مسئولیت‌های کلیدی*]),
-    [#code-inline("Ball")],
-    [`x, y, vx, vy, radius`],
-    [به‌روزرسانی مختصات با بردار سرعت (`update`)، بازتاب افقی و عمودی (`bounceX`, `bounceY`) و استخراج جعبهٔ مرزی.],
-    [#code-inline("Paddle")],
-    [`x, y, width, height, speed`],
-    [حرکت به چپ و راست بر اساس ورودی، و مهار موقعیت در محدودهٔ بوم (`clampToScreen`) جهت جلوگیری از خروج.],
-    [#code-inline("Brick")],
-    [`x, y, width, height, durability, destroyed`],
-    [ثبت برخورد گلوله (`hit`)، کاهش مقاومت، تعیین امتیاز اعطایی (`getPoints`) و گزارش تخریب کامل شیء.],
-    [#code-inline("GameEngine")],
-    [`ball, paddle, bricks, state, storage`],
-    [مدیریت تیک‌های زمانی #latin-number("60") هرتز، پردازش ورودی‌ها، تشخیص برخوردها، گذار وضعیت و فرمان رندر به بوم.],
+  #mvc-card(
+    "لایه نما (View)",
+    code-inline("BreakoutCanvas"),
+    colors.blue,
+    [پرده نقاشی و تماشا؛ دریافت وضعیت از کنترل‌گر و ترسیم اشکال، آجرها و قلب‌های جان. بدون داشتن منطق بازی.]
+  )
+  #v(2pt)
+  #mvc-card(
+    "لایه کنترل‌گر (Controller)",
+    code-inline("GameEngine"),
+    rgb("1B8755"),
+    [مغز هماهنگ‌کننده؛ اجرای حلقه بازی در ۶۰ هرتز، دریافت فشرده‌شدن کلیدها، حل برخوردها و فرمان بازترسیم به نما.]
   )
 
-  = آینده‌نگری معماری: قرارداد ذخیره‌سازی داده
+  #v(2pt)
 
-  یکی از اصول کلیدی طراحی شی‌گرا، وابستگی به انتزاع‌ها به‌جای پیاده‌سازی‌های انضمامی است. بدون ورود به پیچیدگی اصطلاحات الگوهای طراحی، تعریف یک رابط (#term[Interface]) ساده به ما اجازه می‌دهد ثبت بیشترین امتیاز (#en[High Score]) را بدون دستکاری هستهٔ بازی تغییر دهیم:
+  == جریان داده در ۳ گام
+  #block(
+    fill: rgb("FAFDFE"),
+    stroke: 0.5pt + colors.rule,
+    radius: 3pt,
+    inset: (x: 8pt, y: 6pt),
+    width: 100%,
+    [
+      #set text(size: 8.5pt)
+      + *ورودی کاربر:* فشرده شدن کلیدهای جهت‌نما یا کلیدهای فاصله، #en[P] و #en[R] توسط کنترل‌گر دریافت می‌شود.
+      + *محاسبه در مدل:* کنترل‌گر متدهای حرکتی سکو و توپ را صدا زده و وضعیت جدید دنیای بازی را ثبت می‌کند.
+      + *بازترسیم نما:* کنترل‌گر پس از قطعی شدن محاسبات فیزیک، وضعیت تازه را برای ترسیم به بوم نقاشی می‌فرستد.
+    ]
+  )
+
+  #v(2pt)
+
+  == قرارداد ذخیره رکورد (#code-inline("HighScoreStorage"))
+  برای استقلال کامل بازی از نحوه ذخیره‌سازی، یک رابط ساده تعریف می‌کنیم تا در این فاز رکورد در رم بماند و در فاز آینده بدون دست زدن به موتور بازی، ذخیره در فایل متصل شود:
 
   #grid(
-    columns: (1.5fr, 1.7fr),
-    gutter: 10pt,
+    columns: (1.35fr, 1.65fr),
+    gutter: 8pt,
+    align: horizon,
     [
       #code-block("public interface HighScoreStorage {
     int loadHighScore();
@@ -107,10 +82,9 @@
 }")
     ],
     [
-      #set text(size: 9.5pt)
-      - *پیاده‌سازی فوری (#code-inline("InMemoryScoreStorage")):* ذخیرهٔ بالاترین امتیاز در حافظهٔ موقت (#en[RAM]) طی اجرای جاری برنامه.
-      - *پیاده‌سازی آتی (#code-inline("FileScoreStorage")):* خواندن و نوشتن رکورد در فایل متنی پس از آموزش مبحث #en[File I/O].
-      - *چندریختی بدون بازنویسی:* موتور بازی (#code-inline("GameEngine")) تنها با این رابط کار می‌کند و نوع ذخیره‌ساز در زمان ساخت به آن تزریق می‌شود؛ در نتیجه گذار به فاز بعدی نیازمند کوچک‌ترین تغییری در کدهای موتور نخواهد بود.
+      #set text(size: 8.5pt)
+      - *پیاده‌سازی موقت:* کلاس #en[InMemoryScoreStorage] برای نگه‌داری بالاترین رکورد در حافظه جاری بازی.
+      - *پیاده‌سازی آینده:* کلاس #en[FileScoreStorage] برای ذخیره دائمی رکورد در فایل متنی پس از آموزش I/O.
     ]
   )
 ]

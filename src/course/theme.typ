@@ -23,10 +23,10 @@
 )
 // Absolute spacing avoids larger gaps merely because a heading uses larger type.
 #let spacing = (
-  line: 4pt, paragraph: 5pt, item: 5pt,
-  section-before: 16pt, section-after: 6pt,
-  subsection-before: 11pt, subsection-after: 4pt,
-  minor-before: 9pt, minor-after: 3pt,
+  line: 6.5pt, paragraph: 7pt, item: 7.5pt,
+  section-before: 14pt, section-after: 5pt,
+  subsection-before: 10pt, subsection-after: 4pt,
+  minor-before: 8pt, minor-after: 3pt,
   element: 6pt, panel-x: 10pt, panel-y: 8pt, label: 4pt,
   cover-brand: 22mm, cover-course: 5mm, cover-subtitle: 4mm,
   cover-rule: 6mm, cover-details: 10mm,
@@ -315,8 +315,10 @@
   ]
   show table: set text(size: type-scale.label)
   set table(stroke: 0.5pt + colors.rule, inset: (x: 8pt, y: 6pt))
+  set footnote(numbering: "۱")
   set page(
     paper: "a4", margin: (x: document-style.margin-x, top: document-style.body-top, bottom: document-style.body-bottom),
+    numbering: "۱",
     header: context {
       block(above: 0pt, below: 0pt)[
         #set text(font: prose-fonts, lang: "fa", dir: rtl)
@@ -324,6 +326,10 @@
         #set par(spacing: 0pt)
         #text(size: type-scale.small, weight: "bold")[#meta.title]
         #h(1fr)
+        #if meta.faculty != none [
+          #text(size: type-scale.small, fill: colors.muted)[#meta.faculty]
+          #h(1fr)
+        ]
         #box(text(size: type-scale.small, fill: colors.blue)[#kind #if number != none { h(spacing.label); fa(number) }])
         #v(spacing.label)
         #line(length: 100%, stroke: 0.6pt + colors.rule)
