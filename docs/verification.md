@@ -1,5 +1,23 @@
 # Verification record
 
+## Breakout Phase 1 project phase document redesign (2026-10-26)
+
+Typst version: `typst 0.15.1`. From the `course-materials` repository root, the six-page modular project phase PDF was compiled successfully with:
+
+```sh
+PATH="/home/opmc/.cargo/bin:$PATH" ./scripts/build.sh breakout-phase-01
+```
+
+All 6 pages were rendered to numbered PNG files and visually verified individually:
+- **Cover (p. 1):** Dedicated unnumbered cover with official 32 mm UT seal, course title «برنامه‌سازی پیشرفته», kind «فاز پروژه», title «هستهٔ بازی Breakout», phase number «۰۱», and custom vector blueprint vignette (`130 × 65 mm`) detailing playfield geometry, paddle center tick, deflection rays, brick matrix, the 1976 Wozniak/Jobs Atari 44-chip sprint historical quote frame, and a recommended prompt panel.
+- **Foundations (p. 2):** Body page ۱, «فهرست مطالب» (`#outline`) with dotted leaders, «هدف و محدودهٔ آموزشی» aligning with syllabus (SRP, encapsulation, polymorphism, preparing for File I/O), and «قواعد و سازوکار پایهٔ بازی» table covering 3 lives/hearts, score counter, Space serve, P pause toggle, R quick restart, and end states.
+- **Architecture & Contracts (p. 3):** Body page ۲, «معماری سیستم و تفکیک مسئولیت‌ها (MVC)» with 3-tier visual card diagram (Controller: `GameEngine`, View: `BreakoutCanvas`, Model: `Ball`, `Paddle`, `Brick`, `GameState`, `HighScoreStorage`), class responsibilities table, and «آینده‌نگری معماری: قرارداد ذخیره‌سازی داده» introducing the strategy pattern via the `HighScoreStorage` interface (RAM-based now, File-based once covered in lecture).
+- **Physics & Geometry (p. 4):** Body page ۳, «دستگاه مختصات و هندسهٔ بازی» visual diagram and standard dimensions table, «بازتاب زاویه‌دار قطعه‌ای از سکو» segmented deflection math formulation with complete Java implementation snippet, AABB bounding box collision clamp, and «تالار خطاهای متداول» callout (sticky paddle fix with position reset, integer division truncation with `2.0`, high-speed tunneling clamp).
+- **Lifecycle & Milestones (p. 5):** Body page ۴, «ماشین وضعیت و چرخهٔ حیات بازی» visual block diagram (`READY`, `RUNNING`, `PAUSED`, `GAME_OVER`, `VICTORY`), state table, 5 scaffolded implementation milestones with concrete acceptance criteria, and bonus features (durable 2-hit bricks and dynamic runtime storage toggle).
+- **Evaluation & Defense (p. 6):** Body page ۵, «ساختار استاندارد مخزن گیت و فایل‌ها» with standard packaging tree in terminal block, atomic commit conventions, «جدول مصوب ارزیابی و بارم‌بندی» (100 points normalized to 2.0 course points across Functionality 40, OOP 35, Code Quality 15, Oral Defense 10), «ضریب ارزیابی در جلسهٔ دفاع شفاهی» linear interpolation multiplier ($\alpha \in [0.5, 1.0]$), and academic integrity & Quera submission callout.
+
+All pages adhere strictly to the 6-page budget, full-width line justification (`par(justify: true)`), and calm 6pt paragraph rhythm without clipped characters or trailing orphan pages.
+
 ## Debugging, Search & AI student handout (2026-10-13)
 
 Typst version: `typst 0.15.1 (unknown commit)`. From the repository root, with

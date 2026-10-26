@@ -6,6 +6,7 @@ mkdir -p "$project_root/output/pdf"
 build_entries=(
   'hw1|src/documents/hw1.typ|hw1'
   'workshop-01|src/documents/workshop-01.typ|workshop-01'
+  'breakout-phase-01|src/documents/breakout-phase-01.typ|breakout-phase-01'
   'homework|src/templates/homework.typ|homework-template'
   'workshop-notes|src/templates/workshop-notes.typ|workshop-notes-template'
   'project-phase|src/templates/project-phase.typ|project-phase-template'
