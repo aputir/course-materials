@@ -9,5 +9,5 @@
   ]
   #v(8mm)
 
-  #outline(title: none, indent: 1.5em, depth: 2)
+  #outline(title: none, indent: 1.5em, depth: 1)
 ]

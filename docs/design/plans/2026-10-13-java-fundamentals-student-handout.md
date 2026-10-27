@@ -1,6 +1,6 @@
 # Java Fundamentals Student Handout Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Create a Persian-first student handout covering the first two Java fundamentals units with approachable examples, practice checkpoints, and no OOP instruction.
 
@@ -8,7 +8,7 @@
 
 **Tech Stack:** Typst 0.15.1, the course theme, local `@local/dorost:0.2.1`, bundled Vazirmatn/Lora/JetBrains Mono fonts, Poppler rendering tools.
 
-**Spec:** `docs/superpowers/specs/2026-10-13-java-fundamentals-student-handout-design.md`
+**Spec:** `docs/design/specs/2026-10-13-java-fundamentals-student-handout-design.md`
 
 ## Global Constraints
 

@@ -3,6 +3,7 @@
 #import "breakout/toc.typ": *
 #import "breakout/rules.typ": *
 #import "breakout/introduction.typ": *
+#import "breakout/tech-stack.typ": *
 #import "breakout/before-phase1.typ": *
 #import "breakout/architecture.typ": *
 #import "breakout/entities.typ": *
@@ -20,9 +21,6 @@
   cover-artwork: breakout-cover-vignette(),
 )
 
-#set par(justify: true, leading: 6.5pt, spacing: 7pt)
-#set list(spacing: 7.5pt)
-
 #breakout-toc-page()
 #pagebreak()
 
@@ -30,6 +28,9 @@
 #pagebreak()
 
 #breakout-introduction-page()
+#pagebreak()
+
+#breakout-tech-stack-page()
 #pagebreak()
 
 #breakout-before-phase1-page()

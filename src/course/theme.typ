@@ -22,11 +22,14 @@
   furniture-gap: 7mm, logo: 32mm,
 )
 // Absolute spacing avoids larger gaps merely because a heading uses larger type.
+// Typst collapses adjacent block gaps to the larger value, so a heading's "after"
+// must exceed the paragraph gap (7pt) to take effect; "before" stays clearly larger
+// than "after" so each heading groups with the content it introduces.
 #let spacing = (
   line: 6.5pt, paragraph: 7pt, item: 7.5pt,
-  section-before: 14pt, section-after: 5pt,
-  subsection-before: 10pt, subsection-after: 4pt,
-  minor-before: 8pt, minor-after: 3pt,
+  section-before: 14pt, section-after: 8pt,
+  subsection-before: 12pt, subsection-after: 8pt,
+  minor-before: 12pt, minor-after: 8pt,
   element: 6pt, panel-x: 10pt, panel-y: 8pt, label: 4pt,
   cover-brand: 22mm, cover-course: 5mm, cover-subtitle: 4mm,
   cover-rule: 6mm, cover-details: 10mm,
@@ -166,6 +169,19 @@
   #block(above: 0pt, below: 0pt, sticky: true)[#text(weight: "bold", fill: colors.blue)[#title]]
   #v(spacing.label)
   #body
+]
+// Full-width, vertically stacked explanation card with an accent rule on the right.
+#let course-card(title, accent, tag: none, body) = block(
+  width: 100%, fill: colors.pale, stroke: (right: 3pt + accent), radius: 3pt,
+  inset: (x: spacing.panel-x, y: spacing.panel-y), above: spacing.element, below: spacing.element, breakable: false,
+)[
+  #text(weight: "bold", size: type-scale.minor-heading, fill: accent)[#title]
+  #if tag != none and tag != "" and tag != [] [
+    #h(6pt)
+    #text(size: type-scale.footer, fill: colors.muted)[#tag]
+  ]
+  #v(spacing.label)
+  #text(size: type-scale.small)[#body]
 ]
 #let checklist(items) = {
   set list(marker: box(rect(width: 5pt, height: 5pt, stroke: 0.8pt + colors.muted)), spacing: spacing.item)

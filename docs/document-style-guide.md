@@ -2,7 +2,7 @@
 
 This is the project's working editorial and design standard. Apply it to homework, workshop notes, project phases, and handouts through the shared Typst theme.
 
-## References and skills
+## References
 
 The bilingual primitives (`ltr`, `rtl`, `code-inline`, `math-inline`, and
 Persian digit conversion) come from the pinned local [Dorost package](../packages/README.md).
@@ -11,9 +11,9 @@ and course-specific components.
 
 - [Butterick's Practical Typography: key rules](https://practicaltypography.com/summary-of-key-rules.html) and [Typography in ten minutes](https://practicaltypography.com/typography-in-ten-minutes.html): prioritize readable body text; control font size, line spacing, measure, and emphasis; use consistent paragraph spacing and avoid alignment with repeated spaces. Its numerical recommendations primarily describe Latin typography, so Persian settings are judged in rendered pages rather than copied mechanically.
 - [Typst page setup guide](https://typst.app/docs/guides/page-setup/) and [text direction reference](https://typst.app/docs/reference/text/text/): implement consistent page geometry, furniture, and language/direction contexts.
-- The installed PDF skill supplies the production workflow: compile, render, inspect every page, and repair visual defects before delivery.
+- The PDF production workflow is: compile, render, inspect every page, and repair visual defects before delivery.
 
-An online skill search also found [Adobe's whitepaper skill](https://github.com/adobe/skills/blob/main/plugins/aem/project-management/skills/whitepaper/SKILL.md), which uses Pandoc and Typst. Its hierarchy and separate code typography are relevant, but its conversion workflow deletes input Markdown and assumes a whitepaper asset bundle. It was inspected as a reference, not installed or executed. Our reusable Persian course sources remain editable and local. Third-party web/CSS typography skills were not adopted as print-document workflows.
+An online search also found [Adobe's whitepaper workflow](https://github.com/adobe/skills/blob/main/plugins/aem/project-management/skills/whitepaper/SKILL.md), which uses Pandoc and Typst. Its hierarchy and separate code typography are relevant, but its conversion workflow deletes input Markdown and assumes a whitepaper asset bundle. It was inspected as a reference, not installed or executed. Our reusable Persian course sources remain editable and local. Third-party web/CSS typography guides were not adopted as print-document workflows.
 
 These are general publishing references, not an official University of Tehran brand manual. No verified public UT brand manual was found in this search.
 
@@ -36,16 +36,16 @@ These are general publishing references, not an official University of Tehran br
 - Do not justify Persian prose by inserting manual kashida characters or extra spaces. Retain the theme's natural word spacing.
 - Avoid adding heavy panels to ordinary prose. Code blocks and labeled notes may use a quiet tinted background.
 
-The `spacing` dictionary in `src/course/theme.typ` owns the common rhythm. Values below are layout gaps, not baseline-to-baseline line heights. Typst may collapse adjacent block gaps and discard gaps at page boundaries; avoid adding compensating blank paragraphs.
+The `spacing` dictionary in `src/course/theme.typ` owns the common rhythm. Values below are layout gaps, not baseline-to-baseline line heights. Typst collapses adjacent block gaps to the larger of the two, and discards gaps at page boundaries. Two consequences follow: a heading's "after" value only shows when it exceeds the 7 pt paragraph gap, which is why the subheading and minor values sit at 8 pt; and blocks such as cards must declare their own 6 pt above/below gap, because a zero gap lets the block background cover the preceding text. Avoid adding compensating blank paragraphs or manual `#v()` spacers around theme blocks.
 
 | Relationship | Shared value |
 | --- | --- |
-| Body leading / paragraph spacing | 4 pt / 5 pt |
-| Bullet, numbered, and checklist item spacing | 5 pt |
-| Main heading before / after | 16 pt / 6 pt |
-| Subheading before / after | 11 pt / 4 pt |
-| Minor heading before / after | 9 pt / 3 pt |
-| Notes, code, English blocks, display equations | 6 pt above and below |
+| Body leading / paragraph spacing | 6.5 pt / 7 pt |
+| Bullet, numbered, and checklist item spacing | 7.5 pt |
+| Main heading before / after | 14 pt / 8 pt |
+| Subheading before / after | 12 pt / 8 pt |
+| Minor heading before / after | 12 pt / 8 pt |
+| Notes, cards, code, English blocks, display equations | 6 pt above and below |
 | Panel padding | 10 pt horizontal, 8 pt vertical |
 | Label to related text | 4 pt |
 | Cover brand to course group | 22 mm |
@@ -82,7 +82,7 @@ English technical names required by an assignment remain unchanged. Persian sent
 
 ### Layout: vertical cards, code blocks, and formula decomposition
 
-1. **Vertical-first cards:** Avoid horizontal cards or placing cards side-by-side. Always prefer full-width, vertically stacked cards (`width: 100%`) for visual clarity and predictable page flow.
+1. **Vertical-first cards:** Avoid horizontal cards or placing cards side-by-side. Always prefer full-width, vertically stacked cards (`width: 100%`) for visual clarity and predictable page flow. Build short accent cards with `course-card(title, accent, tag: ..., body)` from `src/course/theme.typ`.
 2. **Vertical separation of code and explanations:** Do not place code blocks horizontally adjacent to lists or descriptions. Stack code blocks and explanations vertically with appropriate spacing.
 3. **Formula visibility and decomposition:** Place mathematical formulas in dedicated lines with sufficient breathing room. For complex or multi-term fractions, break the numerator and denominator into separate named variables ($Delta x$ and $w_"half"$) before computing the ratio, aligning the math directly with clean implementation code.
 

@@ -1,6 +1,6 @@
 # UT Course Documents Implementation Plan
 
-> **For agentic workers:** Use superpowers:executing-plans to implement this plan in the current session. Steps use checkbox syntax for tracking.
+> Steps use checkbox syntax for tracking.
 
 **Goal:** Deliver reusable Persian-first course templates and a faithful, polished HW1 in Typst and PDF.
 
@@ -8,7 +8,7 @@
 
 **Tech Stack:** Typst 0.15.1, Vazirmatn 33.003, JetBrains Mono, native Typst math, Poppler for PDF review.
 
-**Spec:** `docs/superpowers/specs/2026-10-06-course-document-system-design.md`
+**Spec:** `docs/design/specs/2026-10-06-course-document-system-design.md`
 
 ## Global Constraints
 
@@ -61,11 +61,11 @@
 
 ## Progress
 
-- Installation: Typst 0.15.1 verified; Superpowers installed/enabled; RTK 0.51.0 installed with global Codex integration registered. Automatic RTK hooks take effect after restart.
+- Installation: Typst 0.15.1 verified.
 - Ruling: apply the Git-based workflow through this plan and progress record because the user's target directory has no Git repository. Cost: no commit history for the changes.
 - Ruling: use compilation and visual/content checks for document templates rather than unit tests mirroring layout code. Cost: visual regressions require human image inspection.
 
 - Initial delivery: shared theme, four starters, eight-page HW1, and two-page typography proof complete. All six builds exited 0 without warnings; all 14 pages visually reviewed. Exact raw PDF content checks passed 32/32, all fonts embedded, and source copies matched SHA-256. Independent review found no actionable defects.
 - Subsequent user refinement: dedicated cover, course/document-first hierarchy, more deliberate cover/header spacing, optional preparers/publication date, and semantic helpers/examples for concepts and Latin prose numbers. Updated all four starters and the typography proof through the existing shared theme; HW1 assignment source untouched. Current outputs total 20 pages (HW1 9, starters 2 each, proof 3). All current pages visually reviewed; fresh independent review found no actionable defects. Current checks and portable rebuild are recorded in `docs/verification.md`.
-- Current identity refinement: one enlarged UT seal (32 mm, upper right), no Engineering logo in any output, no redundant English course label, and Persian HW1 cover title/subtitle. Body content remains pixel-identical to the previous reviewed revision. Researched online skills and publishing guidance; adopted the installed PDF workflow plus Butterick/official Typst references into `docs/document-style-guide.md` and linked it from local `AGENTS.md`. Adobe whitepaper was inspected as a candidate but not installed or executed. Six current covers reviewed; image/text/PDF metadata checks confirm the requested changes.
+- Current identity refinement: one enlarged UT seal (32 mm, upper right), no Engineering logo in any output, no redundant English course label, and Persian HW1 cover title/subtitle. Body content remains pixel-identical to the previous reviewed revision. Researched online publishing guidance; adopted the PDF production workflow plus Butterick/official Typst references into `docs/document-style-guide.md` and linked it from local `AGENTS.md`. Adobe whitepaper was inspected as a candidate but not installed or executed. Six current covers reviewed; image/text/PDF metadata checks confirm the requested changes.
 - Latest consistency audit: the user selected airy, consistent spacing. Added central absolute spacing values, matching cover/body edges, stable cover title anchoring, explicit label/panel gaps, and shared list spacing. Fixed inline raw sizing (including Typst's built-in reduction) and derived PDF author metadata. Clarified code line wrapping and the fixed six-entry build scope. Extended the typography proof with code in a subheading; manually rendered a long cover title and multiple preparer names. HW1 source remains unchanged. Current evidence is in `docs/verification.md`; findings and changes are in `docs/template-review.md`.

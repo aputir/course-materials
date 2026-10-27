@@ -1,9 +1,5 @@
 #import "../../course/theme.typ": *
 
-// Page 7: Entities & Geometry (موجودیت‌ها و هندسه بازی)
-// Features 4 modular OOP entity cards with inline vector graphic visualizations,
-// Persian digits throughout, and strict encapsulation guidelines.
-
 #let paddle-visual() = block(
   width: 100%,
   height: 64pt,
@@ -110,7 +106,7 @@
 
     // Diameter label
     #place(bottom + left, dx: 4pt, dy: -4pt)[
-      #text(dir: rtl, font: body-font, size: 5.6pt, fill: colors.muted)[قطر: ۱۶ پیکسل (جعبه ۱۶×۱۶)]
+      #text(dir: rtl, font: body-font, size: 5.6pt, fill: colors.muted)[قطر ۱۶ پیکسل؛ جعبه مرز ۱۶×۱۶]
     ]
   ]
 )
@@ -160,7 +156,7 @@
 
     // Matrix summary
     #place(bottom + center, dy: -4pt)[
-      #text(dir: rtl, font: body-font, size: 5.8pt, fill: colors.muted)[ماتریس ۵ سطر × ۸ ستون (۴۰ آجر)]
+      #text(dir: rtl, font: body-font, size: 5.8pt, fill: colors.muted)[ماتریس ۵×۸ — ۴۰ آجر]
     ]
   ]
 )
@@ -188,12 +184,12 @@
     #place(top + left, dx: cx, dy: cy,
       rect(width: cw, height: 9pt, fill: rgb("F1F5F9"), stroke: (bottom: 0.5pt + colors.rule), radius: (top: 2pt)))
     #place(top + left, dx: cx + 3pt, dy: cy + 1.5pt)[
-      #text(dir: rtl, font: body-font, size: 4.8pt, fill: colors.ink)[نوار: #text(fill: rgb("EF4444"))[♥ ♥ ♥] | ۱۰۰]
+      #text(dir: rtl, font: body-font, size: 4.8pt, fill: colors.ink)[نوار: #text(fill: rgb("EF4444"))[جان ۳] | امتیاز ۱۰۰]
     ]
 
     // Coordinate Origin (0,0)
     #place(top + left, dx: cx - 6pt, dy: cy - 7pt)[
-      #text(dir: rtl, font: body-font, size: 5.5pt, fill: colors.muted)[(#fa(0), #fa(0))]
+      #text(dir: rtl, font: body-font, size: 5.5pt, fill: colors.muted)[مبدا: #fa(0)، #fa(0)]
     ]
 
     // Dimensions 800 x 600
@@ -201,11 +197,11 @@
       #text(dir: rtl, font: body-font, size: 6.2pt, fill: colors.ink, weight: "bold")[۸۰۰ × ۶۰۰ پیکسل]
     ]
 
-    // Bottom Fall Line (y > 600)
+    // Bottom fall line (below paddle)
     #place(top + left, dx: cx, dy: cy + ch - 1pt,
       line(start: (0pt, 0pt), end: (cw, 0pt), stroke: (paint: rgb("EF4444"), dash: "dashed", thickness: 0.65pt)))
     #place(bottom + center, dy: -2pt)[
-      #text(dir: rtl, font: body-font, size: 5.6pt, fill: rgb("DC2626"))[سقوط توپ: $y > #text(font: body-font)[۶۰۰]$]
+      #text(dir: rtl, font: body-font, size: 5.6pt, fill: rgb("DC2626"))[کف بوم — مرز سقوط توپ]
     ]
   ]
 )
@@ -228,12 +224,12 @@
         columns: (1fr, auto),
         align: (right + horizon, left + horizon),
         [
-          #text(weight: "bold", size: type-scale.small + 0.5pt, fill: accent)[#title]
+          #text(weight: "bold", size: type-scale.minor-heading, fill: accent)[#title]
           #h(6pt)
-          #text(size: 8pt, fill: colors.muted)[#en-tag]
+          #text(size: type-scale.footer, fill: colors.muted)[#en-tag]
         ],
         box(fill: accent.lighten(90%), inset: (x: 6pt, y: 2.5pt), radius: 2pt)[
-          #text(size: 7.5pt, fill: accent, weight: "bold")[#badge-text]
+          #text(size: type-scale.footer, fill: accent, weight: "bold")[#badge-text]
         ]
       )
       #v(3pt)
@@ -241,11 +237,11 @@
         columns: (1fr, 110pt),
         gutter: 10pt,
         [
-          #text(size: 8.5pt)[
+          #text(size: type-scale.small)[
             *هندسه و ابعاد:* #geom-text
           ]
           #v(2.5pt)
-          #text(size: 8.5pt)[
+          #text(size: type-scale.small)[
             *رفتار و کپسوله‌سازی:* #oop-text
           ]
         ],
@@ -258,9 +254,9 @@
     "سکو",
     code-inline("Paddle"),
     colors.blue,
-    [ابعاد ۱۰۰×۱۵ px | Y=۵۴۵ px | بازه X: [۰, ۷۰۰]],
+    [ابعاد ۱۰۰×۱۵ پیکسل | Y=۵۴۵ پیکسل | بازه X: [۰, ۷۰۰]],
     [مستطیل به ابعاد ۱۰۰ در ۱۵ پیکسل مستقر در فاصله ۴۰ پیکسلی از کف پنجره ($y = ۵۴۵$). بازه مجاز جابه‌جایی افقی $x in [۰, ۷۰۰]$ است تا سکو هرگز از حاشیه چپ یا راست بوم خارج نشود.],
-    [فیلدهای مختصات خصوصی (#code-inline("private")) هستند. جابه‌جایی با سرعت ۸ پیکسل بر تیک صرفاً از طریق فراخوانی متدهای #code-inline("moveLeft") و #code-inline("moveRight") با اعمال مهار مرزی انجام می‌پذیرد.],
+    [فیلدهای مختصات با سطح دسترسی #code-inline("private") هستند. جابه‌جایی با تندی ۸ پیکسل بر تیک فقط از طریق #code-inline("moveLeft") و #code-inline("moveRight") با مهار مرزی انجام می‌شود.],
     paddle-visual()
   )
 
@@ -270,9 +266,9 @@
     "توپ",
     code-inline("Ball"),
     rgb("D97706"),
-    [قطر ۱۶ px (شعاع ۸) | تندی پایه ۶.۰ px/tick],
-    [دایره به قطر ۱۶ پیکسل با شعاع $r$ برابر ۸ پیکسل. مستطیل محاطی تداخل آن ۱۶×۱۶ پیکسل است. بردار سرعت با تندی پایه ۶.۰ پیکسل بر تیک در برخورد با دیواره‌ها و سکو به صورت الاستیک بازتاب می‌یابد.],
-    [در شروع دور، توپ در نقطه مهار روی سکو $(x_"paddle" + ۴۲, ۵۲۹)$ قرار داشته و با کلید فاصله پرتاب می‌شود. فیلدهای سرعت و موقعیت خصوصی بوده و متدهای #code-inline("reverseX") و #code-inline("reverseY") جهت بردار را معکوس می‌کنند.],
+    [قطر ۱۶ \| شعاع ۸ \| تندی پایه ۶.۰ پیکسل/تیک],
+    [دایره به قطر ۱۶ پیکسل؛ موقعیت با گوشه بالا-چپ جعبه مرز ۱۶×۱۶ ذخیره می‌شود. در برخورد با دیواره‌ها و آجرها، #code-inline("reverseX") و #code-inline("reverseY") مؤلفهٔ سرعت را معکوس می‌کنند. برخورد با سکو زاویه‌دار است و در بخش فیزیک توضیح داده شده، نه بازتاب آینه‌ای ساده.],
+    [در شروع دور، توپ روی سکو مهار است—مثلاً $(x_"paddle" + ۴۲, ۵۲۹)$ یعنی وسط سکو منهای شعاع توپ—و با #code-inline("Space") پرتاب می‌شود. فیلدهای سرعت و موقعیت #code-inline("private") هستند؛ برای سکو از #code-inline("setVx")/#code-inline("setVy") یا متد کمکی #code-inline("bounceOffPaddle") استفاده کنید.],
     ball-visual()
   )
 
@@ -282,9 +278,9 @@
     "آجرها",
     code-inline("Brick"),
     rgb("059669"),
-    [ماتریس ۴۰ آجر (۵×۸) | ابعاد ۸۵×۲۵ px | فاصله ۶ px],
+    [ماتریس ۴۰ آجر (۵×۸) | ابعاد ۸۵×۲۵ پیکسل | فاصله ۶ پیکسل],
     [شبکه ۵ سطر در ۸ ستون (۴۰ آجر). ابعاد هر آجر ۸۵ در ۲۵ پیکسل با فاصله ۶ پیکسل و حاشیه بالای ۶۰ پیکسل. فرمول مکان آجر سطر $r$ و ستون $c$: $x = ۳۹ + c times ۹۱$ و $y = ۶۰ + r times ۳۱$.],
-    [هر آجر دارای مستطیل محیطی تداخل و فیلد وضعیت تخریب خصوصی است. با اصابت توپ، متد #code-inline("hit") وضعیت آجر را به نابود تغییر داده، آجر از صفحه محو شده و ۱۰۰ امتیاز به بازیکن تعلق می‌گیرد.],
+    [هر آجر مستطیل مرز تداخل#footnote[#en[AABB: Axis-Aligned Bounding Box]] و وضعیت تخریب #code-inline("private") دارد. متد #code-inline("hit") با هر اصابت، آجر را نابود می‌کند و امتیاز ۱۰۰ را ثبت می‌کند.],
     brick-visual()
   )
 
@@ -294,9 +290,9 @@
     "نشانگر وضعیت و بوم",
     code-inline("HUD / Canvas"),
     colors.ink,
-    [بوم ۸۰۰×۶۰۰ px | نوار وضعیت ارتفاع ۳۵ px],
+    [بوم ۸۰۰×۶۰۰ پیکسل | نوار وضعیت ارتفاع ۳۵ پیکسل],
     [پنجره گرافیکی با ابعاد ۸۰۰ در ۶۰۰ پیکسل و مبدا $(#fa(0), #fa(0))$ در گوشه بالا-چپ. نوار بالایی صفحه به ارتفاع ۳۵ پیکسل برای نمایش وضعیت جان‌ها، امتیاز و رکورد بازی در نظر گرفته شده است.],
-    [موتور بازی وضعیت ۳ جان و امتیاز جاری را مدیریت می‌کند. خروج توپ از کف ($y > #text(font: body-font)[۶۰۰]$) جان کسر کرده و پس از اتمام جان‌ها یا تخریب تمام ۴۰ آجر، پیام‌های پایان توسط نما نمایش داده می‌شوند.],
+    [موتور بازی ۳ جان و امتیاز را مدیریت می‌کند. وقتی لبهٔ پایین توپ از خط پایین بوم عبور کند، یک جان کم می‌شود؛ شرط دقیق در بخش گیم‌پلی آمده است. پس از اتمام جان‌ها یا تخریب ۴۰ آجر، نما پیام پایان را نشان می‌دهد.],
     hud-visual()
   )
 ]
