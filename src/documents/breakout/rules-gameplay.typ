@@ -59,9 +59,9 @@
         // --- TOP ROW TRANSITIONS ---
         // READY -> RUNNING (Space)
         #place(top + left, dx: 102pt, dy: 11pt)[
-          #line(start: (0pt, 0pt), end: (74pt, 0pt), stroke: 1.1pt + rgb("1D4ED8"))
+          #line(start: (0pt, 0pt), end: (76pt, 0pt), stroke: 1.1pt + rgb("1D4ED8"))
         ]
-        #place(top + left, dx: 172pt, dy: 9pt)[
+        #place(top + left, dx: 174pt, dy: 11pt)[
           #polygon(fill: rgb("1D4ED8"), (0pt, 2pt), (0pt, -2pt), (4pt, 0pt))
         ]
         #place(top + left, dx: 110pt, dy: 0pt)[
@@ -69,10 +69,10 @@
         ]
 
         // RUNNING -> READY (Ball drop with lives remaining: -1 life)
-        #place(top + left, dx: 176pt, dy: 27pt)[
-          #line(start: (0pt, 0pt), end: (-74pt, 0pt), stroke: 1.1pt + rgb("E11D48"))
+        #place(top + left, dx: 178pt, dy: 27pt)[
+          #line(start: (0pt, 0pt), end: (-76pt, 0pt), stroke: 1.1pt + rgb("E11D48"))
         ]
-        #place(top + left, dx: 106pt, dy: 25pt)[
+        #place(top + left, dx: 106pt, dy: 27pt)[
           #polygon(fill: rgb("E11D48"), (0pt, 2pt), (0pt, -2pt), (-4pt, 0pt))
         ]
         #place(top + left, dx: 104pt, dy: 29pt)[
