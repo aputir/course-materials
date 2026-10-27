@@ -1,5 +1,13 @@
 # Verification record
 
+## Gameplay state diagram layout (2026-10-27)
+
+The `RUNNING ↔ PAUSED` key-P arrow was 22 pt long and stopped short of `PAUSED`, which sat about 90 pt away, so the two arrowheads collided and the state looked disconnected. The arrow now spans the gap, measured with `layout` against the container width, with its label centred above the line. The `GAME_OVER` life-loss label and the `VICTORY` label moved next to their arrows. Rebuilt `breakout-phase-01.pdf` (14 pages); rendered and inspected the diagram on page 9 at 300 dpi.
+
+```sh
+./scripts/build.sh breakout-phase-01
+```
+
 ## Rubric weights, α formula, and Ilearn submission (2026-10-27)
 
 Rubric: correctness, performance, and game feel are now 35 points (was 40); presentation mastery is now 15 points (was 10). The total stays at 100, and the bullet stating the full presentation-row award matches. The oral-defense multiplier is now `α = 0.5 + 0.5 · m/100`, where `m` is the TA mastery percentage from 0 to 100, so `0.5 ≤ α ≤ 1`. Worked example: technical score 80 with `m = 60` gives `α = 0.8` and a final score of 64. The evaluation page, design spec, and plan use the same formula. Submission now names Ilearn (سامانه آموزشی ایلرن) in the rules, the pre-start page, and docs; no Quera references remain in sources, docs, or committed PDFs.
