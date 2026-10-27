@@ -79,18 +79,29 @@
           #text(dir: rtl, size: 6.2pt, fill: rgb("E11D48"), weight: "bold")[افتادن توپ؛ کسر ۱ جان]
         ]
 
-        // RUNNING <-> PAUSED (Key P)
-        #place(top + left, dx: 282pt, dy: 18pt)[
-          #line(start: (0pt, 0pt), end: (22pt, 0pt), stroke: 1.1pt + rgb("D97706"))
-        ]
-        #place(top + left, dx: 300pt, dy: 16pt)[
-          #polygon(fill: rgb("D97706"), (0pt, 2pt), (0pt, -2pt), (4pt, 0pt))
-        ]
-        #place(top + left, dx: 286pt, dy: 16pt)[
-          #polygon(fill: rgb("D97706"), (0pt, 2pt), (0pt, -2pt), (-4pt, 0pt))
-        ]
-        #place(top + left, dx: 288pt, dy: 5pt)[
-          #text(dir: rtl, size: 6.8pt, fill: rgb("D97706"), weight: "bold")[کلید #code-inline("P")]
+        // RUNNING <-> PAUSED (Key P): spans the gap from RUNNING's right edge
+        // (x = 282pt) to PAUSED's left edge (container width - 100pt).
+        #place(top + left)[
+          #layout(size => {
+            let clr = rgb("D97706")
+            let x-start = 284pt
+            let x-end = size.width - 102pt
+            let span = x-end - x-start
+            place(top + left, dx: x-start, dy: 22pt)[
+              #line(start: (0pt, 0pt), end: (span, 0pt), stroke: 1.1pt + clr)
+            ]
+            place(top + left, dx: x-start + 4pt, dy: 22pt)[
+              #polygon(fill: clr, (0pt, 2pt), (0pt, -2pt), (-4pt, 0pt))
+            ]
+            place(top + left, dx: x-end - 4pt, dy: 22pt)[
+              #polygon(fill: clr, (0pt, 2pt), (0pt, -2pt), (4pt, 0pt))
+            ]
+            place(top + left, dx: x-start, dy: 10pt)[
+              #box(width: span)[#align(center)[
+                #text(dir: rtl, size: 6.8pt, fill: clr, weight: "bold")[کلید #code-inline("P")]
+              ]]
+            ]
+          })
         ]
         // --- BOTTOM ROW NODES ---
         // 4. GAME_OVER (bottom-left)
@@ -115,8 +126,10 @@
         #place(top + left, dx: 140pt, dy: 77pt)[
           #polygon(fill: rgb("DC2626"), (1pt, -3pt), (-3pt, 2pt), (4pt, 2pt))
         ]
-        #place(top + left, dx: 72pt, dy: 50pt)[
-          #text(dir: rtl, size: 6.5pt, fill: rgb("DC2626"), weight: "bold")[افتادن توپ؛ جان ۰]
+        #place(top + left, dx: 66pt, dy: 44pt)[
+          #box(width: 110pt)[#align(right)[
+            #text(dir: rtl, size: 6.5pt, fill: rgb("DC2626"), weight: "bold")[افتادن توپ؛ جان ۰]
+          ]]
         ]
 
         // RUNNING -> VICTORY
@@ -126,7 +139,7 @@
         #place(top + left, dx: 320pt, dy: 77pt)[
           #polygon(fill: rgb("059669"), (-1pt, -3pt), (3pt, 2pt), (-4pt, 2pt))
         ]
-        #place(top + left, dx: 310pt, dy: 50pt)[
+        #place(top + left, dx: 284pt, dy: 42pt)[
           #text(dir: rtl, size: 6.5pt, fill: rgb("059669"), weight: "bold")[پاکسازی تمام ۴۰ آجر]
         ]
 
