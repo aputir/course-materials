@@ -320,10 +320,6 @@ X . X .", lang: "text")],
   *1.* #text(fill: colors.blue)[java - Why does integer division truncate in Java? - Stack Overflow]\
   #text(fill: rgb("006621"))[stackoverflow.com/questions/4141682/...]\
   In Java, when you divide two integers, the result is always an integer. To get a floating-point...
-  #linebreak()
-  *2.* #text(fill: colors.blue)[ArithmeticException: / by zero in Java explained - Baeldung]\
-  #text(fill: rgb("006621"))[baeldung.com/java-division-by-zero]\
-  Learn what causes java.lang.ArithmeticException and how to prevent it using guards...
 ]
 
 #v(spacing.element)
