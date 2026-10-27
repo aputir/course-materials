@@ -1,5 +1,15 @@
 # Verification record
 
+## Breakout evaluation rubric and TA contacts (2026-10-27)
+
+The evaluation page (`src/documents/breakout/evaluation.typ`) no longer lists a separate 15-point oral-presentation row. The 100-point table is technical only: game feel 40, OOP architecture 40, code quality 20. Final phase score is technical score times $\alpha$, with $\alpha = 0.5 + 0.5 \cdot m/100$ unchanged. The presentation section explains what is assessed in the session and how $\alpha$ applies, without a static presentation barème.
+
+A dedicated subsection «تماس با دستیاران آموزشی» lists four TAs with Telegram handles, rendered through the new `contact-person-card` / `contact-person-stack` helpers in `src/course/theme.typ` (full-width rows, white surface, subtle border, linked `@username` pill). Impeccable was installed in this project via `npx impeccable install` for design guidance on that component.
+
+```sh
+./scripts/build.sh breakout-phase-01
+```
+
 ## Breakout Phase 1 prose review (2026-10-27)
 
 The Persian prose in the Breakout Phase 1 sources was reworded for plain, direct sentences: the rules, introduction, pre-start, architecture, entities, gameplay, graphics, physics, milestones, tech-stack, and evaluation pages. Stiff calques and filler were removed (for example «شفاف» for a plain canvas, «مهار مرزی», «بطن», «نجات‌بخش», «کاملاً», «لذت‌بخش», and the «ما همیشه کنارتان هستیم» note). The redundant closing line about AI in the defence section was dropped because the rules page already covers it. The rules note was retitled «پرسش و راهنمایی».

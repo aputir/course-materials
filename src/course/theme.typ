@@ -183,6 +183,33 @@
   #v(spacing.label)
   #text(size: type-scale.small)[#body]
 ]
+// Person contact row: name and role on the right, Telegram handle as the primary action on the left.
+#let contact-person-card(name, telegram-username, tight: false) = {
+  let handle-url = "https://t.me/" + telegram-username
+  block(
+    width: 100%, fill: colors.white, stroke: 0.6pt + colors.rule, radius: 4pt,
+    inset: (x: spacing.panel-x, y: if tight { 6pt } else { spacing.panel-y + 1pt }),
+    above: if tight { 4pt } else { spacing.element }, below: 0pt, breakable: false,
+  )[
+    #grid(columns: (1fr, auto), gutter: 10pt, align: (right, left),
+      block(width: 100%, above: 0pt, below: 0pt)[
+        #set par(spacing: 0pt)
+        #text(weight: "bold", size: type-scale.minor-heading, fill: colors.ink)[#name]
+        #v(3pt)
+        #text(size: type-scale.footer, fill: colors.muted)[دستیار آموزشی · تلگرام]
+      ],
+      link(handle-url, block(breakable: false, inset: (x: 8pt, y: 5pt), fill: colors.pale, radius: 3pt, stroke: 0.5pt + colors.rule)[
+        #text(size: type-scale.label, weight: "medium", fill: colors.blue)[#en("@" + telegram-username)]
+      ]),
+    )
+  ]
+}
+#let contact-person-stack(..people) = block(width: 100%, above: spacing.element, below: spacing.element)[
+  #for i in range(people.pos().len()) {
+    let (name, handle) = people.pos().at(i)
+    contact-person-card(name, handle, tight: i > 0)
+  }
+]
 #let checklist(items) = {
   set list(marker: box(rect(width: 5pt, height: 5pt, stroke: 0.8pt + colors.muted)), spacing: spacing.item)
   list(..items)

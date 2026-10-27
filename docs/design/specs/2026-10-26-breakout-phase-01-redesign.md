@@ -125,10 +125,10 @@ Instead of burdening students with theoretical GoF design pattern terminology be
   - High-level description of the repository deliverable; no mandatory directory tree.
   - Commit message conventions.
 - **جدول مصوب بارم‌بندی (100-Point Grading Rubric):**
-  - Functionality & Game Feel: 35 pts.
-  - OOP Architecture & Design: 35 pts.
-  - Code Cleanliness & Best Practices: 15 pts.
-  - Oral Defense & Conceptual Mastery: 15 pts.
+  - Functionality & Game Feel: 40 pts.
+  - OOP Architecture & Design: 40 pts.
+  - Code Cleanliness & Best Practices: 20 pts.
+  - Oral defense and presentation mastery are not a separate rubric row; they adjust the final phase score only through the $\alpha$ multiplier below.
 - **ضریب دفاع شفاهی (Oral Defense Multiplier):**
   - $\alpha = 0.5 + 0.5 \cdot \frac{m}{100}$, where $m \in [0, 100]$ is the mastery percentage the TAs assess after the presentation; therefore $0.5 \le \alpha \le 1$.
   - $\text{Final Score} = \text{Technical Score} \times \alpha$. Example: technical 80 and $m = 60$ give $\alpha = 0.8$ and a final score of 64.
