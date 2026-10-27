@@ -1,5 +1,15 @@
 # Verification record
 
+## Rubric weights, α formula, and Ilearn submission (2026-10-27)
+
+Rubric: correctness, performance, and game feel are now 35 points (was 40); presentation mastery is now 15 points (was 10). The total stays at 100, and the bullet stating the full presentation-row award matches. The oral-defense multiplier is now `α = 0.5 + 0.5 · m/100`, where `m` is the TA mastery percentage from 0 to 100, so `0.5 ≤ α ≤ 1`. Worked example: technical score 80 with `m = 60` gives `α = 0.8` and a final score of 64. The evaluation page, design spec, and plan use the same formula. Submission now names Ilearn (سامانه آموزشی ایلرن) in the rules, the pre-start page, and docs; no Quera references remain in sources, docs, or committed PDFs.
+
+Rebuilt `breakout-phase-01.pdf` (14 pages). Rendered pages 13 and 14: the rubric rows show 35, 35, 15, 15 totalling 100, and the α example fits on page 14.
+
+```sh
+./scripts/build.sh breakout-phase-01
+```
+
 ## Heading and card spacing, docs cleanup (2026-10-27)
 
 Root cause of the tight subheadings: Typst collapses adjacent block gaps to the larger value, and the paragraph gap is 7 pt. Heading "after" values below 7 pt (3 pt minor, 4 pt subheading) therefore had no effect. The `spacing` tokens now set heading "after" to 8 pt and "before" to 12 pt for subheadings and minor headings (main heading 14/8 pt), so each heading groups with its content. `course-card` previously set `above: 0pt`; a card placed directly after a paragraph painted over the paragraph's last line (GitHub section, page 6). Cards now use the standard 6 pt gap, and eight manual `#v(1.5pt)` spacers in `before-phase1.typ` were removed. The style guide's spacing table now matches the code.
@@ -43,7 +53,7 @@ PATH="/home/opmc/.cargo/bin:$PATH" ./scripts/build.sh breakout-phase-01
 All 12 pages were rendered to numbered PNG files and visually verified individually:
 - **Cover (p. 1):** Dedicated unnumbered cover with official 32 mm UT seal, department affiliation «دانشکده علوم کامپیوتر», course title «برنامه‌سازی پیشرفته», kind «فاز پروژه», title «هسته بازی Breakout», phase number «۰۱», and custom vector blueprint vignette (`130 × 70 mm`).
 - **Table of Contents (p. 2):** Automated `#outline` with dotted leaders and clean section hierarchy.
-- **Rules & Submission (p. 3):** Solo development, GitHub commit expectations, in-person oral defense, and Quera submission guidelines.
+- **Rules & Submission (p. 3):** Solo development, GitHub commit expectations, in-person oral defense, and Ilearn submission guidelines.
 - **Introduction & Goals (p. 4):** Historical Atari 1976 Wozniak/Jobs sprint context, core OOP educational goals (SoC, SRP, Encapsulation, Event-driven architecture).
 - **Pre-Phase 1 Actions (p. 5):** High-level tasks for GitHub repository setup, .gitignore configuration, and Conventional Commits; game feel exploration; and UML modeling in vertical card layout without horizontal columns.
 - **System Architecture (p. 6):** MVC pattern with storytelling hook, vertically stacked MVC cards, 3-step data flow, and vertical `HighScoreStorage` interface definition followed by in-memory and file persistence cards.
