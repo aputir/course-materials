@@ -2,7 +2,7 @@
 
 ## Gameplay state diagram layout (2026-10-27)
 
-The `RUNNING ↔ PAUSED` key-P arrow was 22 pt long and stopped short of `PAUSED`, which sat about 90 pt away, so the two arrowheads collided and the state looked disconnected. The arrow now spans the gap, measured with `layout` against the container width, with its label centred above the line. The `GAME_OVER` life-loss label and the `VICTORY` label moved next to their arrows. Rebuilt `breakout-phase-01.pdf` (14 pages); rendered and inspected the diagram on page 9 at 300 dpi.
+The `RUNNING ↔ PAUSED` key-P arrow was 22 pt long and stopped short of `PAUSED`, which sat about 90 pt away, so the two arrowheads collided and the state looked disconnected. The arrow now spans the gap, measured with `layout` against the container width, with its label centred above the line. The `GAME_OVER` life-loss label and the `VICTORY` label moved next to their arrows. The `READY ↔ RUNNING` arrowheads were placed 2 pt above their lines (head origin at a different `dy` from the line); both heads now share the line's `dy`, and the line tails stop 2 pt short of each box instead of 4 pt. Rebuilt `breakout-phase-01.pdf` (14 pages); rendered and inspected the diagram on page 9 at 300 and 600 dpi.
 
 ```sh
 ./scripts/build.sh breakout-phase-01
