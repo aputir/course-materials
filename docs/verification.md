@@ -1,6 +1,6 @@
 # Verification record
 
-## Heading and card spacing, agent-trace cleanup (2026-10-27)
+## Heading and card spacing, docs cleanup (2026-10-27)
 
 Root cause of the tight subheadings: Typst collapses adjacent block gaps to the larger value, and the paragraph gap is 7 pt. Heading "after" values below 7 pt (3 pt minor, 4 pt subheading) therefore had no effect. The `spacing` tokens now set heading "after" to 8 pt and "before" to 12 pt for subheadings and minor headings (main heading 14/8 pt), so each heading groups with its content. `course-card` previously set `above: 0pt`; a card placed directly after a paragraph painted over the paragraph's last line (GitHub section, page 6). Cards now use the standard 6 pt gap, and eight manual `#v(1.5pt)` spacers in `before-phase1.typ` were removed. The style guide's spacing table now matches the code.
 
@@ -8,7 +8,7 @@ The debugging handout's section 5 callout had spilled to a near-empty page 8 bef
 
 Rebuilt every registry document with `./scripts/build.sh all`, plus `debugging-ai-handout` and `java-fundamentals-handout` with the manual command above. Page counts: breakout 14 (committed PDF 12 was from an earlier revision), debugging 11, all others unchanged. Word counts per page found no unintended near-empty pages; the sparse pages are covers, image-only slides, and closing pages. Rendered and inspected: breakout p. 2 (TOC), p. 6 (card gaps), p. 14 (heading gaps); debugging p. 7.
 
-Agent-trace cleanup: `docs/superpowers/` is now `docs/design/` (plans and specs), and agent-directed headers and skill names were removed from docs. The dorost checkout received the same rename.
+Docs cleanup: `docs/superpowers/` is now `docs/design/` (plans and specs), and tool-specific headers and names were removed from docs. The dorost checkout received the same rename.
 
 ```sh
 ./scripts/build.sh all
