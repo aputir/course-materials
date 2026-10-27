@@ -1,5 +1,37 @@
 # Verification record
 
+## Heading and card spacing, agent-trace cleanup (2026-10-27)
+
+Root cause of the tight subheadings: Typst collapses adjacent block gaps to the larger value, and the paragraph gap is 7 pt. Heading "after" values below 7 pt (3 pt minor, 4 pt subheading) therefore had no effect. The `spacing` tokens now set heading "after" to 8 pt and "before" to 12 pt for subheadings and minor headings (main heading 14/8 pt), so each heading groups with its content. `course-card` previously set `above: 0pt`; a card placed directly after a paragraph painted over the paragraph's last line (GitHub section, page 6). Cards now use the standard 6 pt gap, and eight manual `#v(1.5pt)` spacers in `before-phase1.typ` were removed. The style guide's spacing table now matches the code.
+
+The debugging handout's section 5 callout had spilled to a near-empty page 8 before a forced page break. The search example shows one result instead of two, matching the existing lead-in, and the handout is 11 pages again.
+
+Rebuilt every registry document with `./scripts/build.sh all`, plus `debugging-ai-handout` and `java-fundamentals-handout` with the manual command above. Page counts: breakout 14 (committed PDF 12 was from an earlier revision), debugging 11, all others unchanged. Word counts per page found no unintended near-empty pages; the sparse pages are covers, image-only slides, and closing pages. Rendered and inspected: breakout p. 2 (TOC), p. 6 (card gaps), p. 14 (heading gaps); debugging p. 7.
+
+Agent-trace cleanup: `docs/superpowers/` is now `docs/design/` (plans and specs), and agent-directed headers and skill names were removed from docs. The dorost checkout received the same rename.
+
+```sh
+./scripts/build.sh all
+typst compile --root . --package-path packages --ignore-system-fonts --font-path resources/assets/fonts src/documents/debugging-ai-handout.typ output/pdf/debugging-ai-handout.pdf
+```
+
+## Breakout Phase 1 review fixes (2026-10-27)
+
+Compiled `breakout-phase-01.pdf` (14 pages, no page budget) with `./scripts/build.sh breakout-phase-01`; the build reported no warnings. `pdffonts` lists only the bundled Vazirmatn, Lora, JetBrains Mono, and NewCMMath fonts. The earlier `LibertinusSerif` fallback came from a bare Greek `α` in text, which is now set as math. Rendered pages 1, 7, 9, 11, and 14 were checked: the cover hook fits its box, the state diagram labels are legible, and the physics and evaluation text reflects the new rules. Scope: course-card helper in `theme.typ`, shared card markup across modules, the AABB and life-loss rules, the bonus values (2-hit +5, toggle +10), the oral-defense α set by TAs, and removal of toolchain residue from `docs/`.
+
+```sh
+./scripts/build.sh breakout-phase-01
+pdffonts output/pdf/breakout-phase-01.pdf
+```
+
+## Breakout Phase 1 polish (2026-10-27)
+
+Compiled `breakout-phase-01.pdf` (13 pages). TOC `depth: 1`. Life-loss: semantic prose for students; TA note + footnote reference `y=600` playfield floor. Tech stack: official ACM+Java 11 LTS path, `acm.jar` footnote (no JDK 1.4 in student cells). Prior: cover prompt removed; ارائه terminology; ball physics alignment; bonus ۵+۱۰; FSM fixes.
+
+```sh
+./scripts/build.sh breakout-phase-01
+```
+
 ## Breakout Phase 1 project phase document redesign (2026-10-26)
 
 Typst version: `typst 0.15.1`. From the `course-materials` repository root, the 12-page modular project phase PDF was compiled successfully with:
@@ -61,7 +93,7 @@ All seven pages were rendered to numbered PNG files in the ignored SDD workspace
 with `typst compile --format png --ppi 144 --root . --package-path packages
 --ignore-system-fonts --font-path resources/assets/fonts
 src/documents/java-fundamentals-handout.typ
-.superpowers/sdd/2026-10-13-java-fundamentals-student-handout/rendered/page-{p}.png`.
+<local-render-dir>/page-{p}.png`.
 Every page was inspected individually in color and grayscale. Persian shaping
 and paragraph direction, Latin identifiers, Java operators, code line fit,
 headings, page breaks, page numbers ۱–۶ after the unnumbered cover, and footer
@@ -99,13 +131,13 @@ Added the exact sentence “Your output must be only a p5.js codeblock.” on a 
 
 `./scripts/build.sh all` completed with exit code 0 and no warnings, using bundled fonts and disabled system fonts. All nine entries rendered successfully with Poppler at 1200 px. The main editor visually reviewed all 32 editable-output pages and all 43 image-only story pages in contact sheets. The workshop reflection, HW1 submission page, bilingual proof page, and slide comparison were additionally inspected individually. No clipping, overlaps, extra blank pages, or lost current-output content were found. Both workshops remain three A4 pages, with the full reflection on the last page. Raw extraction confirms two exact standalone output-instruction lines and the comments request in both final pages. The image-only story retains exactly one image and no added text on each of its 43 pages.
 
-The requesting-code-review skill dispatched an independent reviewer with a precise requirements brief and no prior session history. It reviewed all source families, current documentation, scripts, the HEAD diff, relevant untracked additions, and PDF typography/bounds. Its confirmed findings and suggestions are recorded in `docs/final-review-2026-10-08.md`: two important compression-helper destination issues, minor HW1 semantic styling and documentation wording issues, and optional pagination/slide-checklist refinements. Compression probes used only disposable `/tmp` copies and directories. These broader findings are open recommendations; this revision implements only the user's prompt instruction and the necessary code-comment wording alignment. No automated tests, commits, or pushes were added. `git diff --check` passed.
+An independent reviewer received a precise requirements brief and no prior session history. It reviewed all source families, current documentation, scripts, the HEAD diff, relevant untracked additions, and PDF typography/bounds. Its confirmed findings and suggestions are recorded in `docs/final-review-2026-10-08.md`: two important compression-helper destination issues, minor HW1 semantic styling and documentation wording issues, and optional pagination/slide-checklist refinements. Compression probes used only disposable `/tmp` copies and directories. These broader findings are open recommendations; this revision implements only the user's prompt instruction and the necessary code-comment wording alignment. No automated tests, commits, or pushes were added. `git diff --check` passed.
 
 ## Ships animation reflection (2026-10-08)
 
 Replaced the shared tournament story and prompt comparison with the user's requested p5.js ships scenario. The English story contrasts describing a fleet visually with using animation experience to specify drawing, motion, and canvas-edge behavior. The refined prompt reuses the exact initial sentence and expands it with an 800 × 500 white canvas, five ships, simple outlined shapes, an array of ship objects, separate display/update/wrap methods, initialization and frame responsibilities, speed in pixels per second, elapsed-time scaling, complete-exit wrapping, and explanations of the decisions and adjustable parameters. The reader invitation now asks students to run both sketches, compare movement/edge behavior/ease of modification, and share their experience and a prompt improvement with classmates.
 
-The editorial subagent reviewed the expanded brief and recommended explicit method responsibilities and speed units. Checked lifecycle/timing language against the official p5.js references for [setup](https://p5js.org/reference/p5/setup/), [draw](https://p5js.org/reference/p5/draw/), and [deltaTime](https://p5js.org/reference/p5/deltaTime/). The requested ship methods are application methods, not library APIs. Updated the current editorial brief, style guide, template audit, and future-workshop instruction; earlier verification entries remain historical records.
+The editorial reviewer checked the expanded brief and recommended explicit method responsibilities and speed units. Checked lifecycle/timing language against the official p5.js references for [setup](https://p5js.org/reference/p5/setup/), [draw](https://p5js.org/reference/p5/draw/), and [deltaTime](https://p5js.org/reference/p5/deltaTime/). The requested ship methods are application methods, not library APIs. Updated the current editorial brief, style guide, template audit, and future-workshop instruction; earlier verification entries remain historical records.
 
 `./scripts/build.sh workshop-01` and `./scripts/build.sh workshop-notes` both completed with exit code 0 and no warnings, using bundled fonts and disabled system fonts. Both PDFs remain three A4 pages. All six pages were rendered at 1600 px with Poppler and visually reviewed. Both expanded reflections fit on one page with footer clearance, intact frames and double quotation marks, readable prose and inline identifiers, and no clipping or overlaps. PDF content streams for the cover and teaching page are unchanged from the PDFs saved immediately before this revision.
 
@@ -123,7 +155,7 @@ Source comparison confirms all content outside the setup section is unchanged. A
 
 Corrected the shared closing reflection to English throughout: story, prompt labels/examples, takeaway, and reader invitation. This overrides the Persian story treatment recorded in the earlier audit below. The theme supplies Lora, English language, LTR direction, left alignment, and a left border for prompt panels. Running headers/footers explicitly retain their Persian context so the English section cannot reverse their arrangement. The shared quote frame adds typographic double quotation marks on the cover and closing-page title.
 
-Expanded the user's brief into a professional micro-story and a simple, engaging programming example. Separate story-writing and prompt-writing subagents proposed copy; an independent editorial subagent reviewed it. The story follows two friends building a tournament leaderboard after a tied final match. The initial Java prompt is stored once and repeated verbatim in the improved prompt, which adds arrays, descending scores, tied ranks (1, 1, 3), and a worked example with an expected scoreboard. The conclusion asks readers to try both prompts in the same AI tool, compare the results, check the tie, and share their experience with classmates. The image is unchanged. The content module now exports a dictionary without an unused helper argument or theme import; the theme remains the sole layout/typography source.
+Expanded the user's brief into a professional micro-story and a simple, engaging programming example. Separate story and prompt writers proposed copy; an independent editorial reviewer checked it. The story follows two friends building a tournament leaderboard after a tied final match. The initial Java prompt is stored once and repeated verbatim in the improved prompt, which adds arrays, descending scores, tied ranks (1, 1, 3), and a worked example with an expected scoreboard. The conclusion asks readers to try both prompts in the same AI tool, compare the results, check the tie, and share their experience with classmates. The image is unchanged. The content module now exports a dictionary without an unused helper argument or theme import; the theme remains the sole layout/typography source.
 
 `./scripts/build.sh workshop-01` and `./scripts/build.sh workshop-notes` completed with exit code 0 and no warnings, using bundled fonts and disabled system fonts. Both final PDFs remain three A4 pages. All six pages were rendered with Poppler at 1600 px and visually inspected; after isolating the page furniture, both closing pages were rendered and inspected again. Both reflections fit on one page, with readable Lora, correctly ordered quotation marks, and no clipped text, overlaps, or blank pages. The two middle teaching pages are pixel-identical before/after the furniture isolation.
 

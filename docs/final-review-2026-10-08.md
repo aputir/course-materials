@@ -12,7 +12,7 @@ The sentence is stored once as `output-instruction` in `src/course/workshop-refl
 
 ## Coverage and evidence
 
-An independent reviewer inspected all course, document, template, example, and script sources, current publishing/brand documentation, the HEAD diff, and relevant untracked additions. The review followed the requesting-code-review skill and used a precise brief without prior conversation history. The main editor separately inspected rendered outputs.
+An independent reviewer inspected all course, document, template, example, and script sources, current publishing/brand documentation, the HEAD diff, and relevant untracked additions. The review used a precise brief without prior conversation history. The main editor separately inspected rendered outputs.
 
 `./scripts/build.sh all` completed without warnings. All nine outputs were rendered at 1200 px with Poppler: 32 editable-output pages and 43 original image-only story pages, 75 total. Every page was visually reviewed in contact sheets. The workshop reflection, HW1 submission page, bilingual typography page, and slide comparison were also inspected individually. PDF inspection confirmed the exact output sentence appears twice, with each occurrence occupying its own line, in both workshop closing pages. Both reflections still fit on one page. The original image deck has exactly one image and no added text per page.
 

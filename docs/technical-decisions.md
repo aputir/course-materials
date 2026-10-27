@@ -77,15 +77,11 @@ The six top-level mission scores sum to 7.5 points. The source does not state a 
 
 ## Publishing guidance
 
-`docs/document-style-guide.md` records the researched typography references and the project's concrete publishing rules. Butterick supplies general readability and spacing principles; Typst's official documentation supplies layout/direction mechanics; the installed PDF skill supplies visual production review. Recommendations for Latin text are adapted to Persian shaping instead of being treated as universal numerical rules. The local `AGENTS.md` points future document work to this guide.
+`docs/document-style-guide.md` records the researched typography references and the project's concrete publishing rules. Butterick supplies general readability and spacing principles; Typst's official documentation supplies layout/direction mechanics; the PDF production workflow supplies visual review. Recommendations for Latin text are adapted to Persian shaping instead of being treated as universal numerical rules. The local `AGENTS.md` points future document work to this guide.
 
-Adobe's online whitepaper skill was inspected but not installed or executed: its Markdown conversion/cleanup workflow is unsuitable for preserving reusable course sources. No public official UT brand manual was verified, so this is a course document style, not a claim of official brand compliance.
+Adobe's online whitepaper workflow was inspected but not installed or executed: its Markdown conversion/cleanup workflow is unsuitable for preserving reusable course sources. No public official UT brand manual was verified, so this is a course document style, not a claim of official brand compliance.
 
 ## Tool setup
 
 - Typst: Homebrew upgrade to 0.15.1; verified with `typst --version`.
-- Superpowers: the installed Codex plugin is already enabled (6.4.2 in this session); no duplicate skill installation was needed.
-- RTK: Rust Token Killer 0.51.0 installed through `brew install rtk-ai/tap/rtk`, verified by `rtk --version` and `rtk gain`.
-- Codex RTK integration: `rtk init -g --codex` created `~/.codex/RTK.md`, added its reference to `~/.codex/AGENTS.md`, and registered `~/.codex/hooks.json`. Automatic hook activation requires restarting Codex. RTK was invoked explicitly during this session.
-
 The initial conversion predated the current Git repository. The 2026-10-08 revision updates the same shared checkout and preserves earlier uncommitted document work. It creates no worktree, commits, or publication side effects. The design, plan, and verification records retain the decisions and progress.

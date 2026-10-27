@@ -17,10 +17,10 @@ The purpose of this overhaul is to transform the Breakout Phase 01 specification
 The revised document provides:
 1. A **specialized visual cover** featuring a blueprint-style arcade playfield schematic and the historical 1976 Steve Wozniak / Steve Jobs 44-chip Atari hardware sprint fun fact.
 2. A formal **Table of Contents (`#outline`)** for clean navigation.
-3. A calm, spacious **6-page layout** with full-width text justification (`par(justify: true)`) and comfortable paragraph spacing (`6pt`) that eliminates cramped text walls.
+3. A calm, spacious layout with the theme's natural Persian alignment and comfortable paragraph spacing; each major topic starts on its own page.
 4. Concrete **visual figures** illustrating OOP architecture (MVC separation), 2D computer graphics coordinate conventions, segmented paddle physics, and the game state machine.
 5. An architectural bridge to the course syllabus: introducing the **Strategy Pattern without naming it** via a decoupled `HighScoreStorage` contract (RAM storage today, File I/O once taught in lecture).
-6. An unambiguous **100-point grading rubric** featuring a **linear interpolation defense multiplier ($\alpha \in [0.5, 1.0]$)** that guards against academic integrity violations and rewards deep conceptual mastery.
+6. An unambiguous **100-point grading rubric** featuring an **oral-defense multiplier $\alpha$ set by the TAs after the presentation** that guards against academic integrity violations and rewards deep conceptual mastery.
 
 ---
 
@@ -43,13 +43,13 @@ Instead of burdening students with theoretical GoF design pattern terminology be
 ## 3. Visual & Typographical Standards
 
 ### Typographical Geometry
-- **Text Alignment:** `set par(justify: true)` to ensure all prose fills the line width with clean, balanced margins.
+- **Text Alignment:** the theme's natural alignment (`justify: false`). Persian prose keeps natural word spacing, as the style guide requires.
 - **Rhythm & Spacing:**
   - Paragraph spacing: `6pt` (measured separation without empty blank lines).
   - Line leading: `4.5pt`.
   - Section headings (Level 1): `18pt` above, `7pt` below.
   - Subsections (Level 2): `12pt` above, `5pt` below.
-- **Page Budget & Flow:** Exactly 6 pages, separated by explicit `#pagebreak()` calls at the boundary of each major topic.
+- **Page Budget & Flow:** No fixed page count. Major topics start on new pages through explicit `#pagebreak()` calls.
 
 ### Cover Artwork & Vignette
 - **Cover Visual:** Placed in the lower-cover area using `workshop-style` proportions (`130mm × 72mm`), presenting a vector blueprint schematic of the Breakout playfield: paddle center coordinate, deflection angle rays ($\theta \in [-60^\circ, +60^\circ]$), and multi-colored brick matrix.
@@ -117,12 +117,12 @@ Instead of burdening students with theoretical GoF design pattern terminology be
   4. *Milestone 4:* 40-brick matrix ($5 \times 8$), AABB destruction, score & RAM high score.
   5. *Milestone 5:* Game state lifecycle, pause overlay, win/loss triggers, and restart.
 - **بخش‌های اختیاری و امتیازی (Bonus Scope):**
-  - Durable 2-hit bricks with damage visual / color shift (+10 pts).
-  - Runtime storage toggle between RAM and File (+5 pts).
+  - Durable 2-hit bricks with damage visual / color shift (+5 pts).
+  - Runtime storage toggle between RAM and File (+10 pts).
 
 ### Page 6: Deliverables, Grading Rubric & Defense Policy
 - **ساختار استاندارد مخزن گیت (Git Directory Standards):**
-  - Mandatory directory tree (`src/model/`, `src/view/`, `src/controller/`, `lib/`, `README.md`).
+  - High-level description of the repository deliverable; no mandatory directory tree.
   - Commit message conventions.
 - **جدول مصوب بارم‌بندی (100-Point Grading Rubric):**
   - Functionality & Game Feel: 40 pts.
@@ -130,9 +130,8 @@ Instead of burdening students with theoretical GoF design pattern terminology be
   - Code Cleanliness & Best Practices: 15 pts.
   - Oral Defense & Conceptual Mastery: 10 pts.
 - **ضریب دفاع شفاهی (Oral Defense Lerp Multiplier):**
-  - $\text{Final Score} = \text{Technical Score} \times \alpha$, where $\alpha \in [0.5, 1.0]$.
-  - Complete, fluent explanation of code and physics yields $\alpha = 1.0$ ($100\%$).
-  - Inability to explain code, suspected plagiarism, or total lack of comprehension scales $\alpha$ down linearly to $0.5$ ($50\%$ penalty).
+  - $\text{Final Score} = \text{Technical Score} \times \alpha$, where $\alpha$ is set by the TAs after the presentation.
+  - The range and criteria are decided by the TAs after the presentation and are not fixed in this spec.
 - **نکات تحویل و پشتیبانی (Submission Guidelines):**
   - Repository link submission on Quera.
   - Plagiarism warning and academic integrity contract.
@@ -142,4 +141,4 @@ Instead of burdening students with theoretical GoF design pattern terminology be
 ## 5. Verification & Quality Gates
 - **Compilation Gate:** Document must compile cleanly via `./course-materials/scripts/build.sh breakout-phase-01` with zero Typst warnings or errors.
 - **Visual Inspection:** Generated PDF must be checked page-by-page via `pdftoppm` to verify line justification, spacing, table borders, and diagram layout.
-- **Page Budget Gate:** Exact 6-page count; no unintended page 7 spillovers.
+- **Page Budget Gate:** Removed. Check instead for near-empty pages and unintended spillovers.

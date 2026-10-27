@@ -1,6 +1,6 @@
 # Course Document Authoring System Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Respect each user-review gate; do not batch ahead across approved-question boundaries.
+> Respect each user-review gate; do not batch ahead across approved-question boundaries.
 
 **Goal:** Establish clean Typst authoring conventions, Persian-first technical footnotes, supervised question editing, reusable document components, and six cohesive HW1 illustrations.
 
@@ -8,7 +8,7 @@
 
 **Tech Stack:** Typst 0.15.1, bundled Vazirmatn and JetBrains Mono fonts, Poppler `pdftoppm`/`pdfinfo`, ImageGen, shell archive/build scripts.
 
-**Spec:** `docs/superpowers/specs/2026-10-07-course-document-authoring-design.md`
+**Spec:** `docs/design/specs/2026-10-07-course-document-authoring-design.md`
 
 ## Global Constraints
 

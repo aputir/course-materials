@@ -1,6 +1,6 @@
 # Breakout Phase 01 Pages 3–7 Polish Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Polish and restructure pages 3 to 7 (and general styling across all pages) of `course-materials/src/documents/breakout-phase-01.typ`: remove teamwork (solo project), convert rules table to headings/paragraphs, expand line-height and list spacing in template, structure bullet lists on page 5, replace .gitignore with "گیت ایگنور", reference GitHub & Conventional Commits, modernize Page 6 architecture with an engaging storytelling hook and vertical MVC cards, convert Page 7 entities to visual cards with an inline Typst vector geometry diagram, shorten all headings, eliminate `ئ` on words ending in `ه`, and ensure strict 1-page-per-section adherence.
 

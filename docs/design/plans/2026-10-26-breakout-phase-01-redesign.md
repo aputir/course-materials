@@ -1,6 +1,6 @@
 # Breakout Phase 01 Specification Redesign Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Completely redesign and rewrite `src/documents/breakout-phase-01.typ` into a calm, professional, 6-page technical specification matching AP course standards, incorporating custom cover artwork, table of contents, MVC architecture, graphics coordinates, segmented deflection physics, pluggable high-score persistence, state machine, and a 100-point rubric with an oral defense multiplier.
 
@@ -8,7 +8,7 @@
 
 **Tech Stack:** Typst 0.15.1, `src/course/theme.typ`, local `@local/dorost:0.2.1`, bundled fonts (Vazirmatn, Lora, JetBrains Mono), Poppler rendering tools (`pdftoppm`, `pdfinfo`).
 
-**Spec:** `docs/superpowers/specs/2026-10-26-breakout-phase-01-redesign.md`
+**Spec:** `docs/design/specs/2026-10-26-breakout-phase-01-redesign.md`
 
 ## Global Constraints
 

@@ -29,6 +29,6 @@ End by asking readers to try both prompts in the same AI tool and run the sketch
 
 `src/course/workshop-reflection.typ` owns all repeated editorial copy and the image path. `src/course/theme.typ` owns typography, direction, frames, image geometry, and prompt panels. Every workshop uses `course-workshop`; do not duplicate this section in entry files. Keep the existing white-background black-ink sketch, the larger closing image, and one-page reflection composition.
 
-The earlier 2026-10-08 revision used separate story-writing and prompt-writing subagents, followed by independent editorial review. For the subsequent user-selected ships scenario, the editorial subagent reviewed the expanded prompt and story, recommending explicit method responsibilities and speed units. The main editor integrated those recommendations into the shared source. Evaluation remains part of the lesson.
+The earlier 2026-10-08 revision used separate story and prompt writers, followed by independent editorial review. For the subsequent user-selected ships scenario, the editorial reviewer checked the expanded prompt and story, recommending explicit method responsibilities and speed units. The main editor integrated those recommendations into the shared source. Evaluation remains part of the lesson.
 
 After copy changes, compile both the actual workshop and starter with bundled fonts, render all pages, inspect the English section and both quoted titles, and update `docs/verification.md`.

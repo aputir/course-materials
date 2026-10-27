@@ -1,6 +1,6 @@
 # Template unification implementation plan
 
-> **For agentic workers:** Execute the approved user request inline. Document production uses compiler, font inspection, source fidelity checks, and rendered-page review; do not add automated tests.
+> Document production uses compiler, font inspection, source fidelity checks, and rendered-page review; do not add automated tests.
 
 **Goal:** Strengthen the shared course theme, use Lora for English prose, and provide one reusable workshop cover and closing reflection.
 
