@@ -250,7 +250,21 @@
   ]
 ]
 
-#let course-cover(kind, title, subtitle, number, meta, deadline, prepared-by, issued-on, artwork: none) = {
+// Dark cover variant: a navy page with one white band that holds the seal and university name.
+#let dark-cover = (
+  page: rgb("#0D1727"), band: white,
+  ink: rgb("#E6F3FF"), accent: rgb("#5EC8F2"), muted: rgb("#7F95B5"), rule: rgb("#2F5183"),
+  band-height: document-style.cover-y + document-style.logo + 6mm,
+)
+#let course-cover(kind, title, subtitle, number, meta, deadline, prepared-by, issued-on, artwork: none, dark: false) = {
+  let ink = if dark { dark-cover.ink } else { colors.ink }
+  let accent = if dark { dark-cover.accent } else { colors.blue }
+  let muted = if dark { dark-cover.muted } else { colors.muted }
+  let rule-color = if dark { dark-cover.rule } else { colors.rule }
+  let page-fill = if dark { dark-cover.page } else { none }
+  let page-background = if dark {
+    place(top + left, rect(width: 210mm, height: dark-cover.band-height, fill: dark-cover.band))
+  } else { none }
   let details = ()
   for (label, value) in (
     ("استاد درس", meta.instructor), ("تهیه‌کنندگان", prepared-by),
@@ -260,36 +274,36 @@
     if value != none {
       details.push(block(above: 0pt, below: 0pt)[
         #set par(spacing: 0pt)
-        #text(size: type-scale.small, fill: colors.muted)[#label]
+        #text(size: type-scale.small, fill: muted)[#label]
         #v(spacing.label)
-        #text(size: type-scale.body)[#value]
+        #text(size: type-scale.body, fill: ink)[#value]
       ])
     }
   }
-  page(paper: "a4", margin: (x: document-style.margin-x, y: document-style.cover-y), header: none, footer: none, numbering: none)[
+  page(paper: "a4", margin: (x: document-style.margin-x, y: document-style.cover-y), header: none, footer: none, numbering: none, fill: page-fill, background: page-background)[
     #set block(above: 0pt, below: 0pt)
     #set par(spacing: 0pt)
     #grid(columns: (document-style.logo, 1fr), gutter: 10mm, align: horizon,
       image("../../resources/assets/logos/ut-source.png", width: document-style.logo),
       align(right)[
-        #text(size: type-scale.body, weight: "bold")[#meta.university]
+        #text(size: type-scale.body, weight: "bold", fill: colors.ink)[#meta.university]
         #v(spacing.label)
         #text(size: type-scale.small, fill: colors.muted)[#meta.faculty]
       ],
     )
-    #v(spacing.cover-brand)
+    #v(if dark { 12mm } else { spacing.cover-brand })
     #block(width: 100%, above: 0pt, below: 0pt)[
-      #text(size: type-scale.cover-course, weight: "bold", fill: colors.ink)[#meta.title]
+      #text(size: type-scale.cover-course, weight: "bold", fill: ink)[#meta.title]
       #v(spacing.cover-course)
-      #text(size: type-scale.label, weight: "bold", fill: colors.blue)[#kind]
+      #text(size: type-scale.label, weight: "bold", fill: accent)[#kind]
       #v(8pt)
       #grid(columns: (1fr, auto), gutter: 20pt, align: (right + horizon, left + horizon),
-        text(size: type-scale.cover-title, weight: "bold")[#title],
-        if number != none { text(size: type-scale.cover-number, weight: "bold", fill: colors.blue)[#fa(number)] },
+        text(size: type-scale.cover-title, weight: "bold", fill: ink)[#title],
+        if number != none { text(size: type-scale.cover-number, weight: "bold", fill: accent)[#fa(number)] },
       )
-      #if subtitle != none { v(spacing.cover-subtitle); text(size: type-scale.cover-subtitle, fill: colors.muted)[#subtitle] }
+      #if subtitle != none { v(spacing.cover-subtitle); text(size: type-scale.cover-subtitle, fill: muted)[#subtitle] }
       #v(spacing.cover-rule)
-      #line(length: 24mm, stroke: 1.8pt + colors.blue)
+      #line(length: 24mm, stroke: 1.8pt + accent)
     ]
     #if details.len() > 0 {
       v(spacing.cover-details)
@@ -298,13 +312,13 @@
     #v(1fr)
     #if artwork != none {
       artwork
-      v(12mm)
+      v(if dark { 6mm } else { 12mm })
     }
-    #line(length: 100%, stroke: 0.6pt + colors.rule)
+    #line(length: 100%, stroke: 0.6pt + rule-color)
   ]
 }
 
-#let course-document(body, kind: "جزوه", title: "", subtitle: none, number: none, meta: course-info, deadline: none, prepared-by: none, issued-on: none, pdf-author: none, cover-artwork: none) = {
+#let course-document(body, kind: "جزوه", title: "", subtitle: none, number: none, meta: course-info, deadline: none, prepared-by: none, issued-on: none, pdf-author: none, cover-artwork: none, cover-dark: false) = {
   let author = if pdf-author == none { metadata-text(meta.university) + " — " + metadata-text(meta.title) } else { pdf-author }
   set document(title: str(title), author: author)
   set text(font: prose-fonts, size: type-scale.body, lang: "fa", dir: rtl, fill: colors.ink)
@@ -361,7 +375,7 @@
     ],
     header-ascent: document-style.furniture-gap, footer-descent: document-style.furniture-gap,
   )
-  course-cover(kind, title, subtitle, number, meta, deadline, prepared-by, issued-on, artwork: cover-artwork)
+  course-cover(kind, title, subtitle, number, meta, deadline, prepared-by, issued-on, artwork: cover-artwork, dark: cover-dark)
   counter(page).update(1)
   body
 }

@@ -19,6 +19,7 @@
   subtitle: "اهداف، نیازمندی‌های فنی، طراحی شی‌گرا و معیارهای ارزیابی",
   number: "01",
   cover-artwork: breakout-cover-vignette(),
+  cover-dark: true,
 )
 
 #breakout-toc-page()
