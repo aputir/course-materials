@@ -1,5 +1,15 @@
 # Verification record
 
+## Breakout Phase 1 prose review (2026-10-27)
+
+The Persian prose in the Breakout Phase 1 sources was reworded for plain, direct sentences: the rules, introduction, pre-start, architecture, entities, gameplay, graphics, physics, milestones, tech-stack, and evaluation pages. Stiff calques and filler were removed (for example «شفاف» for a plain canvas, «مهار مرزی», «بطن», «نجات‌بخش», «کاملاً», «لذت‌بخش», and the «ما همیشه کنارتان هستیم» note). The redundant closing line about AI in the defence section was dropped because the rules page already covers it. The rules note was retitled «پرسش و راهنمایی».
+
+Requirements, scores, numbers, formulas, code identifiers, English terms, and footnotes are unchanged in meaning. The milestone-3 acceptance text now uses the spec's single bottom-edge condition for life loss. The rebuilt PDF is 14 pages, and the Typst and markdown export carry the same wording. The cover quote and the figure placeholders were left as they were.
+
+```sh
+./scripts/build.sh breakout-phase-01
+```
+
 ## Java version labels in Latin font (2026-10-27)
 
 Java version numbers in the Breakout tech-stack page (`src/documents/breakout/tech-stack.typ`) now set in the Latin font through `#en[...]`: `Java 11` (official path), `Java 8`, `JDK 11`, `JDK 17`, and the version-column cells `11 LTS`, `11 تا 21`, `17 یا 21`, and `17`. The Persian word `جاوا` in running prose and the column header remain Persian. The markdown export `output/md/breakout-phase-01.md` carries the same version strings as plain Latin text. Rebuilt `breakout-phase-01.pdf` (14 pages) and rendered the tech-stack page at 110 dpi; the version labels show in Lora with Latin digits.
@@ -101,7 +111,7 @@ PATH="/home/opmc/.cargo/bin:$PATH" ./scripts/build.sh breakout-phase-01
 All 12 pages were rendered to numbered PNG files and visually verified individually:
 - **Cover (p. 1):** Dedicated unnumbered cover with official 32 mm UT seal, department affiliation «دانشکده علوم کامپیوتر», course title «برنامه‌سازی پیشرفته», kind «فاز پروژه», title «هسته بازی Breakout», phase number «۰۱», and custom vector blueprint vignette (`130 × 70 mm`).
 - **Table of Contents (p. 2):** Automated `#outline` with dotted leaders and clean section hierarchy.
-- **Rules & Submission (p. 3):** Solo development, GitHub commit expectations, in-person oral defense, and Ilearn submission guidelines.
+- **Rules & Submission (p. 3):** Solo development, GitHub commit expectations, in-person oral defense, and eLearn submission guidelines.
 - **Introduction & Goals (p. 4):** Historical Atari 1976 Wozniak/Jobs sprint context, core OOP educational goals (SoC, SRP, Encapsulation, Event-driven architecture).
 - **Pre-Phase 1 Actions (p. 5):** High-level tasks for GitHub repository setup, .gitignore configuration, and Conventional Commits; game feel exploration; and UML modeling in vertical card layout without horizontal columns.
 - **System Architecture (p. 6):** MVC pattern with storytelling hook, vertically stacked MVC cards, 3-step data flow, and vertical `HighScoreStorage` interface definition followed by in-memory and file persistence cards.

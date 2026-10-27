@@ -133,7 +133,7 @@ Instead of burdening students with theoretical GoF design pattern terminology be
   - $\alpha = 0.5 + 0.5 \cdot \frac{m}{100}$, where $m \in [0, 100]$ is the mastery percentage the TAs assess after the presentation; therefore $0.5 \le \alpha \le 1$.
   - $\text{Final Score} = \text{Technical Score} \times \alpha$. Example: technical 80 and $m = 60$ give $\alpha = 0.8$ and a final score of 64.
 - **نکات تحویل و پشتیبانی (Submission Guidelines):**
-  - Repository link submission on Ilearn (سامانه آموزشی ایلرن).
+  - Repository link submission on eLearn (سامانه آموزشی ایلرن).
   - Plagiarism warning and academic integrity contract.
 
 ---
