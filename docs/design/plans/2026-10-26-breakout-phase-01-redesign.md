@@ -252,10 +252,10 @@ breakout/
 
 - [ ] **Step 2: Construct the 100-Point Grading Rubric Table**
 Detailed table covering:
-- Functionality & Game Feel: 40 pts.
+- Functionality & Game Feel: 35 pts.
 - OOP Architecture & Design: 35 pts.
 - Code Cleanliness & Best Practices: 15 pts.
-- Oral Defense & Conceptual Mastery: 10 pts.
+- Oral Defense & Conceptual Mastery: 15 pts.
 - Total: 100 pts normalized to 2.0 course points.
 
 - [ ] **Step 3: Formulate the Oral Defense Multiplier Policy**
