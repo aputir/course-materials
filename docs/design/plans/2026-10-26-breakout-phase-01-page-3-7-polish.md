@@ -67,7 +67,7 @@
     - `== استقلال در پیاده‌سازی` (Originality and self-reliance)
     - `== ثبت منظم در گیت‌هاب` (Atomic commits, individual contribution)
     - `== گفت‌وگوی فنی حضوری` (Personal defense session)
-    - `== بستر تحویل و زمان‌بندی` (Ilearn and GitHub repo)
+    - `== بستر تحویل و زمان‌بندی` (eLearn and GitHub repo)
     - `== دستیار هوش مصنوعی` (Educational aid, but you must own every line)
   - Replace `هٔ` with plain `ه` throughout the text.
   - Ensure warm, encouraging tone in the closing assistant note.
