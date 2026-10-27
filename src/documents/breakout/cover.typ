@@ -190,16 +190,9 @@
     below: 0pt,
     breakable: false,
   )[
-    #set text(font: prose-fonts, size: 7.8pt, fill: colors.ink, lang: "fa", dir: rtl)
+    #set text(font: prose-fonts, size: type-scale.small, fill: colors.ink, lang: "fa", dir: rtl)
     #set par(justify: true, leading: 4.0pt, spacing: 0pt)
-    «در سال ۱۹۷۶، نولان باشنل در شرکت آتاری از استیو جابز خواست بازی #en[Breakout] را با کمترین تعداد تراشه سخت‌افزاری بسازد. جابز پروژه را به استیو وازنیاک سپرد؛ وازنیاک طی ۴ شبانه‌روز کار بی‌وقفه، مدار بازی را تنها با ۴۴ تراشه پیاده کرد. ابتکارات وازنیاک در بهینه‌سازی مدارهای گرافیکی این بازی، مستقیماً الهام‌بخش او در طراحی معماری نمایش تصویر و رنگ در رایانه انقلابی #en[Apple II] شد.»
+    «در سال ۱۹۷۶، نولان باشنل در شرکت آتاری از استیو جابز خواست بازی #en[Breakout] را با کمترین تعداد تراشه سخت‌افزاری بسازد. جابز پروژه را به استیو وازنیاک سپرد؛ وازنیاک طی ۴ شبانه‌روز کار بی‌وقفه، مدار بازی را تنها با ۴۴ تراشه پیاده کرد. ابتکارات وازنیاک در بهینه‌سازی مدارهای گرافیکی این بازی، این تجربه را با طراحی نمایش تصویر و رنگ در رایانهٔ انقلابی #en[Apple II] مرتبط می‌دانند.»
   ]
 
-  #v(1.5mm)
-
-  #prompt-example("پرامپت پیشنهادی برای بازتولید تصویر خطی گیم‌پلی")[
-    #set text(font: english-font, size: 6.8pt, style: "italic", fill: colors.muted, lang: "en", dir: ltr)
-    #set par(leading: 3.2pt)
-    Minimalist black and white technical line art of 1976 Breakout game mechanics, single paddle at bottom, single brick at top, dashed trajectory line showing angle of reflection off paddle, and single ball right before impact with brick, clean vector geometry, high contrast.
-  ]
 ])
