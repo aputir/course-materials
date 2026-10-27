@@ -1,198 +1,254 @@
 #import "../../course/theme.typ": *
 
-// Minimal Black & White Breakout Gameplay Vector Graphic
-// Features: Single paddle, single ball, single brick, trajectory traces, angle demonstration,
-// with the ball positioned along the outbound trace just before impacting the brick.
+// Solid navy schematic of the Breakout game geometry and collision model.
+// Layout follows the reference diagram: a 800 × 600 play field on the left,
+// spec panels on the right, and one solid background shared with the quote below.
+// Coordinates are reference pixels on a 1024 × 614 canvas that spans the full page width;
+// play-field coordinates are game units (800 × 600) mapped into the field frame.
+// Values follow the specification: 85 × 25 bricks with a 6 px gap, paddle at y = 545.
 
-#let breakout-cover-vignette() = align(center, block(width: workshop-style.cover-width, breakable: false)[
-  #block(
-    width: 130mm,
-    height: 70mm,
-    fill: white,
-    radius: 3pt,
-    stroke: 0.75pt + rgb("#1A202C"),
+#let art-w = 210mm
+#let scale-px = art-w / 1024
+#let art-h = 614 * scale-px
+// Text sizes were designed for a 130 mm canvas and scale with the wider one.
+#let text-k = art-w / 130mm
+#let art-bg = rgb("#0D1727")
+#let art-panel = rgb("#12223A")
+#let art-border = rgb("#2F5183")
+#let art-line = rgb("#4A9CBF")
+#let art-grid = rgb("#16263E")
+#let art-text = rgb("#E6F3FF")
+#let art-muted = rgb("#7F95B5")
+#let art-cyan = rgb("#5EC8F2")
+#let art-gold = rgb("#FFD45E")
+#let art-teal = rgb("#4FB3AD")
+#let art-paddle = rgb("#6FD4A4")
+#let art-dash = rgb("#8A9BB3")
+#let art-brick-rows = (
+  rgb("#E0604F"), rgb("#EE8F43"), rgb("#EFCF55"), rgb("#62B873"), rgb("#4FB3AD"),
+)
+
+// Reference pixel → mm point, and game unit → reference pixel.
+#let P(x, y) = (x * scale-px, y * scale-px)
+#let GX(g) = 42 + g * 0.7625
+#let GY(g) = 82 + g * 0.7717
+#let G(x, y) = P(GX(x), GY(y))
+
+// Places content with its top-left corner at a reference pixel.
+#let at-px(x, y, body) = place(top + left, dx: x * scale-px, dy: y * scale-px, body)
+// Places content with its right edge at a reference pixel.
+#let at-right(x, y, body) = place(top + right, dx: x * scale-px - art-w, dy: y * scale-px, body)
+
+// Straight segment between two points in absolute lengths.
+// The line is placed at its own bounding box so every coordinate stays non-negative.
+#let seg(p, q, stroke) = {
+  let x0 = calc.min(p.at(0), q.at(0))
+  let y0 = calc.min(p.at(1), q.at(1))
+  place(top + left, dx: x0, dy: y0, line(
+    start: (p.at(0) - x0, p.at(1) - y0),
+    end: (q.at(0) - x0, q.at(1) - y0),
+    stroke: stroke,
+  ))
+}
+
+// Two-arm arrowhead whose tip is at b and which points away from a.
+#let arrow-head(a, b, stroke) = {
+  let dx = (b.at(0) - a.at(0)) / 1mm
+  let dy = (b.at(1) - a.at(1)) / 1mm
+  let n = calc.sqrt(dx * dx + dy * dy)
+  let (ux, uy) = (-dx / n, -dy / n)
+  let (c, s) = (calc.cos(28deg), calc.sin(28deg))
+  let arm = 1.9
+  let (v1x, v1y) = (ux * c - uy * s, ux * s + uy * c)
+  let (v2x, v2y) = (ux * c + uy * s, -ux * s + uy * c)
+  seg(b, (b.at(0) + arm * v1x * 1mm, b.at(1) + arm * v1y * 1mm), stroke)
+  seg(b, (b.at(0) + arm * v2x * 1mm, b.at(1) + arm * v2y * 1mm), stroke)
+}
+
+// Rectangle positioned by its top-left reference pixel and its size in pixels.
+#let rect-px(x, y, w, h, ..args) = at-px(x, y, rect(
+  width: w * scale-px, height: h * scale-px, ..args,
+))
+
+// Rectangle positioned and sized in play-field game units.
+#let rect-game(x, y, w, h, ..args) = {
+  let (ax, ay) = G(x, y)
+  place(top + left, dx: ax, dy: ay, rect(
+    width: w * 0.7625 * scale-px, height: h * 0.7717 * scale-px, ..args,
+  ))
+}
+
+#let hud(body, fill: art-text, weight: "regular", size: 4.4pt) = text(
+  font: code-font, size: size * text-k, fill: fill, weight: weight, body,
+)
+
+// Titled panel with key/value rows (two-element rows) or single lines (one-element rows).
+#let panel(x, y, w, h, title, rows) = {
+  at-px(x, y, rect(width: w * scale-px, height: h * scale-px, fill: art-panel,
+    stroke: 0.4pt + art-border, radius: 2pt))
+  at-px(x + 9, y + 7, hud(size: 4.8pt, weight: "bold", fill: art-cyan)[#title])
+  for (i, row) in rows.enumerate() {
+    let ry = y + 22 + i * 14
+    if row.len() == 2 {
+      at-px(x + 9, ry, hud(fill: art-muted)[#row.at(0)])
+      at-px(x + 64, ry, hud(fill: art-text)[#row.at(1)])
+    } else {
+      at-px(x + 9, ry, hud(fill: art-text)[#row.at(0)])
+    }
+  }
+}
+
+#let breakout-cover-vignette() = {
+  // The page is right-to-left, so align(left) pins the artwork to the left edge before
+  // the bleed shift; the artwork then spans the full 210 mm page width.
+  align(left, move(dx: -document-style.margin-x, block(
+    width: art-w,
+    height: art-h,
+    fill: art-bg,
     clip: true,
   )[
     #set text(lang: "en", dir: ltr, font: english-font)
 
-    // Corner drafting ticks (minimal framing)
-    #let tick-len = 3.5mm
-    #let tick-pad = 2.2mm
-    #let w-total = 130mm
-    #let h-total = 70mm
-    #let frame-stroke = 0.35pt + rgb("#A0AEC0")
+    // Title block
+    #at-px(38, 26, hud(size: 6.2pt, weight: "bold")[BREAKOUT — GAME GEOMETRY & COLLISION MODEL])
+    #at-px(38, 50, hud(size: 4.4pt, fill: art-cyan)[Canvas 800 × 600 px · 4:3 · 60 Hz · origin top-left, y axis points down])
 
-    // Top-left corner tick
-    #place(top + left, dx: tick-pad, dy: tick-pad, line(end: (tick-len, 0mm), stroke: frame-stroke))
-    #place(top + left, dx: tick-pad, dy: tick-pad, line(end: (0mm, tick-len), stroke: frame-stroke))
-    // Top-right corner tick
-    #place(top + left, dx: w-total - tick-pad - tick-len, dy: tick-pad, line(end: (tick-len, 0mm), stroke: frame-stroke))
-    #place(top + left, dx: w-total - tick-pad, dy: tick-pad, line(end: (0mm, tick-len), stroke: frame-stroke))
-    // Bottom-left corner tick
-    #place(top + left, dx: tick-pad, dy: h-total - tick-pad, line(end: (tick-len, 0mm), stroke: frame-stroke))
-    #place(top + left, dx: tick-pad, dy: h-total - tick-pad - tick-len, line(end: (0mm, tick-len), stroke: frame-stroke))
-    // Bottom-right corner tick
-    #place(top + left, dx: w-total - tick-pad - tick-len, dy: h-total - tick-pad, line(end: (tick-len, 0mm), stroke: frame-stroke))
-    #place(top + left, dx: w-total - tick-pad, dy: h-total - tick-pad - tick-len, line(end: (0mm, tick-len), stroke: frame-stroke))
+    // Play field: frame, faint grid and axis dimensions
+    #for gx in range(100, 800, step: 100) {
+      seg(G(gx, 0), G(gx, 600), 0.25pt + art-grid)
+    }
+    #for gy in range(100, 600, step: 100) {
+      seg(G(0, gy), G(800, gy), 0.25pt + art-grid)
+    }
+    #rect-px(42, 82, 610, 463, stroke: 0.6pt + art-line)
+    #at-px(318, 61, box(fill: art-bg, inset: (x: 2pt), hud(fill: art-cyan)[800 px]))
+    #seg(P(42, 70), P(652, 70), 0.6pt + art-line)
+    #arrow-head(P(60, 70), P(42, 70), 0.6pt + art-line)
+    #arrow-head(P(634, 70), P(652, 70), 0.6pt + art-line)
+    #seg(P(26, 82), P(26, 545), 0.6pt + art-line)
+    #arrow-head(P(26, 100), P(26, 82), 0.6pt + art-line)
+    #arrow-head(P(26, 527), P(26, 545), 0.6pt + art-line)
+    #place(top + left, dx: 12 * scale-px, dy: 330 * scale-px,
+      rotate(-90deg, reflow: true)[#hud(fill: art-cyan)[600 px]])
+    #at-px(46, 86, hud(fill: art-muted, size: 4pt)[(0, 0)])
+    #at-px(46, 531, hud(fill: art-muted, size: 4pt)[(0, 600)])
+    #at-right(650, 531, hud(fill: art-muted, size: 4pt)[(800, 600)])
+    #at-px(42, 552, hud(fill: art-muted)[X_MIN = 0])
+    #at-right(652, 552, hud(fill: art-muted)[X_MAX = 800])
 
-    // -------------------------------------------------------------------------
-    // 1. SINGLE BRICK (Top-Right)
-    // -------------------------------------------------------------------------
-    #let brick-x = 90.0mm
-    #let brick-y = 12.0mm
-    #let brick-w = 22.0mm
-    #let brick-h = 7.0mm
+    // Bricks: 5 rows × 8 columns, 85 × 25 px, pitch 91 × 31; the last brick is destroyed
+    #at-px(196, 113, hud(fill: art-cyan)[BRICKS 5 × 8 = 40 · 85 × 25 px · +100 pts])
+    #for r in range(5) {
+      for c in range(8) {
+        if not (r == 4 and c == 7) {
+          rect-game(39 + c * 91, 60 + r * 31, 85, 25,
+            fill: art-brick-rows.at(r), radius: 1pt)
+        }
+      }
+    }
+    #rect-game(676, 184, 85, 25, fill: none, stroke: (paint: art-text, dash: "dashed", thickness: 0.5pt))
+    #at-px(580, 229, hud(fill: art-cyan, weight: "bold")[+100])
+    #at-px(596, 268, hud(fill: art-teal, size: 4pt)[destroyed])
 
-    // Brick shadow / offset line for crisp depth
-    #place(top + left, dx: brick-x + 0.6mm, dy: brick-y + 0.6mm,
-      rect(width: brick-w, height: brick-h, fill: rgb("#EDF2F7"), radius: 1pt))
-    // Main Brick rectangle
-    #place(top + left, dx: brick-x, dy: brick-y,
-      rect(width: brick-w, height: brick-h, fill: white, stroke: 1.1pt + rgb("#1A202C"), radius: 1pt))
+    // Paddle: 100 × 15 px at y = 545, centred at x = 400
+    #rect-game(350, 545, 100, 15, fill: art-paddle, radius: 1pt, stroke: 0.4pt + rgb("#B6F2D6"))
+    #at-px(296, 519, hud(fill: art-muted)[cx = 400])
+    #at-px(388, 519, hud(fill: art-gold)[Δx = +35])
+    #at-px(296, 534, hud(fill: art-cyan)[PADDLE 100 × 15 px])
 
-    // Subtle dimension or label for brick
-    #place(top + left, dx: brick-x + 4.5mm, dy: brick-y + 1.8mm)[
-      #text(size: 6.5pt, fill: rgb("#718096"), weight: "medium")[BRICK]
-    ]
+    // Incoming and normal reference lines at the paddle hit point (x = 435)
+    #let hx = GX(435)
+    #let hy = GY(545)
+    #seg(P(272, 372), P(hx, hy), (paint: art-dash, thickness: 0.6pt, dash: "dashed"))
+    #arrow-head(P(272, 372), P(hx, hy), 0.6pt + art-dash)
+    #at-px(268, 362, hud(fill: art-dash)[incoming])
+    #seg(P(hx, hy), P(hx, 360), (paint: art-dash, thickness: 0.6pt, dash: "dashed"))
+    #at-px(336, 350, hud(fill: art-dash)[normal])
+    #place(top + left, dx: hx * scale-px, dy: hy * scale-px,
+      circle(radius: 1.2 * scale-px, fill: art-cyan))
 
-    // -------------------------------------------------------------------------
-    // 2. SINGLE PADDLE (Bottom Center)
-    // -------------------------------------------------------------------------
-    #let pad-x = 36.0mm
-    #let pad-y = 53.0mm
-    #let pad-w = 40.0mm
-    #let pad-h = 5.0mm
+    // Reflection angle arc from the normal (θ = 42°) and its label
+    #for i in range(12) {
+      let a0 = 42deg * i / 12
+      let a1 = 42deg * (i + 1) / 12
+      seg(
+        P(hx + 60 * calc.sin(a0), hy - 60 * calc.cos(a0)),
+        P(hx + 60 * calc.sin(a1), hy - 60 * calc.cos(a1)),
+        0.8pt + art-gold,
+      )
+    }
+    #at-px(392, 398, hud(fill: art-gold, weight: "bold")[θ = +42°])
 
-    // Paddle shadow / subtle outline
-    #place(top + left, dx: pad-x + 0.6mm, dy: pad-y + 0.6mm,
-      rect(width: pad-w, height: pad-h, fill: rgb("#EDF2F7"), radius: 1.2pt))
-    // Main Paddle rectangle
-    #place(top + left, dx: pad-x, dy: pad-y,
-      rect(width: pad-w, height: pad-h, fill: white, stroke: 1.15pt + rgb("#1A202C"), radius: 1.2pt))
+    // Outbound path after the paddle hit (ends at the destroyed brick)
+    #let tip-x = 435 + 0.6691 * 452.2
+    #seg(P(hx, hy), G(tip-x, 209), (paint: art-cyan, thickness: 0.9pt, dash: "dotted"))
+    #arrow-head(P(hx, hy), G(tip-x, 209), 0.9pt + art-cyan)
 
-    // Center notch on paddle
-    #place(top + left, dx: pad-x + pad-w / 2, dy: pad-y - 1.2mm,
-      line(end: (0mm, 1.2mm), stroke: 0.6pt + rgb("#718096")))
-    #place(top + left, dx: pad-x + pad-w / 2 - 2.5mm, dy: pad-y + 1.2mm)[
-      #text(size: 5.5pt, fill: rgb("#A0AEC0"))[PADDLE]
-    ]
+    // Ball on the outbound path, its velocity vector and labels
+    #let ball-x = 612.4
+    #let ball-y = 348.0
+    #let vel-tip-x = ball-x + 46 * 0.6691
+    #let vel-tip-y = ball-y - 46 * 0.7431
+    #arrow-head(G(ball-x + 9 * 0.6691, ball-y - 9 * 0.7431), G(vel-tip-x, vel-tip-y), 1.4pt + art-gold)
+    #place(top + left, dx: GX(ball-x) * scale-px - 6.1 * scale-px, dy: GY(ball-y) * scale-px - 6.1 * scale-px,
+      circle(radius: 6.1 * scale-px, fill: art-gold, stroke: 0.4pt + rgb("#FFF1B8")))
+    #at-px(532, 352, hud(fill: art-gold, weight: "bold")[BALL r = 8 px])
+    #at-px(532, 364, hud(fill: art-text)[|v| = hypot(vx, vy)])
+    #at-px(580, 300, hud(fill: art-gold)[v = (vx, vy)])
 
-    // -------------------------------------------------------------------------
-    // 3. IMPACT POINT & BALL TRAJECTORY LINES
-    // -------------------------------------------------------------------------
-    // Impact coordinates on paddle
-    #let hit-x = pad-x + 12.0mm   // 48.0mm (left of center, creates clear angle)
-    #let hit-y = pad-y           // 53.0mm
+    // Side panels following the specification
+    #panel(690, 82, 310, 64, "CANVAS", (
+      ("size", "800 × 600 px (4:3)"),
+      ("tick", "60 Hz"),
+      ("origin", "top-left, y grows down"),
+    ))
+    #panel(690, 152, 310, 64, "BRICKS", (
+      ("grid", "5 rows × 8 cols = 40"),
+      ("size", "85 × 25 px, gap 6"),
+      ("reward", "+100 pts each"),
+    ))
+    #panel(690, 222, 310, 56, "PADDLE", (
+      ("size", "100 × 15 px"),
+      ("pos", "y = 545, x in [0, 700]"),
+    ))
+    #panel(690, 284, 310, 56, "BALL", (
+      ("radius", "r = 8 px"),
+      ("speed", "|v| = hypot(vx, vy)"),
+    ))
+    #panel(690, 346, 310, 108, "PADDLE REFLECTION", (
+      ("offset = Δx / (w / 2)",),
+      ("clamped to [-1, 1]",),
+      ("θ = offset · 60°",),
+      ("vx = |v| · sin θ",),
+      ("vy = - |v| · cos θ",),
+      ("e.g. Δx = +35 → θ = +42°",),
+    ))
+    #panel(690, 460, 310, 84, "CONTROLS", (
+      ("← →   move paddle",),
+      ("SPACE   serve",),
+      ("P       pause",),
+      ("R       reset",),
+    ))
 
-    // Brick target impact point (bottom edge of brick)
-    #let target-x = brick-x + 8.0mm  // 98.0mm
-    #let target-y = brick-y + brick-h // 19.0mm
+    // Footer legend
+    #at-px(42, 598, hud(fill: art-muted, size: 3.8pt)[Dotted cyan = ball path after paddle hit · dashed grey = incoming path · yellow = velocity / angle])
+  ]))
 
-    // Inbound origin (upper left)
-    #let in-start-x = 16.0mm
-    #let in-start-y = 17.0mm
-
-    // Inbound trajectory (dashed line)
-    #place(top + left,
-      line(start: (in-start-x, in-start-y), end: (hit-x, hit-y),
-        stroke: (paint: rgb("#2D3748"), dash: "dashed", thickness: 0.75pt)))
-
-    // Inbound direction arrow
-    #let mid-in-x = (in-start-x + hit-x) / 2
-    #let mid-in-y = (in-start-y + hit-y) / 2
-    #place(top + left, dx: mid-in-x - 1.5mm, dy: mid-in-y - 1.5mm)[
-      #rotate(48deg)[
-        #line(start: (0mm, 0mm), end: (2.2mm, 0mm), stroke: 0.9pt + rgb("#2D3748"))
-        #line(start: (1.2mm, -0.9mm), end: (2.2mm, 0mm), stroke: 0.9pt + rgb("#2D3748"))
-        #line(start: (1.2mm, 0.9mm), end: (2.2mm, 0mm), stroke: 0.9pt + rgb("#2D3748"))
-      ]
-    ]
-
-    // Surface Normal at impact (dotted vertical reference)
-    #place(top + left,
-      line(start: (hit-x, hit-y), end: (hit-x, hit-y - 18.0mm),
-        stroke: (paint: rgb("#A0AEC0"), dash: "dotted", thickness: 0.65pt)))
-    #place(top + left, dx: hit-x - 1.0mm, dy: hit-y - 21.0mm)[
-      #text(size: 6.5pt, fill: rgb("#718096"), style: "italic")[N]
-    ]
-
-    // Right-angle symbol (perpendicular to paddle surface)
-    #place(top + left, dx: hit-x + 0.3mm, dy: hit-y - 2.8mm,
-      line(end: (2.5mm, 0mm), stroke: 0.45pt + rgb("#A0AEC0")))
-    #place(top + left, dx: hit-x + 2.8mm, dy: hit-y - 2.8mm,
-      line(end: (0mm, 2.8mm), stroke: 0.45pt + rgb("#A0AEC0")))
-
-    // Angle arcs & labels
-    // Incident angle arc (between inbound and normal)
-    #place(top + left, dx: hit-x - 9.0mm, dy: hit-y - 9.5mm)[
-      #text(size: 7.2pt, fill: rgb("#2D3748"))[$theta_i$]
-    ]
-    // Reflected angle arc (between normal and outbound)
-    #place(top + left, dx: hit-x + 4.5mm, dy: hit-y - 9.5mm)[
-      #text(size: 7.2pt, fill: rgb("#2D3748"))[$theta_r$]
-    ]
-    // Law of reflection equality note
-    #place(top + left, dx: hit-x - 22.0mm, dy: hit-y - 14.5mm)[
-      #text(size: 6.5pt, fill: rgb("#718096"), weight: "medium")[$theta_i = theta_r$]
-    ]
-
-    // Outbound trajectory line from paddle impact to brick target
-    #place(top + left,
-      line(start: (hit-x, hit-y), end: (target-x, target-y),
-        stroke: (paint: rgb("#2D3748"), dash: "dashed", thickness: 0.75pt)))
-
-    // -------------------------------------------------------------------------
-    // 4. BALL (Positioned on the outbound trace, just before the brick)
-    // -------------------------------------------------------------------------
-    // Parametric position along outbound trace: t = 0.82 (just before impact)
-    #let t-ball = 0.80
-    #let ball-x = hit-x + t-ball * (target-x - hit-x) // ~88.0mm
-    #let ball-y = hit-y + t-ball * (target-y - hit-y) // ~25.8mm
-    #let ball-r = 2.4mm
-
-    // Ball circle (clean crisp white with black stroke)
-    #place(top + left, dx: ball-x - ball-r, dy: ball-y - ball-r,
-      circle(radius: ball-r, fill: white, stroke: 1.15pt + rgb("#1A202C")))
-
-    // Velocity vector arrow from ball pointing towards brick
-    #let v-angle = -34.2deg
-    #place(top + left, dx: ball-x + 0.8mm, dy: ball-y - 0.8mm)[
-      #rotate(v-angle)[
-        #line(start: (0mm, 0mm), end: (4.5mm, 0mm), stroke: 1.0pt + rgb("#1A202C"))
-        #line(start: (3.2mm, -1.0mm), end: (4.5mm, 0mm), stroke: 1.0pt + rgb("#1A202C"))
-        #line(start: (3.2mm, 1.0mm), end: (4.5mm, 0mm), stroke: 1.0pt + rgb("#1A202C"))
-      ]
-    ]
-
-    // Velocity vector label
-    #place(top + left, dx: ball-x - 6.0mm, dy: ball-y - 6.0mm)[
-      #text(size: 7.2pt, fill: rgb("#1A202C"), weight: "bold")[$arrow(v)$]
-    ]
-
-    // Ghost circle at impact point on paddle to show contact
-    #place(top + left, dx: hit-x - ball-r, dy: hit-y - ball-r,
-      circle(radius: ball-r, stroke: (paint: rgb("#A0AEC0"), dash: "dotted", thickness: 0.55pt)))
-
-    // Ghost circle at target on brick to show impending contact
-    #place(top + left, dx: target-x - ball-r, dy: target-y - ball-r,
-      circle(radius: ball-r, stroke: (paint: rgb("#CBD5E0"), dash: "dotted", thickness: 0.45pt)))
-  ]
-
-  #v(2.5mm)
+  v(2.5mm)
 
   // Framed quote block containing 1976 Wozniak/Jobs Atari 44-chip historical fun fact
-  #block(
+  block(
     width: 100%,
-    stroke: workshop-style.frame-stroke + colors.ink,
+    fill: art-bg,
+    stroke: 0.6pt + art-border,
     radius: workshop-style.frame-radius,
     inset: (x: 10pt, y: 5.5pt),
     above: 0pt,
     below: 0pt,
     breakable: false,
   )[
-    #set text(font: prose-fonts, size: type-scale.small, fill: colors.ink, lang: "fa", dir: rtl)
+    #set text(font: prose-fonts, size: type-scale.small, fill: art-text, lang: "fa", dir: rtl)
     #set par(justify: true, leading: 4.0pt, spacing: 0pt)
     «در سال ۱۹۷۶، نولان باشنل در شرکت آتاری از استیو جابز خواست بازی #en[Breakout] را با کمترین تعداد تراشه سخت‌افزاری بسازد. جابز پروژه را به استیو وازنیاک سپرد؛ وازنیاک طی ۴ شبانه‌روز کار بی‌وقفه، مدار بازی را تنها با ۴۴ تراشه پیاده کرد. ابتکارات وازنیاک در بهینه‌سازی مدارهای گرافیکی این بازی، این تجربه را با طراحی نمایش تصویر و رنگ در رایانهٔ انقلابی #en[Apple II] مرتبط می‌دانند.»
   ]
-
-])
+}

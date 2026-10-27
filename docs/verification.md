@@ -1,5 +1,45 @@
 # Verification record
 
+## Java version labels in Latin font (2026-10-27)
+
+Java version numbers in the Breakout tech-stack page (`src/documents/breakout/tech-stack.typ`) now set in the Latin font through `#en[...]`: `Java 11` (official path), `Java 8`, `JDK 11`, `JDK 17`, and the version-column cells `11 LTS`, `11 تا 21`, `17 یا 21`, and `17`. The Persian word `جاوا` in running prose and the column header remain Persian. The markdown export `output/md/breakout-phase-01.md` carries the same version strings as plain Latin text. Rebuilt `breakout-phase-01.pdf` (14 pages) and rendered the tech-stack page at 110 dpi; the version labels show in Lora with Latin digits.
+
+```sh
+./scripts/build.sh breakout-phase-01
+```
+
+## Dark cover with full-width artwork (2026-10-27)
+
+The Breakout Phase 1 cover now uses the dark variant (`cover-dark: true` in `course-document`, implemented in `src/course/theme.typ`). The page is navy, `#0D1727`, with one white band across the top that holds the UT seal and university name. The course and title block sit below it in light text on navy. The artwork in `src/documents/breakout/cover.typ` spans the full 210 mm page width, which widens the play field from about 78 mm to about 125 mm; its labels scale with it. The framed quote sits in the same navy block with light text. This supersedes the 130 mm layout recorded above.
+
+The dark option is opt-in. The shared cover adds no colour or spacing change for other documents. The page-level `fill` and `background` are `none` unless `dark` is set, and the title and detail colours resolve to the existing ink, blue, muted, and rule colours. Rebuilt all registry documents with `./scripts/build.sh all`; page counts match the committed PDFs for every document, and a pixel comparison at 40 dpi shows no differences for hw1, workshop-01, and the four templates, so their committed PDFs were restored. The Breakout cover is 14 pages, with the cover on page 1. Rendered the cover at 110 and 250 dpi and inspected the artwork, panels, and quote.
+
+```sh
+./scripts/build.sh all
+```
+
+## Breakout cover redrawn as a solid geometry diagram (2026-10-27)
+
+The cover artwork in `src/documents/breakout/cover.typ` now follows the game-geometry diagram supplied by the author. The artwork and the framed quote below it share one solid background, `#0D1727`, sampled from the diagram, so the cover reads as a single surface. Text colours are light (`#E6F3FF`) and muted (`#7F95B5`) on that background, which keeps the contrast high; the dark quote block uses the same light text. The artwork is 130 × 78 mm, with the play field on the left and six spec panels on the right: canvas, bricks, paddle, ball, paddle reflection, and controls. The field shows the 5 × 8 brick grid with one destroyed brick and its `+100` label, the paddle with `cx = 400` and `Δx = +35`, the incoming and normal lines, the `θ = +42°` arc, the ball on its outbound path, and the velocity vector.
+
+The diagram and the specification disagree on two values. The diagram shows bricks at 80 × 24 px and the paddle at y = 520; the specification (`entities.typ`) gives 85 × 25 px with a 6 px gap and the paddle at y = 545. The cover uses the specification values. The reflection formulas match `physics.typ`: `offset = Δx / (w / 2)` clamped to [-1, 1], `θ = offset · 60°`, `vx = |v| sin θ`, `vy = -|v| cos θ`.
+
+Rebuilt `breakout-phase-01.pdf` (14 pages). Rendered the cover at 220 and 300 dpi and inspected the artwork and panels; the panel rows were spaced to stop overlap, and the ball and dimension labels were moved clear of the trajectory lines.
+
+```sh
+./scripts/build.sh breakout-phase-01
+```
+
+## Breakout cover artwork in full colour (2026-10-27)
+
+The cover illustration in `src/documents/breakout/cover.typ` was a black-and-white sketch. It is now a full-colour vector schematic of the play field, drawn in the same 130 × 70 mm frame and laid out from a reference image supplied by the author. The scene shows a 5 × 8 brick grid in five row colours, one damaged brick with its dashed target box, the paddle, the gold ball with its velocity stub, and the inbound and outbound dotted trajectories with arrowheads. The target brick, which the outbound trajectory meets, is drawn broken into two fallen halves with a jagged gap and debris, inside a dashed target box; the crack line first drawn on the brick above it was removed because it marked the wrong brick. The HUD labels match the specification: 800 × 600 canvas, 5 × 8 bricks (+100 points), 60 Hz tick, a 100 × 15 paddle, a radius-8 ball, `θ = offset · 60°`, and the control keys P and R. The framed Lora quote below the artwork is unchanged. This is a deliberate exception to the monochrome adaptation in the style guide, recorded there. The inbound trajectory runs to the paddle, and the angle label sits clear of the trajectory line.
+
+Rebuilt `breakout-phase-01.pdf` (14 pages, unchanged count). Rendered the cover at 200 and 300 dpi and inspected the artwork at full and zoomed scale; confirmed the quote line is unchanged in the diff.
+
+```sh
+./scripts/build.sh breakout-phase-01
+```
+
 ## Gameplay state diagram layout (2026-10-27)
 
 The `RUNNING ↔ PAUSED` key-P arrow was 22 pt long and stopped short of `PAUSED`, which sat about 90 pt away, so the two arrowheads collided and the state looked disconnected. The arrow now spans the gap, measured with `layout` against the container width, with its label centred above the line. The `GAME_OVER` life-loss label and the `VICTORY` label moved next to their arrows. The `READY ↔ RUNNING` arrowheads were placed 2 pt above their lines (head origin at a different `dy` from the line); both heads now share the line's `dy`, and the line tails stop 2 pt short of each box instead of 4 pt. Rebuilt `breakout-phase-01.pdf` (14 pages); rendered and inspected the diagram on page 9 at 300 and 600 dpi.
